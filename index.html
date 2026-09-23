@@ -111,9 +111,7 @@ button{
   cursor:pointer;
 }
 
-.progress-top:active{
-  opacity:.75;
-}
+.progress-top:active{opacity:.75;}
 
 .chapter-open-hint{
   margin-left:5px;
@@ -169,9 +167,7 @@ button{
   font-size:12px;
 }
 
-.energy-stat{
-  cursor:pointer;
-}
+.energy-stat{cursor:pointer;}
 
 .energy-timer{
   margin-top:4px;
@@ -216,13 +212,8 @@ button{
   align-items:center;
 }
 
-.menu-icon{
-  font-size:25px;
-}
-
-.menu-title{
-  font-weight:800;
-}
+.menu-icon{font-size:25px;}
+.menu-title{font-weight:800;}
 
 .menu-sub{
   color:#8992a4;
@@ -242,13 +233,8 @@ button{
   margin-bottom:18px;
 }
 
-.map-header-center{
-  text-align:center;
-}
-
-.map-header-space{
-  width:50px;
-}
+.map-header-center{text-align:center;}
+.map-header-space{width:50px;}
 
 .map-title{
   font-size:25px;
@@ -292,11 +278,7 @@ button{
   min-height:0;
   padding:10px 10px 18px;
   background:
-    radial-gradient(
-      circle at 50% 10%,
-      rgba(108,92,231,.10),
-      transparent 34%
-    ),
+    radial-gradient(circle at 50% 10%,rgba(108,92,231,.10),transparent 34%),
     #101722;
   border-radius:30px;
   overflow:visible;
@@ -331,23 +313,13 @@ button{
   padding:0;
   border:4px solid #303a4c;
   border-radius:50%;
-  background:
-    linear-gradient(
-      145deg,
-      #1d2634,
-      #121923
-    );
+  background:linear-gradient(145deg,#1d2634,#121923);
   color:white;
-  box-shadow:
-    0 10px 25px rgba(0,0,0,.30);
-  transition:
-    transform .15s ease,
-    opacity .15s ease;
+  box-shadow:0 10px 25px rgba(0,0,0,.30);
+  transition:transform .15s ease,opacity .15s ease;
 }
 
-.compact-level-node:active{
-  transform:scale(.94);
-}
+.compact-level-node:active{transform:scale(.94);}
 
 .compact-level-number{
   font-size:28px;
@@ -366,12 +338,7 @@ button{
 
 .compact-completed{
   border-color:#e6b84d;
-  background:
-    radial-gradient(
-      circle at 50% 40%,
-      #47391c,
-      #1a1b20 72%
-    );
+  background:radial-gradient(circle at 50% 40%,#47391c,#1a1b20 72%);
   box-shadow:
     0 0 0 5px rgba(230,184,77,.08),
     0 0 25px rgba(230,184,77,.28);
@@ -379,12 +346,7 @@ button{
 
 .compact-current{
   border-color:#765cff;
-  background:
-    radial-gradient(
-      circle at 50% 40%,
-      #32275b,
-      #18182a 72%
-    );
+  background:radial-gradient(circle at 50% 40%,#32275b,#18182a 72%);
   box-shadow:
     0 0 0 7px rgba(118,92,255,.13),
     0 0 30px rgba(118,92,255,.45);
@@ -395,10 +357,9 @@ button{
   border-color:#303847;
 }
 
-.compact-lock{
+.compact-lock,
+.compact-check{
   position:absolute;
-  top:-14px;
-  right:0;
   z-index:10;
   width:29px;
   height:29px;
@@ -406,24 +367,20 @@ button{
   align-items:center;
   justify-content:center;
   border-radius:50%;
+}
+
+.compact-lock{
+  top:-14px;
+  right:0;
   background:#202938;
   font-size:14px;
-  box-shadow:
-    0 4px 12px rgba(0,0,0,.35);
+  box-shadow:0 4px 12px rgba(0,0,0,.35);
 }
 
 .compact-check{
-  position:absolute;
   top:-10px;
   right:-2px;
-  z-index:10;
-  width:29px;
-  height:29px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   border:3px solid #07140f;
-  border-radius:50%;
   background:#39d98a;
   color:#06140e;
   font-size:17px;
@@ -592,17 +549,10 @@ button{
   margin-top:17px;
   text-align:center;
   font-weight:800;
-  
 }
 
-
-.good{
-  color:#55e6a5;
-}
-
-.bad{
-  color:#ff7675;
-}
+.good{color:#55e6a5;}
+.bad{color:#ff7675;}
 
 
 /* =========================
@@ -631,30 +581,16 @@ button{
   background:#f4d58d;
   cursor:grab;
   touch-action:none;
-  transition:
-    transform .12s ease,
-    filter .12s ease,
-    opacity .12s ease;
+  transition:transform .12s ease,filter .12s ease,opacity .12s ease;
 }
 
 .match.match-selected{
   transform:scale(1.12);
-  filter:
-    brightness(1.25)
-    drop-shadow(0 0 7px rgba(244,213,141,.6));
+  filter:brightness(1.25) drop-shadow(0 0 7px rgba(244,213,141,.6));
 }
 
-.h{
-  left:7px;
-  width:34px;
-  height:7px;
-}
-
-.v{
-  width:7px;
-  height:34px;
-}
-
+.h{left:7px;width:34px;height:7px;}
+.v{width:7px;height:34px;}
 .a{top:0;}
 .g{top:39px;}
 .d{bottom:0;}
@@ -732,115 +668,443 @@ button{
   z-index:99999;
   border-radius:10px;
   background:#f4d58d;
-  filter:
-    brightness(1.2)
-    drop-shadow(0 0 8px rgba(244,213,141,.55));
+  filter:brightness(1.2) drop-shadow(0 0 8px rgba(244,213,141,.55));
 }
 
 
 /* =========================
-   FISH LEVEL
+   FISH LEVEL — UNDERWATER
 ========================= */
 
 .fish-area{
-  height:220px;
   position:relative;
-  margin:25px auto 0;
-  max-width:300px;
+  width:100%;
+  max-width:340px;
+  height:270px;
+  margin:20px auto 0;
+  overflow:hidden;
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 50% 5%,rgba(102,214,255,.22),transparent 32%),
+    linear-gradient(180deg,#124868 0%,#0a314d 48%,#071d31 100%);
+  border:1px solid rgba(125,214,255,.16);
+  box-shadow:
+    inset 0 0 40px rgba(0,0,0,.30),
+    0 15px 35px rgba(0,0,0,.22);
 }
+
+.fish-area::before{
+  content:"";
+  position:absolute;
+  left:-20%;
+  top:-15px;
+  width:140%;
+  height:120px;
+  background:
+    linear-gradient(
+      108deg,
+      transparent 22%,
+      rgba(181,235,255,.08) 34%,
+      transparent 44%,
+      rgba(181,235,255,.055) 57%,
+      transparent 70%
+    );
+  transform:rotate(-4deg);
+  pointer-events:none;
+}
+
+.fish-area::after{
+  content:"";
+  position:absolute;
+  left:-10%;
+  bottom:-30px;
+  width:120%;
+  height:74px;
+  border-radius:50% 50% 0 0;
+  background:linear-gradient(180deg,#817052,#443b2d);
+  opacity:.72;
+  z-index:1;
+  pointer-events:none;
+}
+
+
+/* BUBBLES */
+
+.fish-bubble{
+  position:absolute;
+  z-index:2;
+  display:block;
+  width:10px;
+  height:10px;
+  border:2px solid rgba(187,239,255,.5);
+  border-radius:50%;
+  animation:fishBubble 4.5s linear infinite;
+  pointer-events:none;
+}
+
+.fish-bubble.b1{
+  left:29px;
+  bottom:38px;
+}
+
+.fish-bubble.b2{
+  left:48px;
+  bottom:27px;
+  width:6px;
+  height:6px;
+  animation-delay:1.4s;
+}
+
+.fish-bubble.b3{
+  right:31px;
+  bottom:44px;
+  width:8px;
+  height:8px;
+  animation-delay:2.3s;
+}
+
+.fish-bubble.b4{
+  right:54px;
+  bottom:27px;
+  width:5px;
+  height:5px;
+  animation-delay:.8s;
+}
+
+@keyframes fishBubble{
+  0%{
+    transform:translateY(0) translateX(0) scale(.7);
+    opacity:0;
+  }
+  15%{opacity:.8;}
+  55%{
+    transform:translateY(-90px) translateX(7px) scale(1);
+    opacity:.65;
+  }
+  100%{
+    transform:translateY(-190px) translateX(-5px) scale(1.15);
+    opacity:0;
+  }
+}
+
+
+/* SEAWEED */
+
+.seaweed{
+  position:absolute;
+  bottom:22px;
+  z-index:3;
+  width:8px;
+  border-radius:100% 100% 0 0;
+  transform-origin:bottom center;
+  background:linear-gradient(180deg,#45c98b,#176747);
+  animation:seaweedMove 3s ease-in-out infinite alternate;
+}
+
+.seaweed.s1{
+  left:21px;
+  height:50px;
+}
+
+.seaweed.s2{
+  left:37px;
+  height:67px;
+  animation-delay:.5s;
+}
+
+.seaweed.s3{
+  right:27px;
+  height:58px;
+  animation-delay:1s;
+}
+
+.seaweed.s4{
+  right:44px;
+  height:41px;
+  animation-delay:.2s;
+}
+
+@keyframes seaweedMove{
+  from{transform:rotate(-5deg);}
+  to{transform:rotate(7deg);}
+}
+
+
+/* ROCKS */
+
+.fish-rock{
+  position:absolute;
+  bottom:20px;
+  z-index:4;
+  background:linear-gradient(145deg,#59677a,#283444);
+  box-shadow:
+    inset 4px 4px 8px rgba(255,255,255,.05),
+    0 5px 8px rgba(0,0,0,.25);
+}
+
+.fish-rock.r1{
+  left:7px;
+  width:48px;
+  height:28px;
+  border-radius:55% 45% 35% 50%;
+}
+
+.fish-rock.r2{
+  right:7px;
+  width:54px;
+  height:30px;
+  border-radius:45% 55% 50% 35%;
+}
+
+
+/* EXIT */
+
+.fish-exit{
+  position:absolute;
+  right:-4px;
+  top:96px;
+  z-index:5;
+  width:65px;
+  height:92px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(102,224,255,.30),
+      rgba(72,152,255,.08) 52%,
+      transparent 73%
+    );
+  opacity:.55;
+  transition:opacity .4s ease,transform .4s ease;
+  pointer-events:none;
+}
+
+.fish-exit::after{
+  content:"›";
+  position:absolute;
+  right:7px;
+  top:22px;
+  color:rgba(174,238,255,.55);
+  font-size:38px;
+  font-weight:900;
+}
+
+.fish-solved .fish-exit{
+  opacity:1;
+  transform:scale(1.18);
+}
+
+
+/* TRAP */
 
 .fish-trap{
   position:absolute;
-  width:210px;
-  height:145px;
   left:50%;
-  top:22px;
+  top:47px;
+  width:250px;
+  height:165px;
   transform:translateX(-50%);
+  z-index:6;
 }
+
+
+/* FISH */
 
 .fish{
   position:absolute;
-  left:50%;
-  top:55px;
-  transform:translateX(-50%);
-  font-size:50px;
-  z-index:2;
+  left:55px;
+  top:61px;
+  z-index:7;
+  width:70px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:47px;
+  line-height:1;
+  filter:drop-shadow(0 5px 5px rgba(0,0,0,.30));
+  transform-origin:center;
   transition:
-    left .7s ease,
-    top .7s ease,
-    transform .7s ease,
-    opacity .7s ease;
-}
-
-.fish-bar{
-  position:absolute;
-  border:0;
-  padding:0;
-  background:#58b7d7;
-  border-radius:8px;
-  box-shadow:
-    0 0 10px rgba(88,183,215,.22);
-  transition:
+    left 2.4s ease-in-out,
+    top .8s ease,
     transform .35s ease,
-    opacity .35s ease;
-  touch-action:none;
+    opacity .5s ease;
+  pointer-events:none;
 }
 
-.fish-bar:active{
-  filter:brightness(1.2);
+.fish.fish-swim-right{
+  left:130px;
+  top:57px;
+  transform:scaleX(1) rotate(2deg);
 }
 
-.fish-bar-top{
-  width:190px;
-  height:10px;
-  left:10px;
-  top:0;
+.fish.fish-swim-left{
+  left:53px;
+  top:69px;
+  transform:scaleX(-1) rotate(-2deg);
 }
 
-.fish-bar-left{
-  width:10px;
-  height:125px;
-  left:10px;
-  top:0;
-}
-
-.fish-bar-right{
-  width:10px;
-  height:125px;
-  right:10px;
-  top:0;
-}
-
-.fish-bar-bottom-left{
-  width:88px;
-  height:10px;
-  left:10px;
-  bottom:20px;
-}
-
-.fish-bar-bottom-right{
-  width:88px;
-  height:10px;
-  right:10px;
-  bottom:20px;
-}
-
-.fish-bar.bar-moved{
-  transform:translateY(-15px);
-}
-
-.fish-bar.fish-exit-open{
-  transform:translateX(80px);
-  opacity:.25;
+.fish.fish-escaping{
+  left:146px;
+  top:72px;
+  transform:scaleX(1) rotate(4deg);
+  transition:
+    left .45s ease,
+    top .45s ease,
+    transform .3s ease;
 }
 
 .fish.fish-free{
-  top:175px;
-  left:72%;
-  transform:
-    translateX(-50%)
-    rotate(8deg)
-    scale(1.1);
+  left:310px;
+  top:80px;
+  transform:scaleX(1) rotate(-4deg) scale(1.08);
+  opacity:.1;
+  transition:
+    left .9s cubic-bezier(.25,.8,.25,1),
+    top .9s ease,
+    transform .9s ease,
+    opacity .9s ease;
+}
+
+
+/* WOOD PLANKS */
+
+.fish-bar{
+  position:absolute;
+  z-index:10;
+  border:2px solid #50311d;
+  padding:0;
+  border-radius:7px;
+  cursor:pointer;
+  touch-action:manipulation;
+  background:
+    linear-gradient(
+      90deg,
+      #6f4426 0%,
+      #a66d38 18%,
+      #81502b 44%,
+      #b47b42 69%,
+      #704225 100%
+    );
+  box-shadow:
+    inset 0 2px 1px rgba(255,255,255,.13),
+    inset 0 -3px 3px rgba(48,25,12,.28),
+    0 5px 8px rgba(0,0,0,.28);
+  transition:
+    transform .45s ease,
+    opacity .45s ease,
+    filter .15s ease;
+}
+
+.fish-bar::before{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border-radius:5px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 8px,
+      rgba(59,30,13,.16) 9px 10px
+    );
+  pointer-events:none;
+}
+
+.fish-bar::after{
+  content:"";
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #e2e6eb,
+      #7e8792 50%,
+      #343b43 75%
+    );
+  box-shadow:0 0 0 1px rgba(0,0,0,.4);
+}
+
+.fish-bar-top{
+  width:220px;
+  height:18px;
+  left:15px;
+  top:0;
+}
+
+.fish-bar-top::after{
+  right:9px;
+  top:3px;
+}
+
+.fish-bar-left{
+  width:18px;
+  height:145px;
+  left:15px;
+  top:0;
+}
+
+.fish-bar-left::after{
+  left:3px;
+  bottom:9px;
+}
+
+.fish-bar-right{
+  width:18px;
+  height:145px;
+  right:15px;
+  top:0;
+}
+
+.fish-bar-right::after{
+  left:3px;
+  top:9px;
+}
+
+.fish-bar-bottom-left{
+  width:105px;
+  height:18px;
+  left:15px;
+  bottom:20px;
+}
+
+.fish-bar-bottom-left::after{
+  left:9px;
+  top:3px;
+}
+
+.fish-bar-bottom-right{
+  width:105px;
+  height:18px;
+  right:15px;
+  bottom:20px;
+}
+
+.fish-bar-bottom-right::after{
+  right:9px;
+  top:3px;
+}
+
+.fish-bar:active{
+  filter:brightness(1.16);
+}
+
+.fish-bar.bar-wrong{
+  animation:wrongBarShake .4s ease;
+}
+
+@keyframes wrongBarShake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-7px) rotate(-2deg);}
+  50%{transform:translateX(7px) rotate(2deg);}
+  75%{transform:translateX(-4px);}
+  100%{transform:translateX(0);}
+}
+
+.fish-bar.fish-exit-open{
+  transform:translateX(125px) rotate(10deg);
+  opacity:.15;
 }
 
 
@@ -859,9 +1123,7 @@ button{
   z-index:10000;
 }
 
-.overlay.show{
-  display:flex;
-}
+.overlay.show{display:flex;}
 
 .win{
   width:100%;
@@ -919,13 +1181,8 @@ button{
   padding:25px 20px;
 }
 
-.energy-box{
-  text-align:center;
-}
-
-.energy-big{
-  font-size:54px;
-}
+.energy-box{text-align:center;}
+.energy-big{font-size:54px;}
 
 .energy-description{
   color:#929bab;
@@ -955,9 +1212,7 @@ button{
   font-weight:800;
 }
 
-.shop-option.primary{
-  background:#6c5ce7;
-}
+.shop-option.primary{background:#6c5ce7;}
 
 .close-shop{
   width:100%;
@@ -1001,6 +1256,16 @@ button{
   line-height:1.5;
   font-size:14px;
 }
+
+
+@media(max-width:380px){
+  .fish-area{height:255px;}
+
+  .fish-trap{
+    transform:translateX(-50%) scale(.92);
+  }
+}
+
 </style>
 </head>
 
@@ -1024,7 +1289,6 @@ button{
 
   <div class="hero">
     <div class="brain">🧠</div>
-
     <h1>Only One Move</h1>
 
     <div class="tagline">
@@ -1079,9 +1343,7 @@ button{
           ❤️ <span data-energy>5/5</span>
         </div>
 
-        <div class="stat-label">
-          Энергия
-        </div>
+        <div class="stat-label">Энергия</div>
 
         <div
           class="energy-timer"
@@ -1097,9 +1359,7 @@ button{
           🪙 <span data-coins>300</span>
         </div>
 
-        <div class="stat-label">
-          Монеты
-        </div>
+        <div class="stat-label">Монеты</div>
       </div>
 
 
@@ -1108,9 +1368,7 @@ button{
           🔥 <span id="streakValue">1</span>
         </div>
 
-        <div class="stat-label">
-          Серия дней
-        </div>
+        <div class="stat-label">Серия дней</div>
       </div>
 
     </div>
@@ -1128,21 +1386,13 @@ button{
 
   <div class="menu">
 
-    <button
-      class="menu-btn"
-      onclick="openRules()"
-    >
+    <button class="menu-btn" onclick="openRules()">
       <div class="menu-left">
         <div class="menu-icon">📖</div>
 
         <div>
-          <div class="menu-title">
-            Правила
-          </div>
-
-          <div class="menu-sub">
-            ⭐, ❤️, время и этапы
-          </div>
+          <div class="menu-title">Правила</div>
+          <div class="menu-sub">⭐, ❤️, время и этапы</div>
         </div>
       </div>
 
@@ -1158,13 +1408,8 @@ button{
         <div class="menu-icon">🧩</div>
 
         <div>
-          <div class="menu-title">
-            Ежедневная загадка
-          </div>
-
-          <div class="menu-sub">
-            Новая задача каждый день
-          </div>
+          <div class="menu-title">Ежедневная загадка</div>
+          <div class="menu-sub">Новая задача каждый день</div>
         </div>
       </div>
 
@@ -1180,13 +1425,8 @@ button{
         <div class="menu-icon">⏱</div>
 
         <div>
-          <div class="menu-title">
-            60 секунд
-          </div>
-
-          <div class="menu-sub">
-            Реши как можно больше
-          </div>
+          <div class="menu-title">60 секунд</div>
+          <div class="menu-sub">Реши как можно больше</div>
         </div>
       </div>
 
@@ -1202,13 +1442,8 @@ button{
         <div class="menu-icon">🏆</div>
 
         <div>
-          <div class="menu-title">
-            Рейтинг
-          </div>
-
-          <div class="menu-sub">
-            Соревнуйся с другими
-          </div>
+          <div class="menu-title">Рейтинг</div>
+          <div class="menu-sub">Соревнуйся с другими</div>
         </div>
       </div>
 
@@ -1224,13 +1459,8 @@ button{
         <div class="menu-icon">🎁</div>
 
         <div>
-          <div class="menu-title">
-            Награда дня
-          </div>
-
-          <div class="menu-sub">
-            Забери ежедневный бонус
-          </div>
+          <div class="menu-title">Награда дня</div>
+          <div class="menu-sub">Забери ежедневный бонус</div>
         </div>
       </div>
 
@@ -1246,34 +1476,22 @@ button{
      LEVEL MAP
 ===================== -->
 
-<div
-  class="app hidden"
-  id="levelMapScreen"
->
+<div class="app hidden" id="levelMapScreen">
 
   <div class="map-header">
 
-    <button
-      class="back"
-      onclick="closeLevelMap()"
-    >
+    <button class="back" onclick="closeLevelMap()">
       ‹
     </button>
 
 
     <div class="map-header-center">
 
-      <div
-        class="map-title"
-        id="mapTitle"
-      >
+      <div class="map-title" id="mapTitle">
         ЭТАП 1
       </div>
 
-      <div
-        class="map-stars"
-        id="mapStars"
-      >
+      <div class="map-stars" id="mapStars">
         ⭐ 0 / 15
       </div>
 
@@ -1285,10 +1503,7 @@ button{
   </div>
 
 
-  <div
-    class="map-status"
-    id="mapStatus"
-  >
+  <div class="map-status" id="mapStatus">
     🧠 Первый проход
 
     <span>
@@ -1297,10 +1512,7 @@ button{
   </div>
 
 
-  <div
-    class="level-path"
-    id="levelPath"
-  ></div>
+  <div class="level-path" id="levelPath"></div>
 
 </div>
 
@@ -1309,17 +1521,11 @@ button{
      GAME
 ===================== -->
 
-<div
-  class="app hidden"
-  id="gameScreen"
->
+<div class="app hidden" id="gameScreen">
 
   <div class="game-header">
 
-    <button
-      class="back"
-      onclick="goHome()"
-    >
+    <button class="back" onclick="goHome()">
       ‹
     </button>
 
@@ -1336,26 +1542,17 @@ button{
   </div>
 
 
-  <div
-    class="level"
-    id="gameLevelLabel"
-  >
+  <div class="level" id="gameLevelLabel">
     ЭТАП 1 · УРОВЕНЬ 1
   </div>
 
 
-  <h1
-    class="game-title"
-    id="gameTitle"
-  >
+  <h1 class="game-title" id="gameTitle">
     Передвинь одну спичку
   </h1>
 
 
-  <div
-    class="subtitle"
-    id="gameSubtitle"
-  >
+  <div class="subtitle" id="gameSubtitle">
     Сделай равенство правильным.<br>
     Можно передвинуть только одну спичку.
   </div>
@@ -1363,17 +1560,12 @@ button{
 
   <div class="level-status">
 
-    <div
-      class="level-stars"
-      id="levelStars"
-    >
+    <div class="level-stars" id="levelStars">
       ⭐⭐⭐
     </div>
 
     <div class="timer">
-      <span id="levelTimer">
-        🧠 20 сек.
-      </span>
+      <span id="levelTimer">🧠 20 сек.</span>
     </div>
 
   </div>
@@ -1400,15 +1592,9 @@ button{
       class="puzzle-container"
     >
 
-      <div
-        class="equation"
-        id="matchEquation"
-      >
+      <div class="equation" id="matchEquation">
 
-        <div
-          class="digit"
-          data-symbol="6"
-        >
+        <div class="digit" data-symbol="6">
           <span class="match h a" data-segment="A"></span>
           <span class="match v f" data-segment="F"></span>
           <span class="match h g" data-segment="G"></span>
@@ -1423,26 +1609,13 @@ button{
         </div>
 
 
-        <div
-          class="operator"
-          data-symbol="+"
-        >
-          <span
-            class="match match-h"
-            data-segment="H"
-          ></span>
-
-          <span
-            class="match match-v"
-            data-segment="V"
-          ></span>
+        <div class="operator" data-symbol="+">
+          <span class="match match-h" data-segment="H"></span>
+          <span class="match match-v" data-segment="V"></span>
         </div>
 
 
-        <div
-          class="digit"
-          data-symbol="4"
-        >
+        <div class="digit" data-symbol="4">
           <span class="match v f" data-segment="F"></span>
           <span class="match h g" data-segment="G"></span>
           <span class="match v b" data-segment="B"></span>
@@ -1450,26 +1623,13 @@ button{
         </div>
 
 
-        <div
-          class="equals-symbol"
-          data-symbol="="
-        >
-          <span
-            class="match eq-top"
-            data-segment="TOP"
-          ></span>
-
-          <span
-            class="match eq-bottom"
-            data-segment="BOTTOM"
-          ></span>
+        <div class="equals-symbol" data-symbol="=">
+          <span class="match eq-top" data-segment="TOP"></span>
+          <span class="match eq-bottom" data-segment="BOTTOM"></span>
         </div>
 
 
-        <div
-          class="digit"
-          data-symbol="4"
-        >
+        <div class="digit" data-symbol="4">
           <span class="match v f" data-segment="F"></span>
           <span class="match h g" data-segment="G"></span>
           <span class="match v b" data-segment="B"></span>
@@ -1490,21 +1650,56 @@ button{
 
       <div class="fish-area">
 
+
+        <!-- BUBBLES -->
+
+        <span class="fish-bubble b1"></span>
+        <span class="fish-bubble b2"></span>
+        <span class="fish-bubble b3"></span>
+        <span class="fish-bubble b4"></span>
+
+
+        <!-- SEAWEED -->
+
+        <span class="seaweed s1"></span>
+        <span class="seaweed s2"></span>
+        <span class="seaweed s3"></span>
+        <span class="seaweed s4"></span>
+
+
+        <!-- ROCKS -->
+
+        <span class="fish-rock r1"></span>
+        <span class="fish-rock r2"></span>
+
+
+        <!-- EXIT -->
+
+        <div class="fish-exit"></div>
+
+
+        <!-- TRAP -->
+
         <div class="fish-trap">
+
+
+          <!-- SWIMMING FISH -->
 
           <div
             class="fish"
             id="fish"
           >
-            🐟
+            🐠
           </div>
 
+
+          <!-- WOODEN BARS -->
 
           <button
             class="fish-bar fish-bar-top"
             data-bar="1"
             onclick="moveFishBar(1)"
-            aria-label="Планка 1"
+            aria-label="Верхняя планка"
           ></button>
 
 
@@ -1512,7 +1707,7 @@ button{
             class="fish-bar fish-bar-left"
             data-bar="2"
             onclick="moveFishBar(2)"
-            aria-label="Планка 2"
+            aria-label="Левая планка"
           ></button>
 
 
@@ -1520,7 +1715,7 @@ button{
             class="fish-bar fish-bar-right"
             data-bar="3"
             onclick="moveFishBar(3)"
-            aria-label="Планка 3"
+            aria-label="Правая планка"
           ></button>
 
 
@@ -1528,7 +1723,7 @@ button{
             class="fish-bar fish-bar-bottom-left"
             data-bar="5"
             onclick="moveFishBar(5)"
-            aria-label="Планка 5"
+            aria-label="Нижняя левая планка"
           ></button>
 
 
@@ -1536,7 +1731,7 @@ button{
             class="fish-bar fish-bar-bottom-right"
             data-bar="4"
             onclick="moveFishBar(4)"
-            aria-label="Планка 4"
+            aria-label="Нижняя правая планка"
           ></button>
 
         </div>
@@ -1546,10 +1741,7 @@ button{
     </div>
 
 
-    <div
-      class="moves"
-      id="movesText"
-    >
+    <div class="moves" id="movesText">
       ⚡ Один ход
     </div>
 
@@ -1588,27 +1780,19 @@ button{
      COMPLETE
 ===================== -->
 
-<div
-  class="overlay"
-  id="levelCompleteModal"
->
+<div class="overlay" id="levelCompleteModal">
 
   <div class="win">
 
     <div class="check">✓</div>
 
-    <h2>
-      Уровень пройден!
-    </h2>
+    <h2>Уровень пройден!</h2>
 
     <div id="completeTime">
       Время: 0 сек.
     </div>
 
-    <div
-      class="stars"
-      id="completeStars"
-    >
+    <div class="stars" id="completeStars">
       ⭐⭐⭐
     </div>
 
@@ -1632,20 +1816,13 @@ button{
      ENERGY
 ===================== -->
 
-<div
-  class="overlay"
-  id="energyModal"
->
+<div class="overlay" id="energyModal">
 
   <div class="energy-box">
 
-    <div class="energy-big">
-      ❤️
-    </div>
+    <div class="energy-big">❤️</div>
 
-    <h2>
-      Энергия
-    </h2>
+    <h2>Энергия</h2>
 
     <div class="energy-description">
       Сердце снимается только после
@@ -1708,22 +1885,15 @@ button{
      RULES
 ===================== -->
 
-<div
-  class="overlay"
-  id="rulesModal"
->
+<div class="overlay" id="rulesModal">
 
   <div class="rules-box">
 
-    <h2>
-      📖 Правила
-    </h2>
+    <h2>📖 Правила</h2>
 
 
     <div class="rule">
-      <div class="rule-title">
-        ⭐ Звёзды
-      </div>
+      <div class="rule-title">⭐ Звёзды</div>
 
       <div class="rule-text">
         Каждая попытка начинается с ⭐⭐⭐.
@@ -1735,9 +1905,7 @@ button{
 
 
     <div class="rule">
-      <div class="rule-title">
-        ⏱ Время
-      </div>
+      <div class="rule-title">⏱ Время</div>
 
       <div class="rule-text">
         Первые 20 секунд — время на размышление.
@@ -1750,9 +1918,7 @@ button{
 
 
     <div class="rule">
-      <div class="rule-title">
-        ❤️ Энергия
-      </div>
+      <div class="rule-title">❤️ Энергия</div>
 
       <div class="rule-text">
         Ошибка не снимает сердце сразу.
@@ -1763,9 +1929,7 @@ button{
 
 
     <div class="rule">
-      <div class="rule-title">
-        🏆 Этапы
-      </div>
+      <div class="rule-title">🏆 Этапы</div>
 
       <div class="rule-text">
         В одном этапе 5 уровней.
@@ -1780,9 +1944,7 @@ button{
 
 
     <div class="rule">
-      <div class="rule-title">
-        🧠 Один ход
-      </div>
+      <div class="rule-title">🧠 Один ход</div>
 
       <div class="rule-text">
         У каждой головоломки есть решение
@@ -1813,9 +1975,11 @@ button{
 <script src="js/energy.js?v=6"></script>
 <script src="js/game.js?v=6"></script>
 <script src="js/matchsticks.js?v=6"></script>
-<script src="js/objects.js?v=2"></script>
 
-<!-- КОМПАКТНАЯ КАРТА УРОВНЕЙ -->
+<!-- НОВАЯ РЫБКА -->
+<script src="js/objects.js?v=3"></script>
+
+<!-- КАРТА -->
 <script src="js/levelmap.js?v=3"></script>
 
 <script src="levels/easy.js?v=6"></script>
@@ -1942,11 +2106,6 @@ function getPlayableLevel(){
 
   const data =
     getPlayerData();
-
-  /*
-     Сейчас реально сделаны
-     только уровни 1 и 2.
-  */
 
   return Math.min(
     Math.max(
@@ -2100,6 +2259,13 @@ function loadLevel(levelNumber){
   stopLevelTimer();
   cancelCurrentDrag();
 
+  if(
+    typeof stopFishSwimming ===
+    "function"
+  ){
+    stopFishSwimming();
+  }
+
   document
     .querySelectorAll(
       ".puzzle-container"
@@ -2110,8 +2276,6 @@ function loadLevel(levelNumber){
       );
     });
 
-
-  /* LEVEL 1 */
 
   if(displayedLevel === 1){
 
@@ -2129,8 +2293,6 @@ function loadLevel(levelNumber){
     return;
   }
 
-
-  /* LEVEL 2 */
 
   if(displayedLevel === 2){
 
@@ -2246,24 +2408,24 @@ function setupLevelTwo(){
       "gameSubtitle"
     )
     .innerHTML =
-      "Открой рыбке выход.<br>Передвинуть можно только один предмет.";
+      "Открой рыбке путь в море.<br>Передвинуть можно только одну планку.";
 
   document
     .getElementById(
       "tutorialBox"
     )
     .innerHTML =
-      "🐟 Рыбка заперта. Нажми на одну из планок, чтобы передвинуть её.";
+      "🐠 Рыбка заперта в деревянной ловушке.<br>Выбери одну планку и открой ей выход.";
 
   document
     .getElementById(
       "gameInstruction"
     )
     .textContent =
-      "Выбери только одну планку. Не каждая откроет выход.";
+      "Правильная планка заранее не подсвечивается.";
 
   movesText.textContent =
-    "⚡ Передвинь одну планку";
+    "⚡ Один ход";
 
   if(
     typeof resetFishPuzzle ===
@@ -2283,6 +2445,13 @@ function goHome(){
   stopLevelTimer();
 
   cancelCurrentDrag();
+
+  if(
+    typeof stopFishSwimming ===
+    "function"
+  ){
+    stopFishSwimming();
+  }
 
   gameScreen.classList.add(
     "hidden"
@@ -2739,7 +2908,7 @@ function resetPuzzleVisual(){
     }
 
     movesText.textContent =
-      "⚡ Передвинь одну планку";
+      "⚡ Один ход";
   }
 }
 
@@ -2837,7 +3006,7 @@ function showHint(){
   if(displayedLevel === 2){
 
     gameMessage.textContent =
-      "💡 Ищи самый короткий путь рыбки наружу.";
+      "💡 Не обязательно разбирать всю ловушку. Рыбке нужен только один свободный выход.";
   }
 }
 
@@ -2879,14 +3048,6 @@ function finishLevel(){
   }
 
 
-  /*
-     Первый проход идёт только вперёд.
-
-     После уровня 1 нельзя сразу
-     вернуться и улучшить его.
-     Сразу отправляем игрока на уровень 2.
-  */
-
   if(
     activeLevel === 1 &&
     !isLevelCompleted(2)
@@ -2902,11 +3063,6 @@ function finishLevel(){
     return;
   }
 
-
-  /*
-     После текущего последнего
-     реализованного уровня показываем карту.
-  */
 
   updateMainUI();
   updateProgress();
