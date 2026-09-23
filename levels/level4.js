@@ -1,7 +1,7 @@
 // =====================================
 // ONLY ONE MOVE
-// LEVEL 4 — RAILWAY SWITCH
-// 2 TRAINS + 16 SWITCHES
+// LEVEL 4 — RAILWAY NETWORK
+// SVG TRACKS + 2 TRAINS + 16 SWITCHES
 // =====================================
 
 window.ONE_MOVE_LEVELS =
@@ -16,14 +16,15 @@ window.ONE_MOVE_LEVELS[4] = {
     solved: false,
     selectedSwitch: null,
 
-    // Правильная стрелка
+    // Единственная правильная стрелка
     correctSwitch: 11,
 
     timers: [],
-    animationFrame: null,
+    animationFrames: [],
+
 
     // =====================================
-    // HTML
+    // RENDER
     // =====================================
 
     render() {
@@ -32,19 +33,34 @@ window.ONE_MOVE_LEVELS[4] = {
 
         for (let i = 1; i <= 16; i++) {
 
-            switches += this.renderSwitch(i);
-
+            switches += `
+                <button
+                    class="rail-switch rail-switch-${i}"
+                    data-switch="${i}"
+                    aria-label="Стрелка ${i}"
+                >
+                    <span class="switch-handle">
+                        <span class="switch-knob"></span>
+                    </span>
+                </button>
+            `;
         }
 
+
         return `
-        <div id="railwayPuzzle" class="puzzle-container">
+        <div
+            id="railwayPuzzle"
+            class="puzzle-container"
+        >
 
             <div class="railway-board">
 
                 <div class="railway-grid"></div>
 
 
-                <!-- ДЕКОР -->
+                <!-- =========================
+                     DECOR
+                ========================== -->
 
                 <div class="rail-tree tree-1">🌲</div>
                 <div class="rail-tree tree-2">🌲</div>
@@ -55,7 +71,204 @@ window.ONE_MOVE_LEVELS[4] = {
                 <div class="rail-rock rock-2"></div>
 
 
-                <!-- СТАНЦИИ -->
+                <!-- =========================
+                     SVG RAILWAY
+                ========================== -->
+
+                <svg
+                    class="railway-svg"
+                    viewBox="0 0 350 405"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                >
+
+                    <defs>
+
+                        <filter
+                            id="railShadow"
+                            x="-20%"
+                            y="-20%"
+                            width="140%"
+                            height="140%"
+                        >
+                            <feDropShadow
+                                dx="0"
+                                dy="2"
+                                stdDeviation="2"
+                                flood-color="#000000"
+                                flood-opacity=".45"
+                            />
+                        </filter>
+
+                    </defs>
+
+
+                    <!-- =====================
+                         BALLAST / DARK BASE
+                    ====================== -->
+
+                    <g
+                        class="rail-ballast"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <!-- TOP LEFT -->
+                        <path d="M 0 86 L 72 86 L 112 113 L 151 140 L 177 164"/>
+
+                        <!-- TOP RIGHT -->
+                        <path d="M 350 86 L 280 86 L 245 86 L 222 111 L 198 137 L 177 164"/>
+
+                        <!-- CENTER TO B -->
+                        <path d="M 177 164 L 147 195 L 111 231 L 76 266 L 51 309 L 51 356"/>
+
+                        <!-- CENTER TO A -->
+                        <path d="M 177 164 L 211 195 L 247 231 L 277 267 L 286 309 L 286 356"/>
+
+                        <!-- FALSE LEFT BRANCH -->
+                        <path d="M 112 113 L 134 160 L 134 238"/>
+
+                        <!-- FALSE RIGHT BRANCH -->
+                        <path d="M 222 111 L 247 157 L 280 218"/>
+
+                        <!-- FALSE CROSS -->
+                        <path d="M 111 231 L 177 164 L 247 231"/>
+
+                    </g>
+
+
+                    <!-- =====================
+                         SLEEPERS
+                    ====================== -->
+
+                    <g class="rail-sleepers">
+
+                        <!-- TOP LEFT -->
+                        <line x1="14" y1="78" x2="14" y2="94"/>
+                        <line x1="32" y1="78" x2="32" y2="94"/>
+                        <line x1="50" y1="78" x2="50" y2="94"/>
+                        <line x1="68" y1="78" x2="68" y2="94"/>
+
+                        <line x1="82" y1="83" x2="75" y2="96"/>
+                        <line x1="98" y1="94" x2="90" y2="107"/>
+                        <line x1="116" y1="105" x2="108" y2="119"/>
+                        <line x1="132" y1="116" x2="124" y2="130"/>
+                        <line x1="149" y1="128" x2="141" y2="142"/>
+                        <line x1="165" y1="145" x2="153" y2="157"/>
+
+
+                        <!-- TOP RIGHT -->
+                        <line x1="336" y1="78" x2="336" y2="94"/>
+                        <line x1="318" y1="78" x2="318" y2="94"/>
+                        <line x1="300" y1="78" x2="300" y2="94"/>
+                        <line x1="282" y1="78" x2="282" y2="94"/>
+
+                        <line x1="259" y1="82" x2="268" y2="96"/>
+                        <line x1="242" y1="94" x2="252" y2="106"/>
+                        <line x1="227" y1="107" x2="239" y2="118"/>
+                        <line x1="211" y1="124" x2="223" y2="135"/>
+                        <line x1="195" y1="142" x2="207" y2="153"/>
+
+
+                        <!-- CENTER LEFT -->
+                        <line x1="160" y1="170" x2="172" y2="182"/>
+                        <line x1="146" y1="185" x2="158" y2="197"/>
+                        <line x1="131" y1="200" x2="143" y2="212"/>
+                        <line x1="116" y1="215" x2="128" y2="227"/>
+                        <line x1="101" y1="231" x2="113" y2="243"/>
+                        <line x1="87" y1="246" x2="99" y2="258"/>
+                        <line x1="70" y1="265" x2="84" y2="273"/>
+
+                        <line x1="43" y1="290" x2="58" y2="299"/>
+                        <line x1="43" y1="316" x2="59" y2="316"/>
+                        <line x1="43" y1="337" x2="59" y2="337"/>
+
+
+                        <!-- CENTER RIGHT -->
+                        <line x1="183" y1="169" x2="172" y2="181"/>
+                        <line x1="198" y1="184" x2="187" y2="197"/>
+                        <line x1="214" y1="200" x2="202" y2="212"/>
+                        <line x1="229" y1="215" x2="217" y2="227"/>
+                        <line x1="245" y1="231" x2="233" y2="243"/>
+                        <line x1="260" y1="247" x2="248" y2="259"/>
+                        <line x1="277" y1="264" x2="263" y2="274"/>
+
+                        <line x1="278" y1="290" x2="293" y2="287"/>
+                        <line x1="278" y1="316" x2="294" y2="316"/>
+                        <line x1="278" y1="337" x2="294" y2="337"/>
+
+
+                        <!-- FALSE LEFT -->
+                        <line x1="119" y1="128" x2="132" y2="122"/>
+                        <line x1="127" y1="148" x2="141" y2="143"/>
+                        <line x1="126" y1="172" x2="142" y2="172"/>
+                        <line x1="126" y1="196" x2="142" y2="196"/>
+                        <line x1="126" y1="220" x2="142" y2="220"/>
+
+
+                        <!-- FALSE RIGHT -->
+                        <line x1="225" y1="128" x2="239" y2="121"/>
+                        <line x1="237" y1="150" x2="251" y2="143"/>
+                        <line x1="249" y1="173" x2="263" y2="166"/>
+                        <line x1="262" y1="196" x2="276" y2="189"/>
+
+                    </g>
+
+
+                    <!-- =====================
+                         STEEL RAILS
+                    ====================== -->
+
+                    <g
+                        class="rail-steel"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <path d="M 0 82 L 72 82 L 114 109 L 154 136 L 180 160"/>
+                        <path d="M 0 90 L 70 90 L 110 117 L 148 144 L 174 168"/>
+
+
+                        <path d="M 350 82 L 280 82 L 242 82 L 218 107 L 194 133 L 174 160"/>
+                        <path d="M 350 90 L 282 90 L 248 90 L 226 115 L 202 141 L 180 168"/>
+
+
+                        <path d="M 174 160 L 143 191 L 107 227 L 72 262 L 47 307 L 47 356"/>
+                        <path d="M 180 168 L 151 199 L 115 235 L 80 270 L 55 311 L 55 356"/>
+
+
+                        <path d="M 180 160 L 215 191 L 251 227 L 281 263 L 290 307 L 290 356"/>
+                        <path d="M 174 168 L 207 199 L 243 235 L 273 271 L 282 311 L 282 356"/>
+
+
+                        <!-- FALSE LEFT -->
+                        <path d="M 108 111 L 130 161 L 130 238"/>
+                        <path d="M 116 115 L 138 159 L 138 238"/>
+
+
+                        <!-- FALSE RIGHT -->
+                        <path d="M 218 109 L 243 159 L 276 220"/>
+                        <path d="M 226 113 L 251 155 L 284 216"/>
+
+                    </g>
+
+
+                    <!-- CENTRAL GLOW -->
+                    <circle
+                        class="junction-core"
+                        cx="177"
+                        cy="164"
+                        r="8"
+                    />
+
+                </svg>
+
+
+                <!-- =========================
+                     STATIONS
+                ========================== -->
 
                 <div class="rail-station station-b">
                     <span>🏁</span>
@@ -68,43 +281,9 @@ window.ONE_MOVE_LEVELS[4] = {
                 </div>
 
 
-                <!-- =================================
-                     РЕЛЬСОВАЯ СЕТЬ
-                ================================== -->
-
-                <div class="track-segment track-1"></div>
-                <div class="track-segment track-2"></div>
-                <div class="track-segment track-3"></div>
-                <div class="track-segment track-4"></div>
-                <div class="track-segment track-5"></div>
-
-                <div class="track-segment track-6"></div>
-                <div class="track-segment track-7"></div>
-                <div class="track-segment track-8"></div>
-                <div class="track-segment track-9"></div>
-                <div class="track-segment track-10"></div>
-
-                <div class="track-segment track-11"></div>
-                <div class="track-segment track-12"></div>
-                <div class="track-segment track-13"></div>
-                <div class="track-segment track-14"></div>
-
-                <div class="track-segment track-false-1"></div>
-                <div class="track-segment track-false-2"></div>
-                <div class="track-segment track-false-3"></div>
-                <div class="track-segment track-false-4"></div>
-                <div class="track-segment track-false-5"></div>
-                <div class="track-segment track-false-6"></div>
-
-
-                <!-- ЦЕНТРАЛЬНАЯ РАЗВЯЗКА -->
-
-                <div class="rail-junction junction-main"></div>
-
-
-                <!-- =================================
-                     ПОЕЗД A — КРАСНЫЙ
-                ================================== -->
+                <!-- =========================
+                     TRAIN A — RED
+                ========================== -->
 
                 <div
                     class="train train-a"
@@ -126,9 +305,9 @@ window.ONE_MOVE_LEVELS[4] = {
                 </div>
 
 
-                <!-- =================================
-                     ПОЕЗД B — СИНИЙ
-                ================================== -->
+                <!-- =========================
+                     TRAIN B — BLUE
+                ========================== -->
 
                 <div
                     class="train train-b"
@@ -150,41 +329,13 @@ window.ONE_MOVE_LEVELS[4] = {
                 </div>
 
 
-                <!-- =================================
-                     16 СТРЕЛОК
-                ================================== -->
+                <!-- SWITCHES -->
 
                 ${switches}
 
             </div>
 
         </div>
-        `;
-    },
-
-
-    // =====================================
-    // SWITCH
-    // =====================================
-
-    renderSwitch(number) {
-
-        return `
-        <button
-            class="rail-switch rail-switch-${number}"
-            data-switch="${number}"
-            aria-label="Стрелка ${number}"
-        >
-
-            <span class="switch-base"></span>
-
-            <span class="switch-handle">
-
-                <span class="switch-knob"></span>
-
-            </span>
-
-        </button>
         `;
     },
 
@@ -201,8 +352,11 @@ window.ONE_MOVE_LEVELS[4] = {
         this.solved = false;
         this.selectedSwitch = null;
 
+
         const puzzle =
-            document.getElementById("railwayPuzzle");
+            document.getElementById(
+                "railwayPuzzle"
+            );
 
         if (!puzzle) {
             return;
@@ -216,46 +370,48 @@ window.ONE_MOVE_LEVELS[4] = {
         );
 
 
-        const switches =
-            puzzle.querySelectorAll(".rail-switch");
+        puzzle
+            .querySelectorAll(".rail-switch")
+            .forEach(button => {
 
+                button.disabled = false;
 
-        switches.forEach(button => {
-
-            button.disabled = false;
-
-            button.classList.remove(
-                "switch-selected",
-                "switch-changed",
-                "switch-wrong",
-                "switch-correct"
-            );
-
-
-            button.onclick = () => {
-
-                this.chooseSwitch(
-                    button,
-                    Number(button.dataset.switch)
+                button.classList.remove(
+                    "switch-selected",
+                    "switch-changed",
+                    "switch-wrong",
+                    "switch-correct"
                 );
 
-            };
 
-        });
+                button.onclick = () => {
+
+                    this.chooseSwitch(
+                        button,
+                        Number(
+                            button.dataset.switch
+                        )
+                    );
+
+                };
+
+            });
 
 
+        // Красный поезд слева
         this.setTrainPosition(
             "trainA",
-            20,
-            74,
+            5,
+            75,
             0
         );
 
 
+        // Синий поезд справа
         this.setTrainPosition(
             "trainB",
-            280,
-            74,
+            290,
+            75,
             180
         );
 
@@ -274,7 +430,7 @@ window.ONE_MOVE_LEVELS[4] = {
 
 
     // =====================================
-    // SELECT SWITCH
+    // CHOOSE SWITCH
     // =====================================
 
     chooseSwitch(button, number) {
@@ -290,1073 +446,8 @@ window.ONE_MOVE_LEVELS[4] = {
 
 
         this.locked = true;
-
         this.selectedSwitch = number;
 
 
         const puzzle =
-            document.getElementById("railwayPuzzle");
-
-        if (!puzzle) {
-            return;
-        }
-
-
-        button.classList.add(
-            "switch-selected",
-            "switch-changed"
-        );
-
-
-        puzzle
-            .querySelectorAll(".rail-switch")
-            .forEach(item => {
-
-                item.disabled = true;
-
-            });
-
-
-        if (
-            typeof gameMessage !== "undefined" &&
-            gameMessage
-        ) {
-
-            gameMessage.className =
-                "message";
-
-            gameMessage.textContent =
-                "🚂 Поезда отправляются...";
-
-        }
-
-
-        this.addTimer(() => {
-
-            if (
-                levelSolved ||
-                levelFailed
-            ) {
-                return;
-            }
-
-            this.startTrains();
-
-        }, 350);
-
-    },
-
-
-    // =====================================
-    // START TRAINS
-    // =====================================
-
-    startTrains() {
-
-        const puzzle =
-            document.getElementById("railwayPuzzle");
-
-        if (!puzzle) {
-            return;
-        }
-
-
-        puzzle.classList.add(
-            "railway-running"
-        );
-
-
-        if (
-            this.selectedSwitch ===
-            this.correctSwitch
-        ) {
-
-            this.runCorrectRoute();
-
-            return;
-        }
-
-
-        this.runWrongRoute();
-
-    },
-
-
-    // =====================================
-    // CORRECT ROUTE
-    // =====================================
-
-    runCorrectRoute() {
-
-        /*
-            Все координаты соответствуют
-            новой сетке рельсов в level4.css.
-
-            Красный:
-            слева → центр → вправо → A
-
-            Синий:
-            справа → центр → влево → B
-        */
-
-
-        const routeA = [
-
-            { x:20,  y:74  },
-
-            { x:72,  y:74  },
-
-            { x:112, y:101 },
-
-            { x:151, y:128 },
-
-            { x:177, y:153 },
-
-            { x:211, y:184 },
-
-            { x:247, y:220 },
-
-            { x:277, y:255 },
-
-            { x:286, y:302 },
-
-            { x:286, y:337 }
-
-        ];
-
-
-        const routeB = [
-
-            { x:280, y:74  },
-
-            { x:245, y:74  },
-
-            { x:222, y:99  },
-
-            { x:198, y:125 },
-
-            { x:177, y:153 },
-
-            { x:147, y:184 },
-
-            { x:111, y:220 },
-
-            { x:76,  y:255 },
-
-            { x:51,  y:298 },
-
-            { x:51,  y:337 }
-
-        ];
-
-
-        let finished = 0;
-
-
-        const completeTrain = () => {
-
-            finished++;
-
-            if (finished === 2) {
-
-                this.correctMove();
-
-            }
-
-        };
-
-
-        this.animateTrain(
-            "trainA",
-            routeA,
-            4000,
-            completeTrain
-        );
-
-
-        this.animateTrain(
-            "trainB",
-            routeB,
-            4000,
-            completeTrain
-        );
-
-    },
-
-
-    // =====================================
-    // WRONG ROUTE
-    // =====================================
-
-    runWrongRoute() {
-
-        const group =
-            this.getWrongRouteGroup(
-                this.selectedSwitch
-            );
-
-
-        let routeA;
-        let routeB;
-
-
-        /*
-            Ошибочные маршруты тоже идут
-            по существующим рельсам.
-        */
-
-
-        if (group === 1) {
-
-            routeA = [
-
-                { x:20,  y:74  },
-
-                { x:72,  y:74  },
-
-                { x:112, y:101 },
-
-                { x:151, y:128 },
-
-                { x:177, y:153 }
-
-            ];
-
-
-            routeB = [
-
-                { x:280, y:74  },
-
-                { x:245, y:74  },
-
-                { x:222, y:99  },
-
-                { x:198, y:125 },
-
-                { x:177, y:153 }
-
-            ];
-
-        }
-
-
-        else if (group === 2) {
-
-            routeA = [
-
-                { x:20,  y:74  },
-
-                { x:72,  y:74  },
-
-                { x:112, y:101 },
-
-                { x:135, y:145 },
-
-                { x:134, y:205 },
-
-                { x:134, y:239 }
-
-            ];
-
-
-            routeB = [
-
-                { x:280, y:74  },
-
-                { x:245, y:74  },
-
-                { x:222, y:99  },
-
-                { x:237, y:145 },
-
-                { x:260, y:186 },
-
-                { x:280, y:217 }
-
-            ];
-
-        }
-
-
-        else {
-
-            routeA = [
-
-                { x:20,  y:74  },
-
-                { x:72,  y:74  },
-
-                { x:112, y:101 },
-
-                { x:151, y:128 },
-
-                { x:177, y:153 },
-
-                { x:147, y:184 },
-
-                { x:111, y:220 }
-
-            ];
-
-
-            routeB = [
-
-                { x:280, y:74  },
-
-                { x:245, y:74  },
-
-                { x:222, y:99  },
-
-                { x:198, y:125 },
-
-                { x:177, y:153 },
-
-                { x:211, y:184 },
-
-                { x:247, y:220 }
-
-            ];
-
-        }
-
-
-        let finished = 0;
-
-
-        const finishWrong = () => {
-
-            finished++;
-
-            if (finished === 2) {
-
-                this.wrongMove();
-
-            }
-
-        };
-
-
-        this.animateTrain(
-            "trainA",
-            routeA,
-            2850,
-            finishWrong
-        );
-
-
-        this.animateTrain(
-            "trainB",
-            routeB,
-            2850,
-            finishWrong
-        );
-
-    },
-
-
-    // =====================================
-    // WRONG GROUP
-    // =====================================
-
-    getWrongRouteGroup(number) {
-
-        if (
-            [1, 4, 7, 10, 14]
-                .includes(number)
-        ) {
-
-            return 1;
-
-        }
-
-
-        if (
-            [2, 5, 8, 12, 15]
-                .includes(number)
-        ) {
-
-            return 2;
-
-        }
-
-
-        return 3;
-
-    },
-
-
-    // =====================================
-    // ANIMATE TRAIN
-    // =====================================
-
-    animateTrain(
-        trainId,
-        points,
-        duration,
-        callback
-    ) {
-
-        const train =
-            document.getElementById(trainId);
-
-        if (
-            !train ||
-            !points ||
-            points.length < 2
-        ) {
-
-            if (callback) {
-                callback();
-            }
-
-            return;
-        }
-
-
-        const segments = [];
-
-        let totalLength = 0;
-
-
-        for (
-            let i = 0;
-            i < points.length - 1;
-            i++
-        ) {
-
-            const start =
-                points[i];
-
-            const end =
-                points[i + 1];
-
-
-            const dx =
-                end.x - start.x;
-
-            const dy =
-                end.y - start.y;
-
-
-            const length =
-                Math.hypot(dx, dy);
-
-
-            segments.push({
-
-                start,
-                end,
-                dx,
-                dy,
-                length,
-
-                angle:
-                    Math.atan2(
-                        dy,
-                        dx
-                    ) * 180 / Math.PI
-
-            });
-
-
-            totalLength += length;
-
-        }
-
-
-        const startTime =
-            performance.now();
-
-
-        const step = now => {
-
-            if (
-                levelSolved ||
-                levelFailed
-            ) {
-                return;
-            }
-
-
-            const elapsed =
-                now - startTime;
-
-
-            const progress =
-                Math.min(
-                    elapsed / duration,
-                    1
-                );
-
-
-            const targetDistance =
-                totalLength * progress;
-
-
-            let passed = 0;
-            let activeSegment =
-                segments[
-                    segments.length - 1
-                ];
-
-
-            for (
-                let i = 0;
-                i < segments.length;
-                i++
-            ) {
-
-                const segment =
-                    segments[i];
-
-
-                if (
-                    targetDistance <=
-                    passed + segment.length
-                ) {
-
-                    activeSegment =
-                        segment;
-
-                    break;
-
-                }
-
-
-                passed +=
-                    segment.length;
-
-            }
-
-
-            const localDistance =
-                Math.max(
-                    0,
-                    targetDistance - passed
-                );
-
-
-            const localProgress =
-                activeSegment.length > 0
-
-                    ? Math.min(
-                        localDistance /
-                        activeSegment.length,
-                        1
-                    )
-
-                    : 1;
-
-
-            const x =
-                activeSegment.start.x +
-                activeSegment.dx *
-                localProgress;
-
-
-            const y =
-                activeSegment.start.y +
-                activeSegment.dy *
-                localProgress;
-
-
-            this.setTrainPosition(
-                trainId,
-                x,
-                y,
-                activeSegment.angle
-            );
-
-
-            if (progress < 1) {
-
-                const frame =
-                    requestAnimationFrame(
-                        step
-                    );
-
-                this.animationFrame =
-                    frame;
-
-                return;
-
-            }
-
-
-            if (callback) {
-
-                callback();
-
-            }
-
-        };
-
-
-        const frame =
-            requestAnimationFrame(
-                step
-            );
-
-        this.animationFrame =
-            frame;
-
-    },
-
-
-    // =====================================
-    // TRAIN POSITION
-    // =====================================
-
-    setTrainPosition(
-        trainId,
-        x,
-        y,
-        angle
-    ) {
-
-        const train =
-            document.getElementById(trainId);
-
-        if (!train) {
-            return;
-        }
-
-
-        train.style.left =
-            `${x}px`;
-
-        train.style.top =
-            `${y}px`;
-
-        train.style.right =
-            "auto";
-
-
-        /*
-            Поезд рисуется носом вправо,
-            поэтому угол совпадает
-            с направлением сегмента.
-        */
-
-        train.style.transform =
-            `rotate(${angle}deg)`;
-
-    },
-
-
-    // =====================================
-    // WRONG MOVE
-    // =====================================
-
-    wrongMove() {
-
-        if (
-            levelSolved ||
-            levelFailed
-        ) {
-            return;
-        }
-
-
-        const puzzle =
-            document.getElementById(
-                "railwayPuzzle"
-            );
-
-        if (!puzzle) {
-            return;
-        }
-
-
-        puzzle.classList.add(
-            "railway-wrong"
-        );
-
-
-        const selected =
-            puzzle.querySelector(
-                `[data-switch="${this.selectedSwitch}"]`
-            );
-
-
-        if (selected) {
-
-            selected.classList.add(
-                "switch-wrong"
-            );
-
-        }
-
-
-        if (
-            typeof gameMessage !== "undefined" &&
-            gameMessage
-        ) {
-
-            gameMessage.className =
-                "message bad";
-
-            gameMessage.textContent =
-                "Неверный маршрут. −⭐";
-
-        }
-
-
-        registerWrongMove();
-
-
-        if (
-            levelSolved ||
-            levelFailed
-        ) {
-            return;
-        }
-
-
-        this.addTimer(() => {
-
-            this.resetAfterWrongMove();
-
-        }, 850);
-
-    },
-
-
-    // =====================================
-    // RESET AFTER WRONG
-    // =====================================
-
-    resetAfterWrongMove() {
-
-        if (
-            levelSolved ||
-            levelFailed
-        ) {
-            return;
-        }
-
-
-        const puzzle =
-            document.getElementById(
-                "railwayPuzzle"
-            );
-
-        if (!puzzle) {
-            return;
-        }
-
-
-        puzzle.classList.remove(
-            "railway-running",
-            "railway-wrong"
-        );
-
-
-        this.setTrainPosition(
-            "trainA",
-            20,
-            74,
-            0
-        );
-
-
-        this.setTrainPosition(
-            "trainB",
-            280,
-            74,
-            180
-        );
-
-
-        puzzle
-            .querySelectorAll(".rail-switch")
-            .forEach(button => {
-
-                button.disabled = false;
-
-                button.classList.remove(
-                    "switch-selected",
-                    "switch-changed",
-                    "switch-wrong",
-                    "switch-correct"
-                );
-
-            });
-
-
-        this.selectedSwitch = null;
-
-        this.locked = false;
-
-
-        if (
-            typeof movesText !== "undefined" &&
-            movesText
-        ) {
-
-            movesText.textContent =
-                "🚦 Попробуй другую стрелку";
-
-        }
-
-    },
-
-
-    // =====================================
-    // CORRECT
-    // =====================================
-
-    correctMove() {
-
-        if (
-            this.solved ||
-            levelSolved ||
-            levelFailed
-        ) {
-            return;
-        }
-
-
-        this.solved = true;
-
-
-        const puzzle =
-            document.getElementById(
-                "railwayPuzzle"
-            );
-
-        if (!puzzle) {
-            return;
-        }
-
-
-        puzzle.classList.add(
-            "railway-solved"
-        );
-
-
-        const selected =
-            puzzle.querySelector(
-                `[data-switch="${this.correctSwitch}"]`
-            );
-
-
-        if (selected) {
-
-            selected.classList.remove(
-                "switch-selected"
-            );
-
-            selected.classList.add(
-                "switch-correct"
-            );
-
-        }
-
-
-        puzzle
-            .querySelectorAll(".rail-switch")
-            .forEach(button => {
-
-                button.disabled = true;
-
-            });
-
-
-        if (
-            typeof movesText !== "undefined" &&
-            movesText
-        ) {
-
-            movesText.textContent =
-                "✓ Оба поезда прибыли";
-
-        }
-
-
-        if (
-            typeof gameMessage !== "undefined" &&
-            gameMessage
-        ) {
-
-            gameMessage.className =
-                "message good";
-
-            gameMessage.textContent =
-                "Маршрут построен! 🚂🚂";
-
-        }
-
-
-        this.addTimer(() => {
-
-            if (
-                !levelSolved &&
-                !levelFailed
-            ) {
-
-                solveLevel(40);
-
-            }
-
-        }, 700);
-
-    },
-
-
-    // =====================================
-    // RESET
-    // =====================================
-
-    reset() {
-
-        this.clearAnimations();
-
-        this.locked = false;
-        this.solved = false;
-        this.selectedSwitch = null;
-
-
-        const puzzle =
-            document.getElementById(
-                "railwayPuzzle"
-            );
-
-        if (!puzzle) {
-            return;
-        }
-
-
-        puzzle.classList.remove(
-            "railway-running",
-            "railway-wrong",
-            "railway-solved"
-        );
-
-
-        this.setTrainPosition(
-            "trainA",
-            20,
-            74,
-            0
-        );
-
-
-        this.setTrainPosition(
-            "trainB",
-            280,
-            74,
-            180
-        );
-
-
-        puzzle
-            .querySelectorAll(".rail-switch")
-            .forEach(button => {
-
-                button.disabled = false;
-
-                button.classList.remove(
-                    "switch-selected",
-                    "switch-changed",
-                    "switch-wrong",
-                    "switch-correct"
-                );
-
-            });
-
-    },
-
-
-    // =====================================
-    // STOP
-    // =====================================
-
-    stop() {
-
-        this.clearAnimations();
-
-        this.locked = true;
-
-
-        const puzzle =
-            document.getElementById(
-                "railwayPuzzle"
-            );
-
-        if (!puzzle) {
-            return;
-        }
-
-
-        puzzle
-            .querySelectorAll(".rail-switch")
-            .forEach(button => {
-
-                button.disabled = true;
-
-            });
-
-    },
-
-
-    // =====================================
-    // TIMER HELPER
-    // =====================================
-
-    addTimer(callback, delay) {
-
-        const timer =
-            setTimeout(() => {
-
-                this.timers =
-                    this.timers.filter(
-                        item =>
-                            item !== timer
-                    );
-
-                callback();
-
-            }, delay);
-
-
-        this.timers.push(
-            timer
-        );
-
-        return timer;
-
-    },
-
-
-    // =====================================
-    // CLEAR ANIMATIONS
-    // =====================================
-
-    clearAnimations() {
-
-        this.timers.forEach(timer => {
-
-            clearTimeout(timer);
-
-        });
-
-
-        this.timers = [];
-
-
-        if (
-            this.animationFrame !== null
-        ) {
-
-            cancelAnimationFrame(
-                this.animationFrame
-            );
-
-            this.animationFrame = null;
-
-        }
-
-    }
-
-};
+            document.getElementBy
