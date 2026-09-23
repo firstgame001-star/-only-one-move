@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
@@ -48,9 +47,7 @@ button{
   display:none!important;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .top{
   display:flex;
@@ -74,9 +71,7 @@ button{
   cursor:pointer;
 }
 
-/* =========================
-   HOME
-========================= */
+/* HOME */
 
 .hero{
   margin-top:42px;
@@ -219,9 +214,7 @@ button{
   margin-top:3px;
 }
 
-/* =========================
-   GAME
-========================= */
+/* GAME */
 
 .game-header{
   display:flex;
@@ -319,9 +312,7 @@ button{
   margin-top:50px;
 }
 
-/* =========================
-   MATCHSTICKS
-========================= */
+/* MATCHSTICKS */
 
 .digit{
   width:48px;
@@ -419,12 +410,6 @@ button{
   top:37px;
 }
 
-/*
-  ВАЖНО:
-  эти позиции НЕ показываются игроку.
-  Они нужны только движку для проверки drop.
-*/
-
 .match-slot{
   position:absolute;
   display:block;
@@ -502,9 +487,7 @@ button{
   color:#ff7675;
 }
 
-/* =========================
-   OVERLAYS
-========================= */
+/* OVERLAYS */
 
 .overlay{
   position:fixed;
@@ -563,9 +546,7 @@ button{
   margin-top:25px;
 }
 
-/* =========================
-   ENERGY
-========================= */
+/* ENERGY */
 
 .energy-box{
   width:100%;
@@ -626,9 +607,7 @@ button{
   font-weight:700;
 }
 
-/* =========================
-   RULES
-========================= */
+/* RULES */
 
 .rules-box{
   width:100%;
@@ -662,55 +641,35 @@ button{
   line-height:1.5;
   font-size:14px;
 }
-
 </style>
 </head>
 
 <body>
 
+<!-- HOME -->
 
-<!-- =========================
-     HOME
-========================= -->
-
-<div
-  class="app"
-  id="homeScreen">
+<div class="app" id="homeScreen">
 
   <div class="top">
-
-    <div class="logo">
-      🧠 ONE MOVE
-    </div>
+    <div class="logo">🧠 ONE MOVE</div>
 
     <div class="balance">
       🪙 <span data-coins>300</span>
     </div>
-
   </div>
 
-
   <div class="hero">
-
-    <div class="brain">
-      🧠
-    </div>
-
-    <h1>
-      Only One Move
-    </h1>
+    <div class="brain">🧠</div>
+    <h1>Only One Move</h1>
 
     <div class="tagline">
       Решение есть всегда. Ход только один.
     </div>
-
   </div>
-
 
   <div class="progress-card">
 
     <div class="progress-top">
-
       <span>
         ЭТАП 1 · Уровень
         <b data-level>1</b>/5
@@ -719,401 +678,201 @@ button{
       <span>
         ⭐ <b data-stars>0</b>
       </span>
-
     </div>
-
 
     <div class="progress-bar">
-
-      <div
-        class="progress-fill"
-        id="progressFill">
-      </div>
-
+      <div class="progress-fill" id="progressFill"></div>
     </div>
 
-
-    <div
-      class="chapter-progress"
-      id="chapterProgress">
-
+    <div class="chapter-progress" id="chapterProgress">
       ⭐ 0 / 15 до Этапа 2
-
     </div>
-
 
     <div class="stats">
 
-      <div
-        class="stat energy-stat"
-        onclick="openEnergyShop()">
-
+      <div class="stat energy-stat" onclick="openEnergyShop()">
         <div class="stat-value">
-          ❤️
-          <span data-energy>
-            5/5
-          </span>
+          ❤️ <span data-energy>5/5</span>
         </div>
 
-        <div class="stat-label">
-          Энергия
-        </div>
+        <div class="stat-label">Энергия</div>
 
-        <div
-          class="energy-timer"
-          data-energy-timer>
-
+        <div class="energy-timer" data-energy-timer>
           Полная энергия
-
         </div>
-
       </div>
 
-
       <div class="stat">
-
         <div class="stat-value">
-          🪙
-          <span data-coins>
-            300
-          </span>
+          🪙 <span data-coins>300</span>
         </div>
-
-        <div class="stat-label">
-          Монеты
-        </div>
-
+        <div class="stat-label">Монеты</div>
       </div>
 
-
       <div class="stat">
-
         <div class="stat-value">
-          🔥
-          <span id="streakValue">
-            1
-          </span>
+          🔥 <span id="streakValue">1</span>
         </div>
-
-        <div class="stat-label">
-          Серия дней
-        </div>
-
+        <div class="stat-label">Серия дней</div>
       </div>
 
     </div>
 
-
-    <button
-      class="play"
-      onclick="openGame()">
-
+    <button class="play" onclick="openGame()">
       ▶ ПРОДОЛЖИТЬ
-
     </button>
 
   </div>
 
-
   <div class="menu">
 
-    <button
-      class="menu-btn"
-      onclick="openRules()">
-
+    <button class="menu-btn" onclick="openRules()">
       <div class="menu-left">
-
-        <div class="menu-icon">
-          📖
-        </div>
+        <div class="menu-icon">📖</div>
 
         <div>
-
-          <div class="menu-title">
-            Правила
-          </div>
-
-          <div class="menu-sub">
-            ⭐, ❤️, время и главы
-          </div>
-
+          <div class="menu-title">Правила</div>
+          <div class="menu-sub">⭐, ❤️, время и главы</div>
         </div>
-
       </div>
 
       <div>›</div>
-
     </button>
-
 
     <button
       class="menu-btn"
       onclick="comingSoon('Ежедневная загадка')">
 
       <div class="menu-left">
-
-        <div class="menu-icon">
-          🧩
-        </div>
+        <div class="menu-icon">🧩</div>
 
         <div>
-
-          <div class="menu-title">
-            Ежедневная загадка
-          </div>
-
-          <div class="menu-sub">
-            Новая задача каждый день
-          </div>
-
+          <div class="menu-title">Ежедневная загадка</div>
+          <div class="menu-sub">Новая задача каждый день</div>
         </div>
-
       </div>
 
       <div>›</div>
-
     </button>
-
 
     <button
       class="menu-btn"
       onclick="comingSoon('60 секунд')">
 
       <div class="menu-left">
-
-        <div class="menu-icon">
-          ⏱
-        </div>
+        <div class="menu-icon">⏱</div>
 
         <div>
-
-          <div class="menu-title">
-            60 секунд
-          </div>
-
-          <div class="menu-sub">
-            Реши как можно больше
-          </div>
-
+          <div class="menu-title">60 секунд</div>
+          <div class="menu-sub">Реши как можно больше</div>
         </div>
-
       </div>
 
       <div>🔒</div>
-
     </button>
-
 
     <button
       class="menu-btn"
       onclick="comingSoon('Рейтинг')">
 
       <div class="menu-left">
-
-        <div class="menu-icon">
-          🏆
-        </div>
+        <div class="menu-icon">🏆</div>
 
         <div>
-
-          <div class="menu-title">
-            Рейтинг
-          </div>
-
-          <div class="menu-sub">
-            Соревнуйся с другими
-          </div>
-
+          <div class="menu-title">Рейтинг</div>
+          <div class="menu-sub">Соревнуйся с другими</div>
         </div>
-
       </div>
 
       <div>›</div>
-
     </button>
 
-
-    <button
-      class="menu-btn"
-      onclick="dailyReward()">
-
+    <button class="menu-btn" onclick="dailyReward()">
       <div class="menu-left">
-
-        <div class="menu-icon">
-          🎁
-        </div>
+        <div class="menu-icon">🎁</div>
 
         <div>
-
-          <div class="menu-title">
-            Награда дня
-          </div>
-
-          <div class="menu-sub">
-            Забери ежедневный бонус
-          </div>
-
+          <div class="menu-title">Награда дня</div>
+          <div class="menu-sub">Забери ежедневный бонус</div>
         </div>
-
       </div>
 
       <div>›</div>
-
     </button>
 
   </div>
 
 </div>
 
+<!-- GAME -->
 
-<!-- =========================
-     GAME
-========================= -->
-
-<div
-  class="app hidden"
-  id="gameScreen">
-
+<div class="app hidden" id="gameScreen">
 
   <div class="game-header">
 
-    <button
-      class="back"
-      onclick="goHome()">
-
+    <button class="back" onclick="goHome()">
       ‹
-
     </button>
 
-
-    <div
-      class="balance energy-click"
-      onclick="openEnergyShop()">
-
-      ❤️
-      <span data-energy>
-        5/5
-      </span>
-
+    <div class="balance energy-click" onclick="openEnergyShop()">
+      ❤️ <span data-energy>5/5</span>
       &nbsp;&nbsp;
-
-      🪙
-      <span data-coins>
-        300
-      </span>
-
+      🪙 <span data-coins>300</span>
     </div>
 
   </div>
-
 
   <div class="level">
     ЭТАП 1 · УРОВЕНЬ 1
   </div>
 
-
   <h1 class="game-title">
     Передвинь одну спичку
   </h1>
 
-
   <div class="subtitle">
-
     Сделай равенство правильным.<br>
     Можно передвинуть только одну спичку.
-
   </div>
-
 
   <div class="level-status">
 
-    <div
-      class="level-stars"
-      id="levelStars">
-
+    <div class="level-stars" id="levelStars">
       ⭐⭐⭐
-
     </div>
 
     <div class="timer">
-
       <span id="levelTimer">
         🧠 20 сек.
       </span>
-
     </div>
 
   </div>
 
-
   <div class="board">
 
-
-    <div
-      class="tutorial-box"
-      id="tutorialBox">
-
+    <div class="tutorial-box" id="tutorialBox">
       👆 Зажми любую спичку и перенеси её.<br>
       Неправильный ход сжигает ⭐.
-
     </div>
-
 
     <div class="instruction">
-
       Выбери любую спичку.
       Правильное место заранее не показывается.
-
     </div>
 
-
-    <div
-      class="equation"
-      id="matchEquation">
-
+    <div class="equation" id="matchEquation">
 
       <!-- 6 -->
 
-      <div
-        class="digit"
-        data-symbol="6">
+      <div class="digit" data-symbol="6">
 
-        <span
-          class="match h a"
-          data-segment="A">
-        </span>
-
-        <span
-          class="match v f"
-          data-segment="F">
-        </span>
-
-        <span
-          class="match h g"
-          data-segment="G">
-        </span>
-
-        <span
-          class="match v e"
-          data-segment="E">
-        </span>
-
-        <span
-          class="match v c"
-          data-segment="C">
-        </span>
-
-        <span
-          class="match h d"
-          data-segment="D">
-        </span>
-
-        <!--
-          B отсутствует.
-          Именно сюда можно поставить
-          вертикальную спичку,
-          но игрок этого не видит.
-        -->
+        <span class="match h a" data-segment="A"></span>
+        <span class="match v f" data-segment="F"></span>
+        <span class="match h g" data-segment="G"></span>
+        <span class="match v e" data-segment="E"></span>
+        <span class="match v c" data-segment="C"></span>
+        <span class="match h d" data-segment="D"></span>
 
         <span
           class="match-slot v-slot b"
@@ -1122,12 +881,9 @@ button{
 
       </div>
 
-
       <!-- + -->
 
-      <div
-        class="operator"
-        data-symbol="+">
+      <div class="operator" data-symbol="+">
 
         <span
           class="match match-h"
@@ -1141,41 +897,20 @@ button{
 
       </div>
 
-
       <!-- 4 -->
 
-      <div
-        class="digit"
-        data-symbol="4">
+      <div class="digit" data-symbol="4">
 
-        <span
-          class="match v f"
-          data-segment="F">
-        </span>
-
-        <span
-          class="match h g"
-          data-segment="G">
-        </span>
-
-        <span
-          class="match v b"
-          data-segment="B">
-        </span>
-
-        <span
-          class="match v c"
-          data-segment="C">
-        </span>
+        <span class="match v f" data-segment="F"></span>
+        <span class="match h g" data-segment="G"></span>
+        <span class="match v b" data-segment="B"></span>
+        <span class="match v c" data-segment="C"></span>
 
       </div>
 
-
       <!-- = -->
 
-      <div
-        class="equals-symbol"
-        data-symbol="=">
+      <div class="equals-symbol" data-symbol="=">
 
         <span
           class="match eq-top"
@@ -1189,371 +924,208 @@ button{
 
       </div>
 
-
       <!-- 4 -->
 
-      <div
-        class="digit"
-        data-symbol="4">
+      <div class="digit" data-symbol="4">
 
-        <span
-          class="match v f"
-          data-segment="F">
-        </span>
-
-        <span
-          class="match h g"
-          data-segment="G">
-        </span>
-
-        <span
-          class="match v b"
-          data-segment="B">
-        </span>
-
-        <span
-          class="match v c"
-          data-segment="C">
-        </span>
+        <span class="match v f" data-segment="F"></span>
+        <span class="match h g" data-segment="G"></span>
+        <span class="match v b" data-segment="B"></span>
+        <span class="match v c" data-segment="C"></span>
 
       </div>
 
     </div>
 
-
-    <div
-      class="moves"
-      id="movesText">
-
+    <div class="moves" id="movesText">
       ⚡ Передвинь одну спичку
-
     </div>
 
   </div>
-
 
   <div class="actions">
 
-    <button
-      class="hint"
-      onclick="showHint()">
-
+    <button class="hint" onclick="showHint()">
       💡 Подсказка · 50 🪙
-
     </button>
 
-
-    <button
-      class="reset"
-      onclick="resetLevel()">
-
+    <button class="reset" onclick="resetLevel()">
       ↻ Заново
-
     </button>
 
   </div>
 
-
-  <div
-    class="message"
-    id="gameMessage">
-  </div>
+  <div class="message" id="gameMessage"></div>
 
 </div>
 
+<!-- LEVEL COMPLETE -->
 
-<!-- =========================
-     LEVEL COMPLETE
-========================= -->
-
-<div
-  class="overlay"
-  id="levelCompleteModal">
+<div class="overlay" id="levelCompleteModal">
 
   <div class="win">
 
-    <div class="check">
-      ✓
-    </div>
+    <div class="check">✓</div>
 
-    <h2>
-      Уровень пройден!
-    </h2>
+    <h2>Уровень пройден!</h2>
 
     <div id="completeTime">
       Время: 0 сек.
     </div>
 
-    <div
-      class="stars"
-      id="completeStars">
-
+    <div class="stars" id="completeStars">
       ⭐⭐⭐
-
     </div>
 
     <div id="completeReward">
       +30 🪙
     </div>
 
-    <button
-      class="next"
-      onclick="finishLevel()">
-
+    <button class="next" onclick="finishLevel()">
       ПРОДОЛЖИТЬ
-
     </button>
 
   </div>
 
 </div>
 
+<!-- ENERGY -->
 
-<!-- =========================
-     ENERGY
-========================= -->
-
-<div
-  class="overlay"
-  id="energyModal">
+<div class="overlay" id="energyModal">
 
   <div class="energy-box">
 
-    <div class="energy-big">
-      ❤️
-    </div>
+    <div class="energy-big">❤️</div>
 
-    <h2>
-      Энергия
-    </h2>
+    <h2>Энергия</h2>
 
     <div class="energy-description">
-
       Сердце снимается только после
       проигрыша попытки.<br><br>
-
       +1 ❤️ каждые 15 минут.
-
     </div>
 
     <div class="energy-count">
-
-      ❤️
-      <span data-energy>
-        5/5
-      </span>
-
+      ❤️ <span data-energy>5/5</span>
     </div>
 
-    <div
-      class="energy-next"
-      data-energy-timer>
-
+    <div class="energy-next" data-energy-timer>
       Полная энергия
-
     </div>
-
 
     <button
       class="shop-option"
       onclick="buyEnergy(1,100)">
-
       ❤️ +1 — 100 🪙
-
     </button>
-
 
     <button
       class="shop-option"
       onclick="buyEnergy(3,250)">
-
       ❤️❤️❤️ +3 — 250 🪙
-
     </button>
-
 
     <button
       class="shop-option primary"
       onclick="buyFullEnergy()">
-
       ❤️ Восстановить всё — 350 🪙
-
     </button>
-
 
     <button
       class="shop-option"
       onclick="comingSoon('Реклама за сердце')">
-
       📺 Посмотреть рекламу — +1 ❤️
-
     </button>
-
 
     <button
       class="close-shop"
       onclick="closeEnergyShop()">
-
       Закрыть
-
     </button>
 
   </div>
 
 </div>
 
+<!-- RULES -->
 
-<!-- =========================
-     RULES
-========================= -->
-
-<div
-  class="overlay"
-  id="rulesModal">
+<div class="overlay" id="rulesModal">
 
   <div class="rules-box">
 
-    <h2>
-      📖 Правила
-    </h2>
-
+    <h2>📖 Правила</h2>
 
     <div class="rule">
-
-      <div class="rule-title">
-        ⭐ Звёзды
-      </div>
+      <div class="rule-title">⭐ Звёзды</div>
 
       <div class="rule-text">
-
-        Каждая попытка начинается
-        с ⭐⭐⭐.
-
-        Неправильный ход сжигает
-        одну ⭐.
-
-        Сколько звёзд осталось
-        при правильном решении —
-        столько звёзд получает игрок.
-
+        Каждая попытка начинается с ⭐⭐⭐.
+        Неправильный ход сжигает одну ⭐.
+        Сколько звёзд осталось при правильном
+        решении — столько звёзд получает игрок.
       </div>
-
     </div>
 
-
     <div class="rule">
-
-      <div class="rule-title">
-        ⏱ Время
-      </div>
+      <div class="rule-title">⏱ Время</div>
 
       <div class="rule-text">
-
-        Первые 20 секунд даются
-        на размышление.
-
-        Затем время начинает
-        сжигать звёзды.
-
+        Первые 20 секунд даются на размышление.
+        Затем время начинает сжигать звёзды.
         На 30-й секунде сгорает ⭐,
         на 40-й — ещё ⭐.
-
-        На 50-й секунде сгорает
-        последняя ⭐ и попытка
-        автоматически проиграна.
-
+        На 50-й секунде сгорает последняя ⭐
+        и попытка автоматически проиграна.
       </div>
-
     </div>
 
-
     <div class="rule">
-
-      <div class="rule-title">
-        ❤️ Энергия
-      </div>
+      <div class="rule-title">❤️ Энергия</div>
 
       <div class="rule-text">
-
         Обычная ошибка сама по себе
         не снимает сердце.
-
         Когда все ⭐ закончились,
-        попытка проиграна и снимается
-        1 ❤️.
-
-        Новая попытка снова начинается
-        с ⭐⭐⭐.
-
+        попытка проиграна и снимается 1 ❤️.
+        Новая попытка снова начинается с ⭐⭐⭐.
       </div>
-
     </div>
 
-
     <div class="rule">
-
-      <div class="rule-title">
-        🏆 Этапы
-      </div>
+      <div class="rule-title">🏆 Этапы</div>
 
       <div class="rule-text">
-
         В одном этапе 5 уровней.
-
         Максимум — 15 ⭐.
-
         Чтобы открыть следующий этап,
-        нужно собрать необходимое
-        количество звёзд.
-
+        нужно собрать необходимое количество звёзд.
         Недостающие ⭐ можно получить,
-        улучшив результаты прошлых
-        уровней или используя
-        бонусные звёзды.
-
+        улучшив результаты прошлых уровней
+        или используя бонусные звёзды.
       </div>
-
     </div>
-
 
     <div class="rule">
-
-      <div class="rule-title">
-        🔥 Спички
-      </div>
+      <div class="rule-title">🔥 Спички</div>
 
       <div class="rule-text">
-
-        В заданиях со спичками можно
-        выбрать любую доступную спичку.
-
-        Правильная спичка и место
-        назначения заранее
-        не показываются.
-
+        В заданиях со спичками можно выбрать
+        любую доступную спичку.
+        Правильная спичка и место назначения
+        заранее не показываются.
         Разрешён только один перенос.
-
       </div>
-
     </div>
 
-
-    <button
-      class="close-shop"
-      onclick="closeRules()">
-
+    <button class="close-shop" onclick="closeRules()">
       Закрыть
-
     </button>
 
   </div>
 
 </div>
 
-
-<!-- =========================
-     CORE FILES
-========================= -->
+<!-- CORE FILES -->
 
 <script src="js/storage.js"></script>
 <script src="js/energy.js"></script>
@@ -1561,38 +1133,24 @@ button{
 <script src="js/matchsticks.js"></script>
 <script src="levels/easy.js"></script>
 
-
 <script>
 
-/* =========================
-   ELEMENTS
-========================= */
+/* ELEMENTS */
 
 const homeScreen =
-  document.getElementById(
-    "homeScreen"
-  );
+  document.getElementById("homeScreen");
 
 const gameScreen =
-  document.getElementById(
-    "gameScreen"
-  );
+  document.getElementById("gameScreen");
 
 const movesText =
-  document.getElementById(
-    "movesText"
-  );
+  document.getElementById("movesText");
 
 const gameMessage =
-  document.getElementById(
-    "gameMessage"
-  );
+  document.getElementById("gameMessage");
 
 const matchEquation =
-  document.getElementById(
-    "matchEquation"
-  );
-
+  document.getElementById("matchEquation");
 
 let draggingMatch = null;
 let dragCopy = null;
@@ -1601,83 +1159,57 @@ let sourceParent = null;
 let sourceSegment = null;
 
 
-/* =========================
-   INITIALIZE
-========================= */
+/* INITIALIZE */
 
 function initializeApp(){
 
   migrateOldSave();
 
   updateMainUI();
-
   updateProgress();
-
   updateChapterUI();
 
   const data =
     getPlayerData();
 
   const streak =
-    document.getElementById(
-      "streakValue"
-    );
+    document.getElementById("streakValue");
 
   if(streak){
-
     streak.textContent =
       data.streak || 1;
   }
-
 }
 
-initializeApp();
 
-
-/* =========================
-   OLD SAVE MIGRATION
-========================= */
+/* OLD SAVE MIGRATION */
 
 function migrateOldSave(){
 
   if(
-    localStorage.getItem(
-      "oldSaveMigrated"
-    )
+    localStorage.getItem("oldSaveMigrated")
   ){
     return;
   }
 
-
   const data =
     getPlayerData();
 
-
   const oldCoins =
-    localStorage.getItem(
-      "coins"
-    );
+    localStorage.getItem("coins");
 
   const oldLevel =
-    localStorage.getItem(
-      "level"
-    );
+    localStorage.getItem("level");
 
   const oldStreak =
-    localStorage.getItem(
-      "streak"
-    );
-
+    localStorage.getItem("streak");
 
   if(oldCoins !== null){
-
     data.coins =
       Number(oldCoins) || 0;
   }
 
-
   if(oldLevel !== null){
-
     data.level =
       Math.max(
         1,
@@ -1685,9 +1217,7 @@ function migrateOldSave(){
       );
   }
 
-
   if(oldStreak !== null){
-
     data.streak =
       Math.max(
         1,
@@ -1695,21 +1225,16 @@ function migrateOldSave(){
       );
   }
 
-
   savePlayerData(data);
-
 
   localStorage.setItem(
     "oldSaveMigrated",
     "1"
   );
-
 }
 
 
-/* =========================
-   PROGRESS
-========================= */
+/* PROGRESS */
 
 function updateProgress(){
 
@@ -1731,18 +1256,14 @@ function updateProgress(){
     );
 
   if(fill){
-
     fill.style.width =
       ((level - 1) / 5 * 100) +
       "%";
   }
-
 }
 
 
-/* =========================
-   CHAPTER UI
-========================= */
+/* CHAPTER UI */
 
 function updateChapterUI(){
 
@@ -1755,54 +1276,42 @@ function updateChapterUI(){
     return;
   }
 
-
   if(
     typeof getChapterProgress !==
     "function"
   ){
-
     element.textContent =
       "⭐ 0 / 15 до Этапа 2";
 
     return;
   }
 
-
   const progress =
     getChapterProgress(1);
-
 
   if(!progress){
     return;
   }
-
 
   element.textContent =
     `⭐ ${Math.min(
       progress.total,
       progress.required
     )} / ${progress.required} до Этапа 2`;
-
 }
 
 
-/* =========================
-   HOME / GAME
-========================= */
+/* HOME / GAME */
 
 function openGame(){
 
   const energy =
     getEnergyData();
 
-
   if(energy.energy <= 0){
-
     openEnergyShop();
-
     return;
   }
-
 
   homeScreen.classList.add(
     "hidden"
@@ -1812,20 +1321,16 @@ function openGame(){
     "hidden"
   );
 
-
   resetPuzzleVisual();
 
   startLevel(1);
-
 
   if(
     typeof startMatchstickPuzzle ===
     "function"
   ){
-
     startMatchstickPuzzle();
   }
-
 }
 
 
@@ -1843,7 +1348,6 @@ function goHome(){
     "hidden"
   );
 
-
   document
     .getElementById(
       "levelCompleteModal"
@@ -1852,30 +1356,24 @@ function goHome(){
       "show"
     );
 
-
   const loseModal =
     document.getElementById(
       "loseModal"
     );
 
   if(loseModal){
-
     loseModal.classList.remove(
       "show"
     );
   }
 
-
   updateMainUI();
   updateProgress();
   updateChapterUI();
-
 }
 
 
-/* =========================
-   MATCHSTICK EVENTS
-========================= */
+/* MATCHSTICK EVENTS */
 
 function bindMatchsticks(){
 
@@ -1888,7 +1386,6 @@ function bindMatchsticks(){
       match.onpointerdown =
         startMatchDrag;
     });
-
 }
 
 bindMatchsticks();
@@ -1903,22 +1400,17 @@ function startMatchDrag(event){
     return;
   }
 
-
   event.preventDefault();
-
 
   const match =
     event.currentTarget;
-
 
   if(
     typeof selectMatchstick ===
     "function"
   ){
-
     selectMatchstick(match);
   }
-
 
   draggingMatch =
     match;
@@ -1929,20 +1421,16 @@ function startMatchDrag(event){
   sourceSegment =
     match.dataset.segment;
 
-
   const rect =
     match.getBoundingClientRect();
-
 
   dragCopy =
     document.createElement(
       "div"
     );
 
-
   dragCopy.className =
     "drag-copy";
-
 
   if(
     rect.width >
@@ -1964,21 +1452,17 @@ function startMatchDrag(event){
       rect.height + "px";
   }
 
-
   document.body.appendChild(
     dragCopy
   );
 
-
   match.style.opacity =
     ".18";
-
 
   moveDragCopy(
     event.clientX,
     event.clientY
   );
-
 
   document.addEventListener(
     "pointermove",
@@ -1988,7 +1472,6 @@ function startMatchDrag(event){
     }
   );
 
-
   document.addEventListener(
     "pointerup",
     endMatchDrag,
@@ -1996,7 +1479,6 @@ function startMatchDrag(event){
       once:true
     }
   );
-
 }
 
 
@@ -2006,15 +1488,12 @@ function moveMatchDrag(event){
     return;
   }
 
-
   event.preventDefault();
-
 
   moveDragCopy(
     event.clientX,
     event.clientY
   );
-
 }
 
 
@@ -2024,10 +1503,8 @@ function moveDragCopy(x,y){
     return;
   }
 
-
   const rect =
     dragCopy.getBoundingClientRect();
-
 
   dragCopy.style.left =
     (x - rect.width / 2) +
@@ -2036,13 +1513,10 @@ function moveDragCopy(x,y){
   dragCopy.style.top =
     (y - rect.height / 2) +
     "px";
-
 }
 
 
-/* =========================
-   END DRAG
-========================= */
+/* END DRAG */
 
 function endMatchDrag(event){
 
@@ -2051,15 +1525,12 @@ function endMatchDrag(event){
     moveMatchDrag
   );
 
-
   if(!draggingMatch){
     return;
   }
 
-
   const dragged =
     draggingMatch;
-
 
   const target =
     findDropSlot(
@@ -2067,7 +1538,6 @@ function endMatchDrag(event){
       event.clientY,
       dragged
     );
-
 
   if(target){
 
@@ -2084,24 +1554,17 @@ function endMatchDrag(event){
       typeof wrongMatchstickMove ===
       "function"
     ){
-
       wrongMatchstickMove();
-
     }else{
-
       registerWrongMove();
     }
   }
 
-
   removeDragCopy();
-
 }
 
 
-/* =========================
-   FIND INVISIBLE SLOT
-========================= */
+/* FIND INVISIBLE SLOT */
 
 function findDropSlot(
   x,
@@ -2116,13 +1579,10 @@ function findDropSlot(
     draggedRect.width >
     draggedRect.height;
 
-
   let bestSlot = null;
   let bestDistance = Infinity;
 
-  // Радиус магнитного захвата
   const MAGNET_RADIUS = 85;
-
 
   document
     .querySelectorAll(
@@ -2135,11 +1595,6 @@ function findDropSlot(
           "h-slot"
         );
 
-
-      // Вертикальная спичка →
-      // вертикальное место.
-      // Горизонтальная →
-      // горизонтальное.
       if(
         horizontal !==
         slotHorizontal
@@ -2147,10 +1602,8 @@ function findDropSlot(
         return;
       }
 
-
       const rect =
         slot.getBoundingClientRect();
-
 
       const centerX =
         rect.left +
@@ -2160,22 +1613,16 @@ function findDropSlot(
         rect.top +
         rect.height / 2;
 
-
       const distance =
         Math.hypot(
           x - centerX,
           y - centerY
         );
 
-
-      // Магнит:
-      // выбираем ближайшую
-      // подходящую позицию
       if(
         distance <= MAGNET_RADIUS &&
         distance < bestDistance
       ){
-
         bestDistance =
           distance;
 
@@ -2185,76 +1632,47 @@ function findDropSlot(
 
     });
 
-
   return bestSlot;
-
-}
-
 }
 
 
-/* =========================
-   PROCESS MOVE
-========================= */
+/* PROCESS MOVE */
 
 function processMatchMove(
   dragged,
   target
 ){
 
-  /*
-    На первом уровне правильный
-    перенос:
-
-    вертикальная спичка из "+"
-    превращает "+" в "-"
-
-    и ставится в отсутствующий
-    сегмент B цифры 6.
-
-    Получается:
-
-    8 - 4 = 4
-  */
-
-
   const fromPlus =
     sourceParent &&
     sourceParent.dataset.symbol ===
     "+";
 
-
   const verticalFromPlus =
     fromPlus &&
     sourceSegment === "V";
 
-
   const targetDigit =
     target.parentElement;
-
 
   const targetIsSix =
     targetDigit &&
     targetDigit.dataset.symbol ===
     "6";
 
-
   const targetIsB =
     target.dataset.emptySegment ===
     "B";
-
 
   const correct =
     verticalFromPlus &&
     targetIsSix &&
     targetIsB;
 
-
   if(correct){
 
     dragged.style.display =
       "none";
-
 
     target.style.opacity =
       "1";
@@ -2265,10 +1683,8 @@ function processMatchMove(
     target.style.borderRadius =
       "10px";
 
-
     movesText.textContent =
       "✓ Ход выполнен";
-
 
     gameMessage.className =
       "message good";
@@ -2276,79 +1692,54 @@ function processMatchMove(
     gameMessage.textContent =
       "8 − 4 = 4 ✓";
 
-
     removeDragCopy();
 
+    setTimeout(() => {
 
-    if(
-      typeof correctMatchstickMove ===
-      "function"
-    ){
-
-      setTimeout(()=>{
-
-        correctMatchstickMove(30);
-
-      },450);
-
-    }else{
-
-      setTimeout(()=>{
-
+      if(
+        !levelSolved &&
+        !levelFailed
+      ){
         solveLevel(30);
+      }
 
-      },450);
-    }
-
+    },200);
 
     return;
   }
 
-
   restoreDraggedMatch();
-
 
   if(
     typeof wrongMatchstickMove ===
     "function"
   ){
-
     wrongMatchstickMove();
-
   }else{
-
     registerWrongMove();
   }
-
 }
 
 
-/* =========================
-   RESTORE
-========================= */
+/* RESTORE */
 
 function restoreDraggedMatch(){
 
   if(draggingMatch){
-
     draggingMatch.style.opacity =
       "1";
   }
-
 
   if(
     typeof clearMatchstickSelection ===
     "function"
   ){
-
     clearMatchstickSelection();
   }
-
 
   draggingMatch = null;
   sourceParent = null;
   sourceSegment = null;
-
 }
 
 
@@ -2361,11 +1752,9 @@ function removeDragCopy(){
     dragCopy = null;
   }
 
-
   draggingMatch = null;
   sourceParent = null;
   sourceSegment = null;
-
 }
 
 
@@ -2376,22 +1765,16 @@ function cancelCurrentDrag(){
     moveMatchDrag
   );
 
-
   if(draggingMatch){
-
     draggingMatch.style.opacity =
       "1";
   }
 
-
   removeDragCopy();
-
 }
 
 
-/* =========================
-   HINT
-========================= */
+/* HINT */
 
 function showHint(){
 
@@ -2401,7 +1784,6 @@ function showHint(){
   ){
     return;
   }
-
 
   if(!spendCoins(50)){
 
@@ -2414,34 +1796,26 @@ function showHint(){
     return;
   }
 
-
   updateMainUI();
-
 
   gameMessage.className =
     "message";
 
-
   gameMessage.textContent =
     "💡 Посмотри не только на цифры — математический знак тоже состоит из спичек.";
-
 }
 
 
-/* =========================
-   RESET VISUAL
-========================= */
+/* RESET VISUAL */
 
 function resetPuzzleVisual(){
 
   cancelCurrentDrag();
 
-
   const matches =
     document.querySelectorAll(
       "#matchEquation .match"
     );
-
 
   matches.forEach(match => {
 
@@ -2456,7 +1830,6 @@ function resetPuzzleVisual(){
     );
   });
 
-
   document
     .querySelectorAll(
       "#matchEquation .match-slot"
@@ -2470,10 +1843,8 @@ function resetPuzzleVisual(){
         "transparent";
     });
 
-
   movesText.textContent =
     "⚡ Передвинь одну спичку";
-
 
   gameMessage.className =
     "message";
@@ -2481,29 +1852,22 @@ function resetPuzzleVisual(){
   gameMessage.textContent =
     "";
 
-
   const completeModal =
     document.getElementById(
       "levelCompleteModal"
     );
 
-
   if(completeModal){
-
     completeModal.classList.remove(
       "show"
     );
   }
 
-
   bindMatchsticks();
-
 }
 
 
-/* =========================
-   MANUAL RESET
-========================= */
+/* MANUAL RESET */
 
 function resetLevel(){
 
@@ -2514,26 +1878,20 @@ function resetLevel(){
     return;
   }
 
-
   resetPuzzleVisual();
 
   startLevel(1);
-
 
   if(
     typeof startMatchstickPuzzle ===
     "function"
   ){
-
     startMatchstickPuzzle();
   }
-
 }
 
 
-/* =========================
-   FINISH LEVEL
-========================= */
+/* FINISH LEVEL */
 
 function finishLevel(){
 
@@ -2545,23 +1903,11 @@ function finishLevel(){
       "show"
     );
 
-
-  /*
-    Пока уровень 2 ещё не создан,
-    возвращаемся на главный экран.
-
-    Следующим шагом кнопка будет
-    открывать уровень 2.
-  */
-
   goHome();
-
 }
 
 
-/* =========================
-   RULES
-========================= */
+/* RULES */
 
 function openRules(){
 
@@ -2572,7 +1918,6 @@ function openRules(){
     .classList.add(
       "show"
     );
-
 }
 
 
@@ -2585,11 +1930,14 @@ function closeRules(){
     .classList.remove(
       "show"
     );
-
 }
 
-</script>
 
+/* START */
+
+initializeApp();
+
+</script>
 
 <!-- APP -->
 
