@@ -346,7 +346,11 @@ function showLoseModal(
         document.getElementById("loseEnergy");
 
     if (energyText) {
-        energyText.textContent = energy.energy;
+        energyText.textContent = energy.infinite ? "∞" : energy.energy;
+        const parent = energyText.parentElement;
+        if (parent && energy.infinite) {
+            parent.innerHTML = '❤️ <span id="loseEnergy">∞</span>';
+        }
     }
 
     const lostText =
@@ -355,9 +359,13 @@ function showLoseModal(
     if (lostText) {
 
         lostText.textContent =
-            heartLost
-                ? "−1 ❤️"
-                : "❤️ Энергия закончилась";
+            energy.infinite
+                ? "∞ Энергия не расходуется"
+                : (
+                    heartLost
+                        ? "−1 ❤️"
+                        : "❤️ Энергия закончилась"
+                  );
     }
 
     modal.classList.add("show");
@@ -778,7 +786,9 @@ function updateEnergyUI() {
         .forEach(element => {
 
             element.textContent =
-                `${data.energy}/${MAX_ENERGY}`;
+                data.infinite
+                    ? "∞"
+                    : `${data.energy}/${MAX_ENERGY}`;
         });
 
     document
@@ -787,7 +797,9 @@ function updateEnergyUI() {
         )
         .forEach(element => {
 
-            if (
+            if (data.infinite) {
+                element.textContent = "Бесконечная энергия";
+            } else if (
                 data.energy >= MAX_ENERGY
             ) {
 
