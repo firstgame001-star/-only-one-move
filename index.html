@@ -2,13 +2,30 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+>
+
 <title>Only One Move</title>
 
+<link rel="stylesheet" href="css/style.css">
+
 <style>
+
+/*
+  ВРЕМЕННО:
+  дизайн пока оставляем здесь,
+  чтобы ничего визуально не сломалось.
+
+  После проверки перенесём этот CSS
+  в css/style.css
+*/
+
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent
+  -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
@@ -16,16 +33,16 @@ html,body{
   min-height:100%;
   background:#090d13;
   color:white;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
 body{
-  min-height:100vh
+  min-height:100vh;
 }
 
 button{
   font-family:inherit;
-  cursor:pointer
+  cursor:pointer;
 }
 
 .app{
@@ -33,11 +50,11 @@ button{
   max-width:500px;
   min-height:100vh;
   margin:auto;
-  padding:22px 20px 40px
+  padding:22px 20px 40px;
 }
 
 .hidden{
-  display:none!important
+  display:none!important;
 }
 
 /* HEADER */
@@ -45,54 +62,54 @@ button{
 .top{
   display:flex;
   justify-content:space-between;
-  align-items:center
+  align-items:center;
 }
 
 .logo{
   font-size:20px;
-  font-weight:900
+  font-weight:900;
 }
 
 .balance{
   background:#171d29;
   padding:10px 15px;
   border-radius:22px;
-  font-weight:800
+  font-weight:800;
 }
 
 /* HOME */
 
 .hero{
   margin-top:42px;
-  text-align:center
+  text-align:center;
 }
 
 .brain{
-  font-size:64px
+  font-size:64px;
 }
 
 .hero h1{
   margin:8px 0 5px;
-  font-size:31px
+  font-size:31px;
 }
 
 .tagline{
   color:#929bab;
-  font-size:16px
+  font-size:16px;
 }
 
 .progress-card{
   margin-top:34px;
   background:#121824;
   border-radius:26px;
-  padding:22px
+  padding:22px;
 }
 
 .progress-top{
   display:flex;
   justify-content:space-between;
   color:#a0a9b8;
-  font-size:14px
+  font-size:14px;
 }
 
 .progress-bar{
@@ -100,38 +117,48 @@ button{
   background:#202736;
   border-radius:20px;
   overflow:hidden;
-  margin-top:15px
+  margin-top:15px;
 }
 
 .progress-fill{
   width:1%;
   height:100%;
-  background:#6c5ce7
+  background:#6c5ce7;
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  margin-top:16px
+  margin-top:16px;
 }
 
 .stat{
   background:#171d29;
   border-radius:18px;
   padding:14px 5px;
-  text-align:center
+  text-align:center;
 }
 
 .stat-value{
   font-size:20px;
-  font-weight:900
+  font-weight:900;
 }
 
 .stat-label{
   margin-top:4px;
   color:#8f98a9;
-  font-size:12px
+  font-size:12px;
+}
+
+.energy-stat{
+  cursor:pointer;
+}
+
+.energy-timer{
+  margin-top:4px;
+  color:#8f98a9;
+  font-size:10px;
 }
 
 .play{
@@ -143,13 +170,13 @@ button{
   background:#6c5ce7;
   color:white;
   font-size:17px;
-  font-weight:900
+  font-weight:900;
 }
 
 .menu{
   margin-top:20px;
   display:grid;
-  gap:11px
+  gap:11px;
 }
 
 .menu-btn{
@@ -162,27 +189,27 @@ button{
   padding:17px;
   background:#151b27;
   color:white;
-  text-align:left
+  text-align:left;
 }
 
 .menu-left{
   display:flex;
   gap:13px;
-  align-items:center
+  align-items:center;
 }
 
 .menu-icon{
-  font-size:25px
+  font-size:25px;
 }
 
 .menu-title{
-  font-weight:800
+  font-weight:800;
 }
 
 .menu-sub{
   color:#8992a4;
   font-size:12px;
-  margin-top:3px
+  margin-top:3px;
 }
 
 /* GAME */
@@ -190,7 +217,7 @@ button{
 .game-header{
   display:flex;
   justify-content:space-between;
-  align-items:center
+  align-items:center;
 }
 
 .back{
@@ -200,7 +227,7 @@ button{
   width:42px;
   height:42px;
   border-radius:50%;
-  font-size:20px
+  font-size:20px;
 }
 
 .level{
@@ -208,26 +235,26 @@ button{
   text-align:center;
   color:#8992a4;
   letter-spacing:4px;
-  font-size:13px
+  font-size:13px;
 }
 
 .game-title{
   text-align:center;
   font-size:28px;
-  margin:14px 0 7px
+  margin:14px 0 7px;
 }
 
 .subtitle{
   text-align:center;
   color:#929bab;
-  line-height:1.5
+  line-height:1.5;
 }
 
 .timer{
   text-align:center;
   margin-top:15px;
   font-size:18px;
-  font-weight:900
+  font-weight:900;
 }
 
 .board{
@@ -235,13 +262,13 @@ button{
   min-height:330px;
   padding:28px 10px;
   background:#121824;
-  border-radius:28px
+  border-radius:28px;
 }
 
 .instruction{
   text-align:center;
   color:#919aaa;
-  font-size:14px
+  font-size:14px;
 }
 
 .equation{
@@ -249,48 +276,48 @@ button{
   justify-content:center;
   align-items:center;
   gap:10px;
-  margin-top:52px
+  margin-top:52px;
 }
 
-/* MATCH DIGITS */
+/* MATCHES */
 
 .digit{
   width:50px;
   height:88px;
   position:relative;
-  flex:0 0 50px
+  flex:0 0 50px;
 }
 
 .match{
   position:absolute;
   display:block;
   border-radius:10px;
-  background:#f4d58d
+  background:#f4d58d;
 }
 
 .h{
   left:7px;
   width:36px;
-  height:7px
+  height:7px;
 }
 
 .v{
   width:7px;
-  height:36px
+  height:36px;
 }
 
-.a{top:0}
-.g{top:40px}
-.d{bottom:0}
-.f{left:0;top:6px}
-.b{right:0;top:6px}
-.e{left:0;bottom:6px}
-.c{right:0;bottom:6px}
+.a{top:0;}
+.g{top:40px;}
+.d{bottom:0;}
+.f{left:0;top:6px;}
+.b{right:0;top:6px;}
+.e{left:0;bottom:6px;}
+.c{right:0;bottom:6px;}
 
 .operator{
   width:44px;
   height:64px;
-  position:relative
+  position:relative;
 }
 
 .plus-h{
@@ -300,7 +327,7 @@ button{
   left:3px;
   top:28px;
   border-radius:10px;
-  background:#f4d58d
+  background:#f4d58d;
 }
 
 .plus-v{
@@ -311,12 +338,12 @@ button{
   top:12px;
   border-radius:10px;
   background:#f4d58d;
-  touch-action:none
+  touch-action:none;
 }
 
 .equals{
   font-size:39px;
-  font-weight:800
+  font-weight:800;
 }
 
 .target{
@@ -327,17 +354,17 @@ button{
   height:36px;
   border:2px dashed #657087;
   border-radius:10px;
-  opacity:0
+  opacity:0;
 }
 
 .target.visible{
-  opacity:1
+  opacity:1;
 }
 
 .target.solved{
   border:0;
   background:#f4d58d;
-  opacity:1
+  opacity:1;
 }
 
 .drag-copy{
@@ -347,19 +374,19 @@ button{
   border-radius:10px;
   background:#f4d58d;
   pointer-events:none;
-  z-index:9999
+  z-index:9999;
 }
 
 .moves{
   margin-top:50px;
   text-align:center;
-  color:#a4adbd
+  color:#a4adbd;
 }
 
 .actions{
   display:flex;
   gap:12px;
-  margin-top:20px
+  margin-top:20px;
 }
 
 .actions button{
@@ -367,30 +394,39 @@ button{
   border:0;
   border-radius:18px;
   padding:16px;
-  font-weight:800
+  font-weight:800;
 }
 
 .hint{
   background:#171d29;
-  color:white
+  color:white;
 }
 
 .reset{
   background:#6c5ce7;
-  color:white
+  color:white;
 }
 
 .message{
   min-height:28px;
   margin-top:17px;
   text-align:center;
-  font-weight:800
+  font-weight:800;
 }
 
-.good{color:#55e6a5}
-.bad{color:#ff7675}
+.message.show{
+  opacity:1;
+}
 
-/* WIN */
+.good{
+  color:#55e6a5;
+}
+
+.bad{
+  color:#ff7675;
+}
+
+/* OVERLAYS */
 
 .overlay{
   position:fixed;
@@ -400,17 +436,17 @@ button{
   justify-content:center;
   padding:25px;
   background:rgba(5,8,13,.96);
-  z-index:10000
+  z-index:10000;
 }
 
 .overlay.show{
-  display:flex
+  display:flex;
 }
 
 .win{
   width:100%;
   max-width:390px;
-  text-align:center
+  text-align:center;
 }
 
 .check{
@@ -424,17 +460,17 @@ button{
   background:#55e6a5;
   color:#06110d;
   font-size:42px;
-  font-weight:900
+  font-weight:900;
 }
 
 .win h2{
   font-size:30px;
-  margin:18px 0 8px
+  margin:18px 0 8px;
 }
 
 .stars{
   font-size:38px;
-  margin:20px 0
+  margin:20px 0;
 }
 
 .next{
@@ -446,107 +482,277 @@ button{
   color:white;
   font-weight:900;
   font-size:16px;
-  margin-top:25px
+  margin-top:25px;
 }
+
+/* ENERGY SHOP */
+
+.energy-box{
+  width:100%;
+  max-width:390px;
+  background:#121824;
+  border-radius:28px;
+  padding:26px 20px;
+  text-align:center;
+}
+
+.energy-big{
+  font-size:54px;
+}
+
+.energy-box h2{
+  margin:10px 0 6px;
+}
+
+.energy-description{
+  color:#929bab;
+  line-height:1.5;
+}
+
+.energy-count{
+  font-size:24px;
+  font-weight:900;
+  margin-top:18px;
+}
+
+.energy-next{
+  margin-top:8px;
+  color:#a7b0c0;
+}
+
+.shop-option{
+  width:100%;
+  margin-top:12px;
+  border:0;
+  border-radius:17px;
+  padding:16px;
+  background:#1a2130;
+  color:white;
+  font-size:15px;
+  font-weight:800;
+}
+
+.shop-option.primary{
+  background:#6c5ce7;
+}
+
+.close-shop{
+  width:100%;
+  margin-top:18px;
+  border:0;
+  background:transparent;
+  color:#929bab;
+  padding:10px;
+  font-weight:700;
+}
+
 </style>
 </head>
 
 <body>
 
 <!-- HOME -->
+
 <div class="app" id="homeScreen">
 
   <div class="top">
     <div class="logo">🧠 ONE MOVE</div>
-    <div class="balance">🪙 <span id="homeCoins">300</span></div>
+
+    <div class="balance">
+      🪙 <span data-coins>300</span>
+    </div>
   </div>
 
   <div class="hero">
     <div class="brain">🧠</div>
+
     <h1>Only One Move</h1>
-    <div class="tagline">Решение есть всегда. Ход только один.</div>
+
+    <div class="tagline">
+      Решение есть всегда. Ход только один.
+    </div>
   </div>
 
   <div class="progress-card">
 
     <div class="progress-top">
-      <span>Уровень <b id="homeLevel">1</b> / 100</span>
-      <span>⭐ <b id="starsValue">0</b></span>
+
+      <span>
+        Уровень
+        <b data-level>1</b>
+        / 100
+      </span>
+
+      <span>
+        ⭐ <b data-stars>0</b>
+      </span>
+
     </div>
 
     <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+      <div
+        class="progress-fill"
+        id="progressFill">
+      </div>
     </div>
 
     <div class="stats">
 
-      <div class="stat">
-        <div class="stat-value">❤️ <span id="energyValue">5</span>/5</div>
-        <div class="stat-label">Энергия</div>
+      <div
+        class="stat energy-stat"
+        onclick="openEnergyShop()">
+
+        <div class="stat-value">
+          ❤️ <span data-energy>5/5</span>
+        </div>
+
+        <div class="stat-label">
+          Энергия
+        </div>
+
+        <div
+          class="energy-timer"
+          data-energy-timer>
+          Полная энергия
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-value">🪙 <span id="statCoins">300</span></div>
-        <div class="stat-label">Монеты</div>
+
+        <div class="stat-value">
+          🪙 <span data-coins>300</span>
+        </div>
+
+        <div class="stat-label">
+          Монеты
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-value">🔥 <span id="streakValue">1</span></div>
-        <div class="stat-label">Серия дней</div>
+
+        <div class="stat-value">
+          🔥 <span id="streakValue">1</span>
+        </div>
+
+        <div class="stat-label">
+          Серия дней
+        </div>
+
       </div>
 
     </div>
 
-    <button class="play" onclick="openGame()">
+    <button
+      class="play"
+      onclick="openGame()">
+
       ▶ ПРОДОЛЖИТЬ
+
     </button>
 
   </div>
 
   <div class="menu">
 
-    <button class="menu-btn" onclick="comingSoon('Ежедневная загадка')">
+    <button
+      class="menu-btn"
+      onclick="comingSoon('Ежедневная загадка')">
+
       <div class="menu-left">
+
         <div class="menu-icon">🧩</div>
+
         <div>
-          <div class="menu-title">Ежедневная загадка</div>
-          <div class="menu-sub">Новая задача каждый день</div>
+          <div class="menu-title">
+            Ежедневная загадка
+          </div>
+
+          <div class="menu-sub">
+            Новая задача каждый день
+          </div>
         </div>
+
       </div>
+
       <div>›</div>
+
     </button>
 
-    <button class="menu-btn" onclick="comingSoon('60 секунд')">
+
+    <button
+      class="menu-btn"
+      onclick="comingSoon('60 секунд')">
+
       <div class="menu-left">
+
         <div class="menu-icon">⏱</div>
+
         <div>
-          <div class="menu-title">60 секунд</div>
-          <div class="menu-sub">Реши как можно больше</div>
+          <div class="menu-title">
+            60 секунд
+          </div>
+
+          <div class="menu-sub">
+            Реши как можно больше
+          </div>
         </div>
+
       </div>
+
       <div>🔒</div>
+
     </button>
 
-    <button class="menu-btn" onclick="comingSoon('Рейтинг')">
+
+    <button
+      class="menu-btn"
+      onclick="comingSoon('Рейтинг')">
+
       <div class="menu-left">
+
         <div class="menu-icon">🏆</div>
+
         <div>
-          <div class="menu-title">Рейтинг</div>
-          <div class="menu-sub">Соревнуйся с другими</div>
+          <div class="menu-title">
+            Рейтинг
+          </div>
+
+          <div class="menu-sub">
+            Соревнуйся с другими
+          </div>
         </div>
+
       </div>
+
       <div>›</div>
+
     </button>
 
-    <button class="menu-btn" onclick="dailyReward()">
+
+    <button
+      class="menu-btn"
+      onclick="dailyReward()">
+
       <div class="menu-left">
+
         <div class="menu-icon">🎁</div>
+
         <div>
-          <div class="menu-title">Награда дня</div>
-          <div class="menu-sub">Забери ежедневный бонус</div>
+          <div class="menu-title">
+            Награда дня
+          </div>
+
+          <div class="menu-sub">
+            Забери ежедневный бонус
+          </div>
         </div>
+
       </div>
+
       <div>›</div>
+
     </button>
 
   </div>
@@ -555,23 +761,38 @@ button{
 
 
 <!-- GAME -->
-<div class="app hidden" id="gameScreen">
+
+<div
+  class="app hidden"
+  id="gameScreen">
 
   <div class="game-header">
 
-    <button class="back" onclick="goHome()">‹</button>
+    <button
+      class="back"
+      onclick="goHome()">
+      ‹
+    </button>
 
     <div class="balance">
-      ❤️ <span id="gameEnergy">5</span>
+
+      ❤️ <span data-energy>5/5</span>
+
       &nbsp;&nbsp;
-      🪙 <span id="gameCoins">300</span>
+
+      🪙 <span data-coins>300</span>
+
     </div>
 
   </div>
 
-  <div class="level">УРОВЕНЬ 1</div>
+  <div class="level">
+    УРОВЕНЬ 1
+  </div>
 
-  <h1 class="game-title">Передвинь одну спичку</h1>
+  <h1 class="game-title">
+    Передвинь одну спичку
+  </h1>
 
   <div class="subtitle">
     Сделай равенство правильным.<br>
@@ -579,7 +800,7 @@ button{
   </div>
 
   <div class="timer">
-    ⏱ <span id="timer">0</span> сек.
+    ⏱ <span id="levelTimer">00:00</span>
   </div>
 
   <div class="board">
@@ -591,6 +812,7 @@ button{
     <div class="equation">
 
       <!-- 6 -->
+
       <div class="digit">
 
         <span class="match h a"></span>
@@ -600,88 +822,135 @@ button{
         <span class="match h d"></span>
         <span class="match v c"></span>
 
-        <span class="target" id="dropTarget"></span>
+        <span
+          class="target"
+          id="dropTarget">
+        </span>
 
       </div>
 
+
       <!-- + -->
+
       <div class="operator">
 
         <span class="plus-h"></span>
 
         <span
           class="plus-v"
-          id="movableMatch"
-        ></span>
+          id="movableMatch">
+        </span>
 
       </div>
 
+
       <!-- 4 -->
+
       <div class="digit">
+
         <span class="match v f"></span>
         <span class="match h g"></span>
         <span class="match v b"></span>
         <span class="match v c"></span>
+
       </div>
 
-      <div class="equals">=</div>
+
+      <div class="equals">
+        =
+      </div>
+
 
       <!-- 4 -->
+
       <div class="digit">
+
         <span class="match v f"></span>
         <span class="match h g"></span>
         <span class="match v b"></span>
         <span class="match v c"></span>
+
       </div>
 
     </div>
 
-    <div class="moves" id="movesText">
+    <div
+      class="moves"
+      id="movesText">
+
       ⚡ Остался 1 ход
+
     </div>
 
   </div>
+
 
   <div class="actions">
 
-    <button class="hint" onclick="showHint()">
+    <button
+      class="hint"
+      onclick="showHint()">
+
       💡 Подсказка · 50 🪙
+
     </button>
 
-    <button class="reset" onclick="resetLevel()">
+    <button
+      class="reset"
+      onclick="resetLevel()">
+
       ↻ Заново
+
     </button>
 
   </div>
 
-  <div class="message" id="message"></div>
+  <div
+    class="message"
+    id="gameMessage">
+  </div>
 
 </div>
 
 
-<!-- WIN -->
-<div class="overlay" id="winOverlay">
+<!-- LEVEL COMPLETE -->
+
+<div
+  class="overlay"
+  id="levelCompleteModal">
 
   <div class="win">
 
-    <div class="check">✓</div>
-
-    <h2>Уровень пройден!</h2>
-
-    <div id="resultText">
-      Решено за 0 секунд
+    <div class="check">
+      ✓
     </div>
 
-    <div class="stars" id="winStars">
+    <h2>
+      Уровень пройден!
+    </h2>
+
+    <div id="completeTime">
+      Время: 0 сек.
+    </div>
+
+    <div
+      class="stars"
+      id="completeStars">
+
       ⭐⭐⭐
+
     </div>
 
-    <div>
+    <div id="completeReward">
       +30 🪙
     </div>
 
-    <button class="next" onclick="finishLevel()">
+    <button
+      class="next"
+      onclick="finishLevel()">
+
       ПРОДОЛЖИТЬ
+
     </button>
 
   </div>
@@ -689,39 +958,94 @@ button{
 </div>
 
 
+<!-- ENERGY SHOP -->
+
+<div
+  class="overlay"
+  id="energyModal">
+
+  <div class="energy-box">
+
+    <div class="energy-big">
+      ❤️
+    </div>
+
+    <h2>
+      Энергия
+    </h2>
+
+    <div class="energy-description">
+      Одно сердце восстанавливается
+      каждые 15 минут.
+    </div>
+
+    <div class="energy-count">
+      ❤️ <span data-energy>5/5</span>
+    </div>
+
+    <div
+      class="energy-next"
+      data-energy-timer>
+
+      Полная энергия
+
+    </div>
+
+    <button
+      class="shop-option"
+      onclick="buyEnergy(1,100)">
+
+      ❤️ +1 — 100 🪙
+
+    </button>
+
+    <button
+      class="shop-option"
+      onclick="buyEnergy(3,250)">
+
+      ❤️❤️❤️ +3 — 250 🪙
+
+    </button>
+
+    <button
+      class="shop-option primary"
+      onclick="buyFullEnergy()">
+
+      ❤️ Восстановить всё — 350 🪙
+
+    </button>
+
+    <button
+      class="shop-option"
+      onclick="comingSoon('Реклама за сердце')">
+
+      📺 Посмотреть рекламу — +1 ❤️
+
+    </button>
+
+    <button
+      class="close-shop"
+      onclick="closeEnergyShop()">
+
+      Закрыть
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- CORE -->
+
+<script src="js/storage.js"></script>
+<script src="js/energy.js"></script>
+<script src="js/game.js"></script>
+<script src="levels/easy.js"></script>
+
+<!-- APP LOGIC -->
+
 <script>
-
-/* =========================
-   SAVE DATA
-========================= */
-
-let coins =
-  Number(localStorage.getItem("coins")) || 300;
-
-let energy =
-  Number(localStorage.getItem("energy")) || 5;
-
-let level =
-  Number(localStorage.getItem("level")) || 1;
-
-let totalStars =
-  Number(localStorage.getItem("stars")) || 0;
-
-let streak =
-  Number(localStorage.getItem("streak")) || 1;
-
-
-/* =========================
-   GAME VARIABLES
-========================= */
-
-let solved = false;
-let dragging = false;
-let dragCopy = null;
-
-let timerValue = 0;
-let timerInterval = null;
-
 
 /* =========================
    ELEMENTS
@@ -739,52 +1063,120 @@ const movableMatch =
 const dropTarget =
   document.getElementById("dropTarget");
 
-const message =
-  document.getElementById("message");
-
 const movesText =
   document.getElementById("movesText");
 
-const winOverlay =
-  document.getElementById("winOverlay");
+const gameMessage =
+  document.getElementById("gameMessage");
+
+
+let dragging = false;
+let dragCopy = null;
 
 
 /* =========================
-   UPDATE UI
+   INITIALIZE
 ========================= */
 
-function updateUI(){
+function initializeApp(){
 
-  document.getElementById("homeCoins").textContent = coins;
-  document.getElementById("statCoins").textContent = coins;
-  document.getElementById("gameCoins").textContent = coins;
+  migrateOldSave();
 
-  document.getElementById("energyValue").textContent = energy;
-  document.getElementById("gameEnergy").textContent = energy;
+  updateMainUI();
 
-  document.getElementById("homeLevel").textContent = level;
-  document.getElementById("starsValue").textContent = totalStars;
-  document.getElementById("streakValue").textContent = streak;
+  const data = getPlayerData();
 
-  document.getElementById("progressFill").style.width =
-    Math.min(level,100) + "%";
+  document.getElementById(
+    "streakValue"
+  ).textContent = data.streak;
+
+  updateProgress();
 
 }
 
-updateUI();
+initializeApp();
 
 
 /* =========================
-   SAVE
+   OLD SAVE MIGRATION
 ========================= */
 
-function saveGame(){
+function migrateOldSave(){
 
-  localStorage.setItem("coins", coins);
-  localStorage.setItem("energy", energy);
-  localStorage.setItem("level", level);
-  localStorage.setItem("stars", totalStars);
-  localStorage.setItem("streak", streak);
+  if(
+    localStorage.getItem(
+      "oldSaveMigrated"
+    )
+  ){
+    return;
+  }
+
+  const data = getPlayerData();
+
+  const oldCoins =
+    localStorage.getItem("coins");
+
+  const oldLevel =
+    localStorage.getItem("level");
+
+  const oldStars =
+    localStorage.getItem("stars");
+
+  const oldStreak =
+    localStorage.getItem("streak");
+
+
+  if(oldCoins !== null){
+    data.coins =
+      Number(oldCoins) || 0;
+  }
+
+  if(oldLevel !== null){
+    data.level =
+      Math.max(
+        1,
+        Number(oldLevel) || 1
+      );
+  }
+
+  if(oldStars !== null){
+    data.totalStars =
+      Number(oldStars) || 0;
+  }
+
+  if(oldStreak !== null){
+    data.streak =
+      Math.max(
+        1,
+        Number(oldStreak) || 1
+      );
+  }
+
+  savePlayerData(data);
+
+  localStorage.setItem(
+    "oldSaveMigrated",
+    "1"
+  );
+
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+function updateProgress(){
+
+  const data = getPlayerData();
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    Math.min(
+      data.level,
+      100
+    ) + "%";
 
 }
 
@@ -795,51 +1187,41 @@ function saveGame(){
 
 function openGame(){
 
-  homeScreen.classList.add("hidden");
-  gameScreen.classList.remove("hidden");
+  homeScreen.classList.add(
+    "hidden"
+  );
 
-  startTimer();
+  gameScreen.classList.remove(
+    "hidden"
+  );
+
+  resetPuzzleVisual();
+
+  startLevel(1);
 
 }
+
 
 function goHome(){
 
-  stopTimer();
+  stopLevelTimer();
 
-  gameScreen.classList.add("hidden");
-  homeScreen.classList.remove("hidden");
+  gameScreen.classList.add(
+    "hidden"
+  );
 
-  updateUI();
+  homeScreen.classList.remove(
+    "hidden"
+  );
 
-}
+  document
+    .getElementById(
+      "levelCompleteModal"
+    )
+    .classList.remove("show");
 
-
-/* =========================
-   TIMER
-========================= */
-
-function startTimer(){
-
-  timerValue = 0;
-
-  document.getElementById("timer").textContent = 0;
-
-  clearInterval(timerInterval);
-
-  timerInterval = setInterval(()=>{
-
-    timerValue++;
-
-    document.getElementById("timer").textContent =
-      timerValue;
-
-  },1000);
-
-}
-
-function stopTimer(){
-
-  clearInterval(timerInterval);
+  updateMainUI();
+  updateProgress();
 
 }
 
@@ -853,9 +1235,10 @@ movableMatch.addEventListener(
   startDrag
 );
 
+
 function startDrag(event){
 
-  if(solved) return;
+  if(levelSolved) return;
 
   event.preventDefault();
 
@@ -896,6 +1279,7 @@ function startDrag(event){
 
 }
 
+
 function dragMove(event){
 
   if(!dragging) return;
@@ -908,6 +1292,7 @@ function dragMove(event){
   );
 
 }
+
 
 function moveDragged(x,y){
 
@@ -964,28 +1349,18 @@ function dropMove(event){
 
   if(correct){
 
-    solveLevel();
+    completeMatchPuzzle();
 
   }else{
 
-    movableMatch.style.opacity = "1";
+    movableMatch.style.opacity =
+      "1";
 
     dropTarget.classList.remove(
       "visible"
     );
 
-    message.className =
-      "message bad";
-
-    message.textContent =
-      "Не туда. Попробуй ещё раз.";
-
-    setTimeout(()=>{
-
-      if(!solved)
-        message.textContent = "";
-
-    },1200);
+    registerWrongMove();
 
   }
 
@@ -993,14 +1368,10 @@ function dropMove(event){
 
 
 /* =========================
-   SOLVE
+   CORRECT PUZZLE
 ========================= */
 
-function solveLevel(){
-
-  solved = true;
-
-  stopTimer();
+function completeMatchPuzzle(){
 
   movableMatch.style.display =
     "none";
@@ -1016,67 +1387,17 @@ function solveLevel(){
   movesText.textContent =
     "✓ Ход выполнен";
 
-  message.className =
+  gameMessage.className =
     "message good";
 
-  message.textContent =
+  gameMessage.textContent =
     "8 − 4 = 4 ✓";
-
-
-  let earnedStars = 1;
-
-  if(timerValue <= 20){
-
-    earnedStars = 3;
-
-  }else if(timerValue <= 45){
-
-    earnedStars = 2;
-
-  }
-
-
-  if(earnedStars === 3){
-
-    document.getElementById("winStars")
-      .textContent = "⭐⭐⭐";
-
-  }else if(earnedStars === 2){
-
-    document.getElementById("winStars")
-      .textContent = "⭐⭐";
-
-  }else{
-
-    document.getElementById("winStars")
-      .textContent = "⭐";
-
-  }
-
-
-  document.getElementById("resultText")
-    .textContent =
-    "Решено за " +
-    timerValue +
-    " сек.";
-
-
-  coins += 30;
-
-  totalStars += earnedStars;
-
-  saveGame();
-
-  updateUI();
-
 
   setTimeout(()=>{
 
-    winOverlay.classList.add(
-      "show"
-    );
+    solveLevel(30);
 
-  },700);
+  },500);
 
 }
 
@@ -1087,29 +1408,26 @@ function solveLevel(){
 
 function showHint(){
 
-  if(solved) return;
+  if(levelSolved) return;
 
-  if(coins < 50){
+  if(!spendCoins(50)){
 
-    message.className =
+    gameMessage.className =
       "message bad";
 
-    message.textContent =
+    gameMessage.textContent =
       "Недостаточно монет";
 
     return;
 
   }
 
-  coins -= 50;
+  updateMainUI();
 
-  saveGame();
-  updateUI();
-
-  message.className =
+  gameMessage.className =
     "message";
 
-  message.textContent =
+  gameMessage.textContent =
     "💡 Знак «+» необязательно должен остаться плюсом.";
 
   dropTarget.classList.add(
@@ -1118,7 +1436,10 @@ function showHint(){
 
   setTimeout(()=>{
 
-    if(!solved && !dragging){
+    if(
+      !levelSolved &&
+      !dragging
+    ){
 
       dropTarget.classList.remove(
         "visible"
@@ -1135,9 +1456,9 @@ function showHint(){
    RESET
 ========================= */
 
-function resetLevel(){
+function resetPuzzleVisual(){
 
-  solved = false;
+  levelSolved = false;
 
   movableMatch.style.display =
     "block";
@@ -1153,13 +1474,22 @@ function resetLevel(){
   movesText.textContent =
     "⚡ Остался 1 ход";
 
-  message.textContent = "";
+  gameMessage.textContent = "";
 
-  winOverlay.classList.remove(
-    "show"
-  );
+  document
+    .getElementById(
+      "levelCompleteModal"
+    )
+    .classList.remove("show");
 
-  startTimer();
+}
+
+
+function resetLevel(){
+
+  resetPuzzleVisual();
+
+  startLevel(1);
 
 }
 
@@ -1170,15 +1500,11 @@ function resetLevel(){
 
 function finishLevel(){
 
-  winOverlay.classList.remove(
-    "show"
-  );
-
-  /*
-    Пока второго уровня ещё нет.
-    После его добавления здесь
-    будем увеличивать level.
-  */
+  document
+    .getElementById(
+      "levelCompleteModal"
+    )
+    .classList.remove("show");
 
   goHome();
 
@@ -1186,7 +1512,108 @@ function finishLevel(){
 
 
 /* =========================
-   DAILY
+   ENERGY SHOP
+========================= */
+
+function openEnergyShop(){
+
+  updateEnergyUI();
+
+  document
+    .getElementById(
+      "energyModal"
+    )
+    .classList.add("show");
+
+}
+
+
+function closeEnergyShop(){
+
+  document
+    .getElementById(
+      "energyModal"
+    )
+    .classList.remove("show");
+
+}
+
+
+function buyEnergy(
+  amount,
+  price
+){
+
+  const energy =
+    getEnergyData();
+
+  if(
+    energy.energy >=
+    MAX_ENERGY
+  ){
+
+    alert(
+      "❤️ Энергия уже полная"
+    );
+
+    return;
+
+  }
+
+  if(!spendCoins(price)){
+
+    alert(
+      "Недостаточно монет 🪙"
+    );
+
+    return;
+
+  }
+
+  addEnergy(amount);
+
+  updateMainUI();
+
+}
+
+
+function buyFullEnergy(){
+
+  const energy =
+    getEnergyData();
+
+  if(
+    energy.energy >=
+    MAX_ENERGY
+  ){
+
+    alert(
+      "❤️ Энергия уже полная"
+    );
+
+    return;
+
+  }
+
+  if(!spendCoins(350)){
+
+    alert(
+      "Недостаточно монет 🪙"
+    );
+
+    return;
+
+  }
+
+  addEnergy(MAX_ENERGY);
+
+  updateMainUI();
+
+}
+
+
+/* =========================
+   DAILY REWARD
 ========================= */
 
 function dailyReward(){
@@ -1209,16 +1636,14 @@ function dailyReward(){
 
   }
 
-  coins += 50;
+  addCoins(50);
 
   localStorage.setItem(
     "dailyReward",
     today
   );
 
-  saveGame();
-
-  updateUI();
+  updateMainUI();
 
   alert(
     "🎁 +50 монет!"
@@ -1240,6 +1665,8 @@ function comingSoon(name){
 }
 
 </script>
+
+<script src="js/app.js"></script>
 
 </body>
 </html>
