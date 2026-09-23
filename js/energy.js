@@ -3,9 +3,18 @@
 // ===============================
 
 const MAX_ENERGY = 5;
+const INFINITE_ENERGY_MODE = true; // TEMP: unlimited energy for testing
 const ENERGY_REGEN_TIME = 15 * 60 * 1000; // 15 минут
 
 function getEnergyData() {
+    if (INFINITE_ENERGY_MODE) {
+        return {
+            energy: MAX_ENERGY,
+            updatedAt: Date.now(),
+            infinite: true
+        };
+    }
+
     const savedEnergy = localStorage.getItem("energy");
     const savedTime = localStorage.getItem("energyUpdatedAt");
 
@@ -63,6 +72,10 @@ function saveEnergyData(energy, updatedAt = Date.now()) {
 
 // Потратить одно сердце
 function useEnergy() {
+    if (INFINITE_ENERGY_MODE) {
+        return false;
+    }
+
     const data = getEnergyData();
 
     if (data.energy <= 0) {
@@ -86,6 +99,10 @@ function useEnergy() {
 
 // Купить / получить сердца
 function addEnergy(amount = 1) {
+    if (INFINITE_ENERGY_MODE) {
+        return MAX_ENERGY;
+    }
+
     const data = getEnergyData();
 
     const newEnergy = Math.min(
@@ -105,6 +122,10 @@ function addEnergy(amount = 1) {
 
 // Сколько осталось до следующего сердца
 function getEnergyTimer() {
+    if (INFINITE_ENERGY_MODE) {
+        return "∞";
+    }
+
     const data = getEnergyData();
 
     if (data.energy >= MAX_ENERGY) {
