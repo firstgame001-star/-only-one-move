@@ -10,7 +10,7 @@
 
 <title>Only One Move</title>
 
-<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
 
 <style>
 *{
@@ -26,9 +26,7 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-body{
-  min-height:100vh;
-}
+body{min-height:100vh;}
 
 button{
   font-family:inherit;
@@ -43,13 +41,12 @@ button{
   padding:22px 20px 40px;
 }
 
-.hidden{
-  display:none!important;
-}
+.hidden{display:none!important;}
 
 /* HEADER */
 
-.top{
+.top,
+.game-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -67,9 +64,7 @@ button{
   font-weight:800;
 }
 
-.energy-click{
-  cursor:pointer;
-}
+.energy-click{cursor:pointer;}
 
 /* HOME */
 
@@ -78,9 +73,7 @@ button{
   text-align:center;
 }
 
-.brain{
-  font-size:64px;
-}
+.brain{font-size:64px;}
 
 .hero h1{
   margin:8px 0 5px;
@@ -115,9 +108,10 @@ button{
 }
 
 .progress-fill{
-  width:1%;
+  width:0%;
   height:100%;
   background:#6c5ce7;
+  transition:width .25s ease;
 }
 
 .chapter-progress{
@@ -153,9 +147,7 @@ button{
   font-size:12px;
 }
 
-.energy-stat{
-  cursor:pointer;
-}
+.energy-stat{cursor:pointer;}
 
 .energy-timer{
   margin-top:4px;
@@ -200,13 +192,8 @@ button{
   align-items:center;
 }
 
-.menu-icon{
-  font-size:25px;
-}
-
-.menu-title{
-  font-weight:800;
-}
+.menu-icon{font-size:25px;}
+.menu-title{font-weight:800;}
 
 .menu-sub{
   color:#8992a4;
@@ -215,12 +202,6 @@ button{
 }
 
 /* GAME */
-
-.game-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
 
 .back{
   border:0;
@@ -250,6 +231,7 @@ button{
   text-align:center;
   color:#929bab;
   line-height:1.5;
+  min-height:48px;
 }
 
 .level-status{
@@ -283,6 +265,8 @@ button{
   padding:25px 8px;
   background:#121824;
   border-radius:28px;
+  position:relative;
+  overflow:hidden;
 }
 
 .tutorial-box{
@@ -304,6 +288,51 @@ button{
   margin-top:13px;
 }
 
+.moves{
+  margin-top:48px;
+  text-align:center;
+  color:#a4adbd;
+  font-size:14px;
+}
+
+.actions{
+  display:flex;
+  gap:12px;
+  margin-top:20px;
+}
+
+.actions button{
+  flex:1;
+  border:0;
+  border-radius:18px;
+  padding:16px 10px;
+  font-weight:800;
+}
+
+.hint{
+  background:#171d29;
+  color:white;
+}
+
+.reset{
+  background:#6c5ce7;
+  color:white;
+}
+
+.message{
+  min-height:28px;
+  margin-top:17px;
+  text-align:center;
+  font-weight:800;
+}
+
+.good{color:#55e6a5;}
+.bad{color:#ff7675;}
+
+/* =========================
+   MATCHSTICKS
+========================= */
+
 .equation{
   display:flex;
   justify-content:center;
@@ -311,8 +340,6 @@ button{
   gap:8px;
   margin-top:50px;
 }
-
-/* MATCHSTICKS */
 
 .digit{
   width:48px;
@@ -332,10 +359,6 @@ button{
     transform .12s ease,
     filter .12s ease,
     opacity .12s ease;
-}
-
-.match:active{
-  cursor:grabbing;
 }
 
 .match.match-selected{
@@ -427,8 +450,6 @@ button{
   height:34px;
 }
 
-/* DRAG */
-
 .drag-copy{
   position:fixed!important;
   pointer-events:none!important;
@@ -440,51 +461,112 @@ button{
     drop-shadow(0 0 8px rgba(244,213,141,.55));
 }
 
-.moves{
-  margin-top:48px;
-  text-align:center;
-  color:#a4adbd;
-  font-size:14px;
+/* =========================
+   FISH LEVEL
+========================= */
+
+.fish-area{
+  height:220px;
+  position:relative;
+  margin:25px auto 0;
+  max-width:300px;
 }
 
-.actions{
-  display:flex;
-  gap:12px;
-  margin-top:20px;
+.fish-trap{
+  position:absolute;
+  width:210px;
+  height:145px;
+  left:50%;
+  top:22px;
+  transform:translateX(-50%);
 }
 
-.actions button{
-  flex:1;
+.fish{
+  position:absolute;
+  left:50%;
+  top:55px;
+  transform:translateX(-50%);
+  font-size:50px;
+  z-index:2;
+  transition:
+    left .7s ease,
+    top .7s ease,
+    transform .7s ease,
+    opacity .7s ease;
+}
+
+.fish-bar{
+  position:absolute;
   border:0;
-  border-radius:18px;
-  padding:16px 10px;
-  font-weight:800;
+  padding:0;
+  background:#58b7d7;
+  border-radius:8px;
+  box-shadow:
+    0 0 10px rgba(88,183,215,.22);
+  transition:
+    transform .35s ease,
+    opacity .35s ease;
+  touch-action:none;
 }
 
-.hint{
-  background:#171d29;
-  color:white;
+.fish-bar:active{
+  filter:brightness(1.2);
 }
 
-.reset{
-  background:#6c5ce7;
-  color:white;
+.fish-bar-top{
+  width:190px;
+  height:10px;
+  left:10px;
+  top:0;
 }
 
-.message{
-  min-height:28px;
-  margin-top:17px;
-  text-align:center;
-  font-weight:800;
-  opacity:1;
+.fish-bar-left{
+  width:10px;
+  height:125px;
+  left:10px;
+  top:0;
 }
 
-.good{
-  color:#55e6a5;
+.fish-bar-right{
+  width:10px;
+  height:125px;
+  right:10px;
+  top:0;
 }
 
-.bad{
-  color:#ff7675;
+.fish-bar-bottom-left{
+  width:88px;
+  height:10px;
+  left:10px;
+  bottom:20px;
+}
+
+.fish-bar-bottom-right{
+  width:88px;
+  height:10px;
+  right:10px;
+  bottom:20px;
+}
+
+/* Неправильная планка слегка двигается */
+.fish-bar.bar-moved{
+  transform:translateY(-15px);
+}
+
+/* Правильная планка уходит вправо */
+.fish-bar.fish-exit-open{
+  transform:translateX(80px);
+  opacity:.25;
+}
+
+/* Рыбка выплывает через открывшийся низ */
+.fish.fish-free{
+  top:175px;
+  left:72%;
+  transform:
+    translateX(-50%)
+    rotate(8deg)
+    scale(1.1);
 }
 
 /* OVERLAYS */
@@ -500,9 +582,7 @@ button{
   z-index:10000;
 }
 
-.overlay.show{
-  display:flex;
-}
+.overlay.show{display:flex;}
 
 .win{
   width:100%;
@@ -548,22 +628,18 @@ button{
 
 /* ENERGY */
 
-.energy-box{
+.energy-box,
+.rules-box{
   width:100%;
-  max-width:390px;
+  max-width:410px;
   background:#121824;
   border-radius:28px;
-  padding:26px 20px;
-  text-align:center;
+  padding:25px 20px;
 }
 
-.energy-big{
-  font-size:54px;
-}
+.energy-box{text-align:center;}
 
-.energy-box h2{
-  margin:10px 0 6px;
-}
+.energy-big{font-size:54px;}
 
 .energy-description{
   color:#929bab;
@@ -610,13 +686,8 @@ button{
 /* RULES */
 
 .rules-box{
-  width:100%;
-  max-width:410px;
   max-height:85vh;
   overflow:auto;
-  background:#121824;
-  border-radius:28px;
-  padding:25px 20px;
 }
 
 .rules-box h2{
@@ -646,7 +717,9 @@ button{
 
 <body>
 
-<!-- HOME -->
+<!-- =====================
+     HOME
+===================== -->
 
 <div class="app" id="homeScreen">
 
@@ -672,7 +745,7 @@ button{
     <div class="progress-top">
       <span>
         ЭТАП 1 · Уровень
-        <b data-level>1</b>/5
+        <b id="homeLevel">1</b>/5
       </span>
 
       <span>
@@ -681,23 +754,35 @@ button{
     </div>
 
     <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+      <div
+        class="progress-fill"
+        id="progressFill">
+      </div>
     </div>
 
-    <div class="chapter-progress" id="chapterProgress">
+    <div
+      class="chapter-progress"
+      id="chapterProgress">
       ⭐ 0 / 15 до Этапа 2
     </div>
 
     <div class="stats">
 
-      <div class="stat energy-stat" onclick="openEnergyShop()">
+      <div
+        class="stat energy-stat"
+        onclick="openEnergyShop()">
+
         <div class="stat-value">
           ❤️ <span data-energy>5/5</span>
         </div>
 
-        <div class="stat-label">Энергия</div>
+        <div class="stat-label">
+          Энергия
+        </div>
 
-        <div class="energy-timer" data-energy-timer>
+        <div
+          class="energy-timer"
+          data-energy-timer>
           Полная энергия
         </div>
       </div>
@@ -706,19 +791,27 @@ button{
         <div class="stat-value">
           🪙 <span data-coins>300</span>
         </div>
-        <div class="stat-label">Монеты</div>
+
+        <div class="stat-label">
+          Монеты
+        </div>
       </div>
 
       <div class="stat">
         <div class="stat-value">
           🔥 <span id="streakValue">1</span>
         </div>
-        <div class="stat-label">Серия дней</div>
+
+        <div class="stat-label">
+          Серия дней
+        </div>
       </div>
 
     </div>
 
-    <button class="play" onclick="openGame()">
+    <button
+      class="play"
+      onclick="openGame()">
       ▶ ПРОДОЛЖИТЬ
     </button>
 
@@ -726,60 +819,108 @@ button{
 
   <div class="menu">
 
-    <button class="menu-btn" onclick="openRules()">
+    <button
+      class="menu-btn"
+      onclick="openRules()">
+
       <div class="menu-left">
         <div class="menu-icon">📖</div>
 
         <div>
-          <div class="menu-title">Правила</div>
-          <div class="menu-sub">⭐, ❤️, время и главы</div>
+          <div class="menu-title">
+            Правила
+          </div>
+
+          <div class="menu-sub">
+            ⭐, ❤️, время и этапы
+          </div>
         </div>
       </div>
 
       <div>›</div>
     </button>
 
-    <button class="menu-btn" onclick="comingSoon('Ежедневная загадка')">
+    <button
+      class="menu-btn"
+      onclick="comingSoon('Ежедневная загадка')">
+
       <div class="menu-left">
         <div class="menu-icon">🧩</div>
+
         <div>
-          <div class="menu-title">Ежедневная загадка</div>
-          <div class="menu-sub">Новая задача каждый день</div>
+          <div class="menu-title">
+            Ежедневная загадка
+          </div>
+
+          <div class="menu-sub">
+            Новая задача каждый день
+          </div>
         </div>
       </div>
+
       <div>›</div>
     </button>
 
-    <button class="menu-btn" onclick="comingSoon('60 секунд')">
+    <button
+      class="menu-btn"
+      onclick="comingSoon('60 секунд')">
+
       <div class="menu-left">
         <div class="menu-icon">⏱</div>
+
         <div>
-          <div class="menu-title">60 секунд</div>
-          <div class="menu-sub">Реши как можно больше</div>
+          <div class="menu-title">
+            60 секунд
+          </div>
+
+          <div class="menu-sub">
+            Реши как можно больше
+          </div>
         </div>
       </div>
+
       <div>🔒</div>
     </button>
 
-    <button class="menu-btn" onclick="comingSoon('Рейтинг')">
+    <button
+      class="menu-btn"
+      onclick="comingSoon('Рейтинг')">
+
       <div class="menu-left">
         <div class="menu-icon">🏆</div>
+
         <div>
-          <div class="menu-title">Рейтинг</div>
-          <div class="menu-sub">Соревнуйся с другими</div>
+          <div class="menu-title">
+            Рейтинг
+          </div>
+
+          <div class="menu-sub">
+            Соревнуйся с другими
+          </div>
         </div>
       </div>
+
       <div>›</div>
     </button>
 
-    <button class="menu-btn" onclick="dailyReward()">
+    <button
+      class="menu-btn"
+      onclick="dailyReward()">
+
       <div class="menu-left">
         <div class="menu-icon">🎁</div>
+
         <div>
-          <div class="menu-title">Награда дня</div>
-          <div class="menu-sub">Забери ежедневный бонус</div>
+          <div class="menu-title">
+            Награда дня
+          </div>
+
+          <div class="menu-sub">
+            Забери ежедневный бонус
+          </div>
         </div>
       </div>
+
       <div>›</div>
     </button>
 
@@ -787,15 +928,27 @@ button{
 
 </div>
 
-<!-- GAME -->
 
-<div class="app hidden" id="gameScreen">
+<!-- =====================
+     GAME
+===================== -->
+
+<div
+  class="app hidden"
+  id="gameScreen">
 
   <div class="game-header">
 
-    <button class="back" onclick="goHome()">‹</button>
+    <button
+      class="back"
+      onclick="goHome()">
+      ‹
+    </button>
 
-    <div class="balance energy-click" onclick="openEnergyShop()">
+    <div
+      class="balance energy-click"
+      onclick="openEnergyShop()">
+
       ❤️ <span data-energy>5/5</span>
       &nbsp;&nbsp;
       🪙 <span data-coins>300</span>
@@ -803,126 +956,325 @@ button{
 
   </div>
 
-  <div class="level">
+  <div
+    class="level"
+    id="gameLevelLabel">
     ЭТАП 1 · УРОВЕНЬ 1
   </div>
 
-  <h1 class="game-title">
+  <h1
+    class="game-title"
+    id="gameTitle">
     Передвинь одну спичку
   </h1>
 
-  <div class="subtitle">
+  <div
+    class="subtitle"
+    id="gameSubtitle">
     Сделай равенство правильным.<br>
     Можно передвинуть только одну спичку.
   </div>
 
   <div class="level-status">
 
-    <div class="level-stars" id="levelStars">
+    <div
+      class="level-stars"
+      id="levelStars">
       ⭐⭐⭐
     </div>
 
     <div class="timer">
-      <span id="levelTimer">🧠 20 сек.</span>
+      <span id="levelTimer">
+        🧠 20 сек.
+      </span>
     </div>
 
   </div>
 
   <div class="board">
 
-    <div class="tutorial-box" id="tutorialBox">
-      👆 Зажми любую спичку и перенеси её.<br>
-      Неправильный ход сжигает ⭐.
+    <div
+      class="tutorial-box"
+      id="tutorialBox">
     </div>
 
-    <div class="instruction">
-      Выбери любую спичку.
-      Правильное место заранее не показывается.
+    <div
+      class="instruction"
+      id="gameInstruction">
     </div>
 
-    <div class="equation" id="matchEquation">
 
-      <!-- 6 -->
-      <div class="digit" data-symbol="6">
-        <span class="match h a" data-segment="A"></span>
-        <span class="match v f" data-segment="F"></span>
-        <span class="match h g" data-segment="G"></span>
-        <span class="match v e" data-segment="E"></span>
-        <span class="match v c" data-segment="C"></span>
-        <span class="match h d" data-segment="D"></span>
+    <!-- =====================
+         LEVEL 1 — MATCHSTICKS
+    ====================== -->
 
-        <span
-          class="match-slot v-slot b"
-          data-empty-segment="B">
-        </span>
+    <div
+      id="matchstickPuzzle"
+      class="puzzle-container">
+
+      <div
+        class="equation"
+        id="matchEquation">
+
+        <!-- 6 -->
+
+        <div
+          class="digit"
+          data-symbol="6">
+
+          <span
+            class="match h a"
+            data-segment="A">
+          </span>
+
+          <span
+            class="match v f"
+            data-segment="F">
+          </span>
+
+          <span
+            class="match h g"
+            data-segment="G">
+          </span>
+
+          <span
+            class="match v e"
+            data-segment="E">
+          </span>
+
+          <span
+            class="match v c"
+            data-segment="C">
+          </span>
+
+          <span
+            class="match h d"
+            data-segment="D">
+          </span>
+
+          <span
+            class="match-slot v-slot b"
+            data-empty-segment="B">
+          </span>
+
+        </div>
+
+
+        <!-- + -->
+
+        <div
+          class="operator"
+          data-symbol="+">
+
+          <span
+            class="match match-h"
+            data-segment="H">
+          </span>
+
+          <span
+            class="match match-v"
+            data-segment="V">
+          </span>
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div
+          class="digit"
+          data-symbol="4">
+
+          <span
+            class="match v f"
+            data-segment="F">
+          </span>
+
+          <span
+            class="match h g"
+            data-segment="G">
+          </span>
+
+          <span
+            class="match v b"
+            data-segment="B">
+          </span>
+
+          <span
+            class="match v c"
+            data-segment="C">
+          </span>
+
+        </div>
+
+
+        <!-- = -->
+
+        <div
+          class="equals-symbol"
+          data-symbol="=">
+
+          <span
+            class="match eq-top"
+            data-segment="TOP">
+          </span>
+
+          <span
+            class="match eq-bottom"
+            data-segment="BOTTOM">
+          </span>
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div
+          class="digit"
+          data-symbol="4">
+
+          <span
+            class="match v f"
+            data-segment="F">
+          </span>
+
+          <span
+            class="match h g"
+            data-segment="G">
+          </span>
+
+          <span
+            class="match v b"
+            data-segment="B">
+          </span>
+
+          <span
+            class="match v c"
+            data-segment="C">
+          </span>
+
+        </div>
+
       </div>
+    </div>
 
-      <!-- + -->
-      <div class="operator" data-symbol="+">
-        <span class="match match-h" data-segment="H"></span>
-        <span class="match match-v" data-segment="V"></span>
-      </div>
 
-      <!-- 4 -->
-      <div class="digit" data-symbol="4">
-        <span class="match v f" data-segment="F"></span>
-        <span class="match h g" data-segment="G"></span>
-        <span class="match v b" data-segment="B"></span>
-        <span class="match v c" data-segment="C"></span>
-      </div>
+    <!-- =====================
+         LEVEL 2 — FISH
+    ====================== -->
 
-      <!-- = -->
-      <div class="equals-symbol" data-symbol="=">
-        <span class="match eq-top" data-segment="TOP"></span>
-        <span class="match eq-bottom" data-segment="BOTTOM"></span>
-      </div>
+    <div
+      id="fishPuzzle"
+      class="puzzle-container hidden">
 
-      <!-- 4 -->
-      <div class="digit" data-symbol="4">
-        <span class="match v f" data-segment="F"></span>
-        <span class="match h g" data-segment="G"></span>
-        <span class="match v b" data-segment="B"></span>
-        <span class="match v c" data-segment="C"></span>
+      <div class="fish-area">
+
+        <div class="fish-trap">
+
+          <div
+            class="fish"
+            id="fish">
+            🐟
+          </div>
+
+          <button
+            class="fish-bar fish-bar-top"
+            data-bar="1"
+            onclick="moveFishBar(1)"
+            aria-label="Планка 1">
+          </button>
+
+          <button
+            class="fish-bar fish-bar-left"
+            data-bar="2"
+            onclick="moveFishBar(2)"
+            aria-label="Планка 2">
+          </button>
+
+          <button
+            class="fish-bar fish-bar-right"
+            data-bar="3"
+            onclick="moveFishBar(3)"
+            aria-label="Планка 3">
+          </button>
+
+          <button
+            class="fish-bar fish-bar-bottom-left"
+            data-bar="5"
+            onclick="moveFishBar(5)"
+            aria-label="Планка 5">
+          </button>
+
+          <button
+            class="fish-bar fish-bar-bottom-right"
+            data-bar="4"
+            onclick="moveFishBar(4)"
+            aria-label="Планка 4">
+          </button>
+
+        </div>
+
       </div>
 
     </div>
 
-    <div class="moves" id="movesText">
-      ⚡ Передвинь одну спичку
+
+    <div
+      class="moves"
+      id="movesText">
+      ⚡ Один ход
     </div>
 
   </div>
 
+
   <div class="actions">
 
-    <button class="hint" onclick="showHint()">
+    <button
+      class="hint"
+      onclick="showHint()">
       💡 Подсказка · 50 🪙
     </button>
 
-    <button class="reset" onclick="resetLevel()">
+    <button
+      class="reset"
+      onclick="resetLevel()">
       ↻ Заново
     </button>
 
   </div>
 
-  <div class="message" id="gameMessage"></div>
+  <div
+    class="message"
+    id="gameMessage">
+  </div>
 
 </div>
 
-<!-- LEVEL COMPLETE -->
 
-<div class="overlay" id="levelCompleteModal">
+<!-- =====================
+     COMPLETE
+===================== -->
+
+<div
+  class="overlay"
+  id="levelCompleteModal">
+
   <div class="win">
 
     <div class="check">✓</div>
 
-    <h2>Уровень пройден!</h2>
+    <h2>
+      Уровень пройден!
+    </h2>
 
     <div id="completeTime">
       Время: 0 сек.
     </div>
 
-    <div class="stars" id="completeStars">
+    <div
+      class="stars"
+      id="completeStars">
       ⭐⭐⭐
     </div>
 
@@ -930,20 +1282,30 @@ button{
       +30 🪙
     </div>
 
-    <button class="next" onclick="finishLevel()">
+    <button
+      class="next"
+      onclick="finishLevel()">
       ПРОДОЛЖИТЬ
     </button>
 
   </div>
+
 </div>
 
-<!-- ENERGY -->
 
-<div class="overlay" id="energyModal">
+<!-- =====================
+     ENERGY
+===================== -->
+
+<div
+  class="overlay"
+  id="energyModal">
 
   <div class="energy-box">
 
-    <div class="energy-big">❤️</div>
+    <div class="energy-big">
+      ❤️
+    </div>
 
     <h2>Энергия</h2>
 
@@ -957,27 +1319,39 @@ button{
       ❤️ <span data-energy>5/5</span>
     </div>
 
-    <div class="energy-next" data-energy-timer>
+    <div
+      class="energy-next"
+      data-energy-timer>
       Полная энергия
     </div>
 
-    <button class="shop-option" onclick="buyEnergy(1,100)">
+    <button
+      class="shop-option"
+      onclick="buyEnergy(1,100)">
       ❤️ +1 — 100 🪙
     </button>
 
-    <button class="shop-option" onclick="buyEnergy(3,250)">
+    <button
+      class="shop-option"
+      onclick="buyEnergy(3,250)">
       ❤️❤️❤️ +3 — 250 🪙
     </button>
 
-    <button class="shop-option primary" onclick="buyFullEnergy()">
+    <button
+      class="shop-option primary"
+      onclick="buyFullEnergy()">
       ❤️ Восстановить всё — 350 🪙
     </button>
 
-    <button class="shop-option" onclick="comingSoon('Реклама за сердце')">
+    <button
+      class="shop-option"
+      onclick="comingSoon('Реклама за сердце')">
       📺 Посмотреть рекламу — +1 ❤️
     </button>
 
-    <button class="close-shop" onclick="closeEnergyShop()">
+    <button
+      class="close-shop"
+      onclick="closeEnergyShop()">
       Закрыть
     </button>
 
@@ -985,72 +1359,87 @@ button{
 
 </div>
 
-<!-- RULES -->
 
-<div class="overlay" id="rulesModal">
+<!-- =====================
+     RULES
+===================== -->
+
+<div
+  class="overlay"
+  id="rulesModal">
 
   <div class="rules-box">
 
     <h2>📖 Правила</h2>
 
     <div class="rule">
-      <div class="rule-title">⭐ Звёзды</div>
+      <div class="rule-title">
+        ⭐ Звёзды
+      </div>
+
       <div class="rule-text">
         Каждая попытка начинается с ⭐⭐⭐.
         Неправильный ход сжигает одну ⭐.
-        Сколько звёзд осталось при правильном
-        решении — столько звёзд получает игрок.
+        Сколько звёзд осталось при решении —
+        столько получает игрок.
       </div>
     </div>
 
     <div class="rule">
-      <div class="rule-title">⏱ Время</div>
+      <div class="rule-title">
+        ⏱ Время
+      </div>
+
       <div class="rule-text">
-        Первые 20 секунд даются на размышление.
+        Первые 20 секунд — время на размышление.
         На 30-й секунде сгорает ⭐,
         на 40-й — ещё ⭐,
         на 50-й — ещё ⭐.
-        Штрафы за время складываются
-        с неправильными ходами.
+        Ошибки и штрафы времени складываются.
       </div>
     </div>
 
     <div class="rule">
-      <div class="rule-title">❤️ Энергия</div>
+      <div class="rule-title">
+        ❤️ Энергия
+      </div>
+
       <div class="rule-text">
-        Обычная ошибка сама по себе
-        не снимает сердце.
-        Когда все ⭐ закончились,
+        Ошибка не снимает сердце сразу.
+        Когда закончились все ⭐,
         попытка проиграна и снимается 1 ❤️.
-        Новая попытка снова начинается с ⭐⭐⭐.
       </div>
     </div>
 
     <div class="rule">
-      <div class="rule-title">🏆 Этапы</div>
+      <div class="rule-title">
+        🏆 Этапы
+      </div>
+
       <div class="rule-text">
         В одном этапе 5 уровней.
         Максимум — 15 ⭐.
-        Чтобы открыть следующий этап,
-        нужно собрать необходимое количество звёзд.
-        Недостающие ⭐ можно получить,
-        улучшив результаты прошлых уровней
-        или используя бонусные звёзды.
+        Для следующего этапа нужно
+        собрать необходимое количество звёзд.
       </div>
     </div>
 
     <div class="rule">
-      <div class="rule-title">🔥 Спички</div>
+      <div class="rule-title">
+        🧠 Один ход
+      </div>
+
       <div class="rule-text">
-        В заданиях со спичками можно выбрать
-        любую доступную спичку.
-        Правильная спичка и место назначения
-        заранее не показываются.
-        Разрешён только один перенос.
+        У каждой головоломки есть решение
+        одним действием. Можно двигать разные
+        элементы — очевидный вариант не всегда
+        правильный.
       </div>
     </div>
 
-    <button class="close-shop" onclick="closeRules()">
+    <button
+      class="close-shop"
+      onclick="closeRules()">
       Закрыть
     </button>
 
@@ -1058,17 +1447,27 @@ button{
 
 </div>
 
-<!-- CORE FILES — v=4 заставляет Telegram взять свежие файлы -->
 
-<script src="js/storage.js?v=4"></script>
-<script src="js/energy.js?v=4"></script>
-<script src="js/game.js?v=4"></script>
-<script src="js/matchsticks.js?v=4"></script>
-<script src="levels/easy.js?v=4"></script>
+<!-- =====================
+     CORE
+===================== -->
+
+<script src="js/storage.js?v=5"></script>
+<script src="js/energy.js?v=5"></script>
+<script src="js/game.js?v=5"></script>
+<script src="js/matchsticks.js?v=5"></script>
+
+<!-- НОВЫЙ ДВИЖОК ОБЪЕКТОВ -->
+<script src="js/objects.js?v=1"></script>
+
+<script src="levels/easy.js?v=5"></script>
+
 
 <script>
 
-/* ELEMENTS */
+/* =========================
+   ELEMENTS
+========================= */
 
 const homeScreen =
   document.getElementById("homeScreen");
@@ -1082,17 +1481,17 @@ const movesText =
 const gameMessage =
   document.getElementById("gameMessage");
 
-const matchEquation =
-  document.getElementById("matchEquation");
+let displayedLevel = 1;
 
 let draggingMatch = null;
 let dragCopy = null;
-
 let sourceParent = null;
 let sourceSegment = null;
 
 
-/* INITIALIZE */
+/* =========================
+   INITIALIZE
+========================= */
 
 function initializeApp(){
 
@@ -1101,12 +1500,15 @@ function initializeApp(){
   updateMainUI();
   updateProgress();
   updateChapterUI();
+  updateHomeLevel();
 
   const data =
     getPlayerData();
 
   const streak =
-    document.getElementById("streakValue");
+    document.getElementById(
+      "streakValue"
+    );
 
   if(streak){
     streak.textContent =
@@ -1115,30 +1517,51 @@ function initializeApp(){
 }
 
 
-/* OLD SAVE MIGRATION */
+/* =========================
+   MIGRATION
+========================= */
 
 function migrateOldSave(){
 
-  if(localStorage.getItem("oldSaveMigrated")){
+  if(
+    localStorage.getItem(
+      "oldSaveMigrated"
+    )
+  ){
     return;
   }
 
-  const data = getPlayerData();
+  const data =
+    getPlayerData();
 
-  const oldCoins = localStorage.getItem("coins");
-  const oldLevel = localStorage.getItem("level");
-  const oldStreak = localStorage.getItem("streak");
+  const oldCoins =
+    localStorage.getItem("coins");
+
+  const oldLevel =
+    localStorage.getItem("level");
+
+  const oldStreak =
+    localStorage.getItem("streak");
 
   if(oldCoins !== null){
-    data.coins = Number(oldCoins) || 0;
+    data.coins =
+      Number(oldCoins) || 0;
   }
 
   if(oldLevel !== null){
-    data.level = Math.max(1, Number(oldLevel) || 1);
+    data.level =
+      Math.max(
+        1,
+        Number(oldLevel) || 1
+      );
   }
 
   if(oldStreak !== null){
-    data.streak = Math.max(1, Number(oldStreak) || 1);
+    data.streak =
+      Math.max(
+        1,
+        Number(oldStreak) || 1
+      );
   }
 
   savePlayerData(data);
@@ -1150,17 +1573,58 @@ function migrateOldSave(){
 }
 
 
-/* PROGRESS */
+/* =========================
+   CURRENT AVAILABLE LEVEL
+========================= */
+
+function getPlayableLevel(){
+
+  const data =
+    getPlayerData();
+
+  /*
+      Пока реализованы только
+      уровни 1 и 2.
+
+      Даже если старое сохранение
+      показывает 3+, не пытаемся
+      открыть несуществующий уровень.
+  */
+
+  return Math.min(
+    Math.max(
+      Number(data.level) || 1,
+      1
+    ),
+    2
+  );
+}
+
+
+function updateHomeLevel(){
+
+  const element =
+    document.getElementById(
+      "homeLevel"
+    );
+
+  if(!element){
+    return;
+  }
+
+  element.textContent =
+    getPlayableLevel();
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
 
 function updateProgress(){
 
-  const data = getPlayerData();
-
   const level =
-    Math.min(
-      Math.max(data.level,1),
-      5
-    );
+    getPlayableLevel();
 
   const fill =
     document.getElementById(
@@ -1168,13 +1632,17 @@ function updateProgress(){
     );
 
   if(fill){
+
     fill.style.width =
-      ((level - 1) / 5 * 100) + "%";
+      ((level - 1) / 5 * 100) +
+      "%";
   }
 }
 
 
-/* CHAPTER UI */
+/* =========================
+   CHAPTER
+========================= */
 
 function updateChapterUI(){
 
@@ -1187,9 +1655,14 @@ function updateChapterUI(){
     return;
   }
 
-  if(typeof getChapterProgress !== "function"){
+  if(
+    typeof getChapterProgress !==
+    "function"
+  ){
+
     element.textContent =
       "⭐ 0 / 15 до Этапа 2";
+
     return;
   }
 
@@ -1208,7 +1681,9 @@ function updateChapterUI(){
 }
 
 
-/* HOME / GAME */
+/* =========================
+   OPEN GAME
+========================= */
 
 function openGame(){
 
@@ -1216,22 +1691,218 @@ function openGame(){
     getEnergyData();
 
   if(energy.energy <= 0){
+
     openEnergyShop();
+
     return;
   }
 
-  homeScreen.classList.add("hidden");
-  gameScreen.classList.remove("hidden");
+  const level =
+    getPlayableLevel();
 
-  resetPuzzleVisual();
+  homeScreen.classList.add(
+    "hidden"
+  );
 
-  startLevel(1);
+  gameScreen.classList.remove(
+    "hidden"
+  );
 
-  if(typeof startMatchstickPuzzle === "function"){
-    startMatchstickPuzzle();
+  loadLevel(level);
+}
+
+
+/* =========================
+   LOAD LEVEL
+========================= */
+
+function loadLevel(levelNumber){
+
+  displayedLevel =
+    levelNumber;
+
+  stopLevelTimer();
+  cancelCurrentDrag();
+
+  /*
+      Скрываем все типы головоломок.
+  */
+
+  document
+    .querySelectorAll(
+      ".puzzle-container"
+    )
+    .forEach(puzzle => {
+
+      puzzle.classList.add(
+        "hidden"
+      );
+    });
+
+
+  /*
+      LEVEL 1
+  */
+
+  if(levelNumber === 1){
+
+    setupLevelOne();
+
+    startLevel(1);
+
+    if(
+      typeof startMatchstickPuzzle ===
+      "function"
+    ){
+      startMatchstickPuzzle();
+    }
+
+    return;
+  }
+
+
+  /*
+      LEVEL 2
+  */
+
+  if(levelNumber === 2){
+
+    setupLevelTwo();
+
+    startLevel(2);
+
+    if(
+      typeof startObjectPuzzle ===
+      "function"
+    ){
+      startObjectPuzzle();
+    }
+
+    return;
   }
 }
 
+
+/* =========================
+   LEVEL 1
+========================= */
+
+function setupLevelOne(){
+
+  document
+    .getElementById(
+      "matchstickPuzzle"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+  document
+    .getElementById(
+      "gameLevelLabel"
+    )
+    .textContent =
+      "ЭТАП 1 · УРОВЕНЬ 1";
+
+  document
+    .getElementById(
+      "gameTitle"
+    )
+    .textContent =
+      "Передвинь одну спичку";
+
+  document
+    .getElementById(
+      "gameSubtitle"
+    )
+    .innerHTML =
+      "Сделай равенство правильным.<br>Можно передвинуть только одну спичку.";
+
+  document
+    .getElementById(
+      "tutorialBox"
+    )
+    .innerHTML =
+      "👆 Зажми любую спичку и перенеси её.<br>Неправильный ход сжигает ⭐.";
+
+  document
+    .getElementById(
+      "gameInstruction"
+    )
+    .textContent =
+      "Выбери любую спичку. Правильное место заранее не показывается.";
+
+  movesText.textContent =
+    "⚡ Передвинь одну спичку";
+
+  resetMatchstickVisual();
+}
+
+
+/* =========================
+   LEVEL 2
+========================= */
+
+function setupLevelTwo(){
+
+  document
+    .getElementById(
+      "fishPuzzle"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+  document
+    .getElementById(
+      "gameLevelLabel"
+    )
+    .textContent =
+      "ЭТАП 1 · УРОВЕНЬ 2";
+
+  document
+    .getElementById(
+      "gameTitle"
+    )
+    .textContent =
+      "Освободи рыбку";
+
+  document
+    .getElementById(
+      "gameSubtitle"
+    )
+    .innerHTML =
+      "Открой рыбке выход.<br>Передвинуть можно только один предмет.";
+
+  document
+    .getElementById(
+      "tutorialBox"
+    )
+    .innerHTML =
+      "🐟 Рыбка заперта. Нажми на одну из планок, чтобы передвинуть её.";
+
+  document
+    .getElementById(
+      "gameInstruction"
+    )
+    .textContent =
+      "Выбери только одну планку. Не каждая откроет выход.";
+
+  movesText.textContent =
+    "⚡ Передвинь одну планку";
+
+  if(
+    typeof resetFishPuzzle ===
+    "function"
+  ){
+    resetFishPuzzle();
+  }
+}
+
+
+/* =========================
+   HOME
+========================= */
 
 function goHome(){
 
@@ -1239,32 +1910,53 @@ function goHome(){
 
   cancelCurrentDrag();
 
-  gameScreen.classList.add("hidden");
-  homeScreen.classList.remove("hidden");
+  gameScreen.classList.add(
+    "hidden"
+  );
 
-  document
-    .getElementById("levelCompleteModal")
-    .classList.remove("show");
+  homeScreen.classList.remove(
+    "hidden"
+  );
 
-  const loseModal =
-    document.getElementById("loseModal");
+  const complete =
+    document.getElementById(
+      "levelCompleteModal"
+    );
 
-  if(loseModal){
-    loseModal.classList.remove("show");
+  if(complete){
+    complete.classList.remove(
+      "show"
+    );
+  }
+
+  const lose =
+    document.getElementById(
+      "loseModal"
+    );
+
+  if(lose){
+    lose.classList.remove(
+      "show"
+    );
   }
 
   updateMainUI();
   updateProgress();
   updateChapterUI();
+  updateHomeLevel();
 }
 
 
-/* MATCHSTICK EVENTS */
+/* =========================
+   MATCHSTICK EVENTS
+========================= */
 
 function bindMatchsticks(){
 
   document
-    .querySelectorAll("#matchEquation .match")
+    .querySelectorAll(
+      "#matchEquation .match"
+    )
     .forEach(match => {
 
       match.onpointerdown =
@@ -1272,12 +1964,14 @@ function bindMatchsticks(){
     });
 }
 
-bindMatchsticks();
-
 
 function startMatchDrag(event){
 
-  if(levelSolved || levelFailed){
+  if(
+    displayedLevel !== 1 ||
+    levelSolved ||
+    levelFailed
+  ){
     return;
   }
 
@@ -1286,24 +1980,37 @@ function startMatchDrag(event){
   const match =
     event.currentTarget;
 
-  if(typeof selectMatchstick === "function"){
+  if(
+    typeof selectMatchstick ===
+    "function"
+  ){
     selectMatchstick(match);
   }
 
-  draggingMatch = match;
-  sourceParent = match.parentElement;
-  sourceSegment = match.dataset.segment;
+  draggingMatch =
+    match;
+
+  sourceParent =
+    match.parentElement;
+
+  sourceSegment =
+    match.dataset.segment;
 
   const rect =
     match.getBoundingClientRect();
 
   dragCopy =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   dragCopy.className =
     "drag-copy";
 
-  if(rect.width > rect.height){
+  if(
+    rect.width >
+    rect.height
+  ){
 
     dragCopy.style.width =
       rect.width + "px";
@@ -1324,7 +2031,8 @@ function startMatchDrag(event){
     dragCopy
   );
 
-  match.style.opacity = ".18";
+  match.style.opacity =
+    ".18";
 
   moveDragCopy(
     event.clientX,
@@ -1334,13 +2042,17 @@ function startMatchDrag(event){
   document.addEventListener(
     "pointermove",
     moveMatchDrag,
-    {passive:false}
+    {
+      passive:false
+    }
   );
 
   document.addEventListener(
     "pointerup",
     endMatchDrag,
-    {once:true}
+    {
+      once:true
+    }
   );
 }
 
@@ -1370,14 +2082,14 @@ function moveDragCopy(x,y){
     dragCopy.getBoundingClientRect();
 
   dragCopy.style.left =
-    (x - rect.width / 2) + "px";
+    (x - rect.width / 2) +
+    "px";
 
   dragCopy.style.top =
-    (y - rect.height / 2) + "px";
+    (y - rect.height / 2) +
+    "px";
 }
 
-
-/* END DRAG */
 
 function endMatchDrag(event){
 
@@ -1411,8 +2123,12 @@ function endMatchDrag(event){
 
     restoreDraggedMatch();
 
-    if(typeof wrongMatchstickMove === "function"){
+    if(
+      typeof wrongMatchstickMove ===
+      "function"
+    ){
       wrongMatchstickMove();
+
     }else{
       registerWrongMove();
     }
@@ -1422,9 +2138,15 @@ function endMatchDrag(event){
 }
 
 
-/* FIND INVISIBLE SLOT */
+/* =========================
+   FIND MATCH SLOT
+========================= */
 
-function findDropSlot(x,y,dragged){
+function findDropSlot(
+  x,
+  y,
+  dragged
+){
 
   const draggedRect =
     dragged.getBoundingClientRect();
@@ -1439,7 +2161,9 @@ function findDropSlot(x,y,dragged){
   const MAGNET_RADIUS = 85;
 
   document
-    .querySelectorAll("#matchEquation .match-slot")
+    .querySelectorAll(
+      "#matchEquation .match-slot"
+    )
     .forEach(slot => {
 
       const slotHorizontal =
@@ -1447,7 +2171,10 @@ function findDropSlot(x,y,dragged){
           "h-slot"
         );
 
-      if(horizontal !== slotHorizontal){
+      if(
+        horizontal !==
+        slotHorizontal
+      ){
         return;
       }
 
@@ -1455,10 +2182,12 @@ function findDropSlot(x,y,dragged){
         slot.getBoundingClientRect();
 
       const centerX =
-        rect.left + rect.width / 2;
+        rect.left +
+        rect.width / 2;
 
       const centerY =
-        rect.top + rect.height / 2;
+        rect.top +
+        rect.height / 2;
 
       const distance =
         Math.hypot(
@@ -1470,23 +2199,32 @@ function findDropSlot(x,y,dragged){
         distance <= MAGNET_RADIUS &&
         distance < bestDistance
       ){
-        bestDistance = distance;
-        bestSlot = slot;
-      }
 
+        bestDistance =
+          distance;
+
+        bestSlot =
+          slot;
+      }
     });
 
   return bestSlot;
 }
 
 
-/* PROCESS MOVE */
+/* =========================
+   PROCESS MATCH
+========================= */
 
-function processMatchMove(dragged,target){
+function processMatchMove(
+  dragged,
+  target
+){
 
   const fromPlus =
     sourceParent &&
-    sourceParent.dataset.symbol === "+";
+    sourceParent.dataset.symbol ===
+    "+";
 
   const verticalFromPlus =
     fromPlus &&
@@ -1497,10 +2235,12 @@ function processMatchMove(dragged,target){
 
   const targetIsSix =
     targetDigit &&
-    targetDigit.dataset.symbol === "6";
+    targetDigit.dataset.symbol ===
+    "6";
 
   const targetIsB =
-    target.dataset.emptySegment === "B";
+    target.dataset.emptySegment ===
+    "B";
 
   const correct =
     verticalFromPlus &&
@@ -1509,11 +2249,17 @@ function processMatchMove(dragged,target){
 
   if(correct){
 
-    dragged.style.display = "none";
+    dragged.style.display =
+      "none";
 
-    target.style.opacity = "1";
-    target.style.background = "#f4d58d";
-    target.style.borderRadius = "10px";
+    target.style.opacity =
+      "1";
+
+    target.style.background =
+      "#f4d58d";
+
+    target.style.borderRadius =
+      "10px";
 
     movesText.textContent =
       "✓ Ход выполнен";
@@ -1528,7 +2274,10 @@ function processMatchMove(dragged,target){
 
     setTimeout(() => {
 
-      if(!levelSolved && !levelFailed){
+      if(
+        !levelSolved &&
+        !levelFailed
+      ){
         solveLevel(30);
       }
 
@@ -1539,23 +2288,108 @@ function processMatchMove(dragged,target){
 
   restoreDraggedMatch();
 
-  if(typeof wrongMatchstickMove === "function"){
+  if(
+    typeof wrongMatchstickMove ===
+    "function"
+  ){
     wrongMatchstickMove();
+
   }else{
     registerWrongMove();
   }
 }
 
 
-/* RESTORE */
+/* =========================
+   MATCH RESET
+========================= */
+
+function resetMatchstickVisual(){
+
+  cancelCurrentDrag();
+
+  document
+    .querySelectorAll(
+      "#matchEquation .match"
+    )
+    .forEach(match => {
+
+      match.style.display =
+        "block";
+
+      match.style.opacity =
+        "1";
+
+      match.classList.remove(
+        "match-selected"
+      );
+    });
+
+  document
+    .querySelectorAll(
+      "#matchEquation .match-slot"
+    )
+    .forEach(slot => {
+
+      slot.style.opacity =
+        "0";
+
+      slot.style.background =
+        "transparent";
+    });
+
+  bindMatchsticks();
+}
+
+
+/*
+   matchsticks.js вызывает эту функцию
+   после неправильного хода.
+*/
+
+function resetPuzzleVisual(){
+
+  if(displayedLevel === 1){
+
+    resetMatchstickVisual();
+
+    movesText.textContent =
+      "⚡ Передвинь одну спичку";
+
+    return;
+  }
+
+  if(displayedLevel === 2){
+
+    if(
+      typeof resetFishPuzzle ===
+      "function"
+    ){
+      resetFishPuzzle();
+    }
+
+    movesText.textContent =
+      "⚡ Передвинь одну планку";
+  }
+}
+
+
+/* =========================
+   MATCH DRAG CLEANUP
+========================= */
 
 function restoreDraggedMatch(){
 
   if(draggingMatch){
-    draggingMatch.style.opacity = "1";
+
+    draggingMatch.style.opacity =
+      "1";
   }
 
-  if(typeof clearMatchstickSelection === "function"){
+  if(
+    typeof clearMatchstickSelection ===
+    "function"
+  ){
     clearMatchstickSelection();
   }
 
@@ -1568,7 +2402,9 @@ function restoreDraggedMatch(){
 function removeDragCopy(){
 
   if(dragCopy){
+
     dragCopy.remove();
+
     dragCopy = null;
   }
 
@@ -1586,18 +2422,25 @@ function cancelCurrentDrag(){
   );
 
   if(draggingMatch){
-    draggingMatch.style.opacity = "1";
+
+    draggingMatch.style.opacity =
+      "1";
   }
 
   removeDragCopy();
 }
 
 
-/* HINT */
+/* =========================
+   HINT
+========================= */
 
 function showHint(){
 
-  if(levelSolved || levelFailed){
+  if(
+    levelSolved ||
+    levelFailed
+  ){
     return;
   }
 
@@ -1617,120 +2460,132 @@ function showHint(){
   gameMessage.className =
     "message";
 
-  gameMessage.textContent =
-    "💡 Посмотри не только на цифры — математический знак тоже состоит из спичек.";
+  if(displayedLevel === 1){
+
+    gameMessage.textContent =
+      "💡 Посмотри не только на цифры — математический знак тоже состоит из спичек.";
+
+    return;
+  }
+
+  if(displayedLevel === 2){
+
+    gameMessage.textContent =
+      "💡 Ищи самый короткий путь рыбки наружу.";
+  }
 }
 
 
-/* RESET VISUAL */
+/* =========================
+   RESET BUTTON
+========================= */
 
-function resetPuzzleVisual(){
+function resetLevel(){
 
-  cancelCurrentDrag();
+  if(
+    levelSolved ||
+    levelFailed
+  ){
+    return;
+  }
 
-  const matches =
-    document.querySelectorAll(
-      "#matchEquation .match"
-    );
+  /*
+      Пока сохраняем старое поведение:
+      кнопка начинает попытку заново.
+  */
 
-  matches.forEach(match => {
+  loadLevel(
+    displayedLevel
+  );
+}
 
-    match.style.display = "block";
-    match.style.opacity = "1";
 
-    match.classList.remove(
-      "match-selected"
-    );
-  });
+/* =========================
+   FINISH LEVEL
+========================= */
 
-  document
-    .querySelectorAll("#matchEquation .match-slot")
-    .forEach(slot => {
+function finishLevel(){
 
-      slot.style.opacity = "0";
-      slot.style.background = "transparent";
-    });
-
-  movesText.textContent =
-    "⚡ Передвинь одну спичку";
-
-  gameMessage.className =
-    "message";
-
-  gameMessage.textContent = "";
-
-  const completeModal =
+  const modal =
     document.getElementById(
       "levelCompleteModal"
     );
 
-  if(completeModal){
-    completeModal.classList.remove(
+  if(modal){
+    modal.classList.remove(
       "show"
     );
   }
 
-  bindMatchsticks();
-}
+  /*
+      После первого уровня
+      storage.js уже устанавливает
+      текущий уровень = 2.
+  */
 
+  if(activeLevel === 1){
 
-/* MANUAL RESET */
+    updateMainUI();
+    updateProgress();
+    updateChapterUI();
+    updateHomeLevel();
 
-function resetLevel(){
+    loadLevel(2);
 
-  if(levelSolved || levelFailed){
     return;
   }
 
-  resetPuzzleVisual();
-
-  startLevel(1);
-
-  if(typeof startMatchstickPuzzle === "function"){
-    startMatchstickPuzzle();
-  }
-}
-
-
-/* FINISH LEVEL */
-
-function finishLevel(){
-
-  document
-    .getElementById("levelCompleteModal")
-    .classList.remove("show");
+  /*
+      Уровень 3 пока не создан.
+      После рыбки возвращаемся домой.
+  */
 
   goHome();
 }
 
 
-/* RULES */
+/* =========================
+   RULES
+========================= */
 
 function openRules(){
 
   document
-    .getElementById("rulesModal")
-    .classList.add("show");
+    .getElementById(
+      "rulesModal"
+    )
+    .classList.add(
+      "show"
+    );
 }
 
 
 function closeRules(){
 
   document
-    .getElementById("rulesModal")
-    .classList.remove("show");
+    .getElementById(
+      "rulesModal"
+    )
+    .classList.remove(
+      "show"
+    );
 }
 
 
-/* START */
+/* =========================
+   START
+========================= */
+
+bindMatchsticks();
 
 initializeApp();
 
 </script>
 
+
 <!-- APP -->
 
-<script src="js/app.js?v=4"></script>
+<script src="js/app.js?v=5"></script>
 
 </body>
 </html>
