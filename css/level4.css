@@ -6,474 +6,462 @@
 
 #railwayPuzzle{
     width:100%;
+    margin-top:8px;
 }
 
-#railwayPuzzle .railway-info{
-    margin:2px auto 10px;
-    max-width:340px;
-    text-align:center;
-    font-size:13px;
-    line-height:1.35;
-    color:#9eabc0;
+.railway-info{
+    display:none;
 }
+
 
 /* =========================================
    BOARD
 ========================================= */
 
-#railwayPuzzle .railway-board{
+.railway-board{
     position:relative;
+
     width:min(100%,350px);
-    height:430px;
-    margin:0 auto;
+    height:405px;
+
+    margin:12px auto 0;
+
     overflow:hidden;
+
+    border:1px solid rgba(113,145,155,.28);
     border-radius:24px;
-    border:1px solid rgba(129,151,181,.24);
 
     background:
         radial-gradient(
-            circle at 20% 20%,
-            rgba(48,78,77,.35),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 80% 70%,
-            rgba(44,65,81,.35),
-            transparent 35%
+            circle at 50% 42%,
+            rgba(28,68,58,.30),
+            transparent 55%
         ),
         linear-gradient(
             180deg,
-            #17231f 0%,
-            #111b19 48%,
-            #0b1314 100%
+            #10231f 0%,
+            #0b1917 100%
         );
 
     box-shadow:
-        inset 0 0 45px rgba(0,0,0,.5),
-        0 14px 32px rgba(0,0,0,.25);
+        inset 0 0 45px rgba(0,0,0,.48),
+        0 16px 34px rgba(0,0,0,.30);
 }
+
+
+/* =========================================
+   GRID
+========================================= */
 
 .railway-grid{
     position:absolute;
     inset:0;
+
     pointer-events:none;
-    opacity:.09;
+
+    opacity:.16;
 
     background-image:
         linear-gradient(
-            rgba(255,255,255,.12) 1px,
+            rgba(160,200,190,.20) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(255,255,255,.12) 1px,
+            rgba(160,200,190,.20) 1px,
             transparent 1px
         );
 
-    background-size:35px 35px;
+    background-size:32px 32px;
 }
+
 
 /* =========================================
-   TRACKS
+   GROUND
 ========================================= */
 
-.rail-track{
-    position:absolute;
-    z-index:4;
-    height:15px;
-    border-radius:8px;
+.railway-board::before{
 
-    background:
-        repeating-linear-gradient(
-            90deg,
-            transparent 0 8px,
-            #493d30 8px 12px,
-            transparent 12px 19px
-        );
-
-    border-top:3px solid #7d8790;
-    border-bottom:3px solid #4f5961;
-
-    box-shadow:
-        0 2px 3px rgba(0,0,0,.45);
-}
-
-.rail-track::before{
     content:"";
+
     position:absolute;
-    left:0;
-    right:0;
-    top:3px;
-    height:2px;
-    background:#aab2b8;
-    opacity:.45;
-}
+    inset:0;
 
-/* TRAIN A ROUTE */
-
-.track-a-start{
-    left:-12px;
-    top:93px;
-    width:115px;
-}
-
-.track-a-mid{
-    left:91px;
-    top:93px;
-    width:118px;
-    transform-origin:left center;
-    transform:rotate(33deg);
-}
-
-.track-a-turn{
-    left:190px;
-    top:155px;
-    width:115px;
-    transform-origin:left center;
-    transform:rotate(90deg);
-}
-
-.track-a-finish{
-    left:190px;
-    top:260px;
-    width:128px;
-    transform-origin:left center;
-    transform:rotate(52deg);
-}
-
-/* TRAIN B ROUTE */
-
-.track-b-start{
-    left:274px;
-    top:-8px;
-    width:115px;
-    transform-origin:left center;
-    transform:rotate(90deg);
-}
-
-.track-b-mid{
-    left:274px;
-    top:95px;
-    width:116px;
-    transform-origin:left center;
-    transform:rotate(145deg);
-}
-
-.track-b-turn{
-    left:180px;
-    top:160px;
-    width:126px;
-    transform-origin:left center;
-    transform:rotate(150deg);
-}
-
-.track-b-finish{
-    left:70px;
-    top:220px;
-    width:165px;
-    transform-origin:left center;
-    transform:rotate(90deg);
-}
-
-/* FALSE ROUTES */
-
-.false-track{
-    opacity:.68;
-}
-
-.false-track-1{
-    left:68px;
-    top:93px;
-    width:118px;
-    transform-origin:left center;
-    transform:rotate(72deg);
-}
-
-.false-track-2{
-    left:117px;
-    top:151px;
-    width:108px;
-    transform-origin:left center;
-    transform:rotate(-27deg);
-}
-
-.false-track-3{
-    left:227px;
-    top:104px;
-    width:110px;
-    transform-origin:left center;
-    transform:rotate(62deg);
-}
-
-.false-track-4{
-    left:43px;
-    top:262px;
-    width:130px;
-    transform-origin:left center;
-    transform:rotate(25deg);
-}
-
-.false-track-5{
-    left:178px;
-    top:282px;
-    width:125px;
-    transform-origin:left center;
-    transform:rotate(-25deg);
-}
-
-.false-track-6{
-    left:117px;
-    top:350px;
-    width:155px;
-    transform-origin:left center;
-    transform:rotate(0deg);
-}
-
-/* =========================================
-   SWITCHES
-========================================= */
-
-.rail-switch{
-    position:absolute;
-    z-index:20;
-
-    width:30px;
-    height:30px;
-
-    padding:0;
-    border:0;
-    outline:0;
-
-    border-radius:50%;
+    pointer-events:none;
 
     background:
         radial-gradient(
-            circle,
-            #2b3540 0%,
-            #161e27 62%,
-            #090e14 100%
+            ellipse at 18% 70%,
+            rgba(90,105,100,.16) 0 18px,
+            transparent 20px
+        ),
+        radial-gradient(
+            ellipse at 82% 35%,
+            rgba(90,105,100,.13) 0 20px,
+            transparent 22px
+        ),
+        radial-gradient(
+            circle at 30% 18%,
+            rgba(40,90,65,.10),
+            transparent 22%
         );
-
-    box-shadow:
-        0 0 0 2px #46515f,
-        0 4px 8px rgba(0,0,0,.42);
-
-    touch-action:manipulation;
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
 }
 
-.switch-base{
+
+/* =========================================
+   TREES
+========================================= */
+
+.rail-tree{
+
     position:absolute;
-    left:8px;
-    top:8px;
 
-    width:14px;
-    height:14px;
+    z-index:4;
 
-    border-radius:50%;
+    font-size:25px;
 
-    background:#0c1218;
+    opacity:.78;
 
-    box-shadow:
-        inset 0 0 4px rgba(0,0,0,.8);
+    filter:
+        brightness(.75)
+        saturate(.8);
+
+    pointer-events:none;
 }
 
-.switch-handle{
+.tree-1{
+    left:20px;
+    top:24px;
+}
+
+.tree-2{
+    right:18px;
+    top:188px;
+}
+
+.tree-3{
+    left:23px;
+    bottom:70px;
+}
+
+.tree-4{
+    right:63px;
+    bottom:17px;
+}
+
+
+/* =========================================
+   ROCKS
+========================================= */
+
+.rail-rock{
+
     position:absolute;
 
-    left:13px;
-    top:1px;
+    z-index:3;
 
-    width:4px;
-    height:15px;
+    width:38px;
+    height:23px;
 
-    border-radius:5px;
+    border-radius:
+        50% 45% 48% 40%;
 
     background:
         linear-gradient(
-            90deg,
-            #8b939a,
-            #e0e4e6,
-            #6f777e
+            145deg,
+            #43504d,
+            #242e2c
         );
 
-    transform-origin:
-        50% 13px;
-
-    transform:rotate(-35deg);
-
-    transition:
-        transform .28s
-        cubic-bezier(.34,1.56,.64,1);
-}
-
-.switch-knob{
-    position:absolute;
-
-    left:-3px;
-    top:-3px;
-
-    width:10px;
-    height:10px;
-
-    border-radius:50%;
-
-    background:#e54b43;
-
     box-shadow:
-        0 0 5px
-        rgba(229,75,67,.7);
+        inset 0 2px 4px
+        rgba(255,255,255,.08);
 }
 
-.switch-changed .switch-handle{
-    transform:rotate(35deg);
+.rock-1{
+    left:32px;
+    top:221px;
+
+    transform:rotate(-7deg);
 }
 
-.switch-selected{
-    transform:scale(1.15);
+.rock-2{
+    right:29px;
+    top:112px;
 
-    box-shadow:
-        0 0 0 2px #f1c95b,
-        0 0 14px rgba(241,201,91,.6);
+    transform:rotate(9deg);
 }
 
-.switch-wrong{
-    box-shadow:
-        0 0 0 2px #ff5757,
-        0 0 17px rgba(255,87,87,.65);
-
-    animation:
-        railwaySwitchWrong .35s ease;
-}
-
-@keyframes railwaySwitchWrong{
-    0%,100%{
-        translate:0;
-    }
-
-    25%{
-        translate:-4px 0;
-    }
-
-    50%{
-        translate:4px 0;
-    }
-
-    75%{
-        translate:-3px 0;
-    }
-}
-
-.switch-correct{
-    transform:scale(1.12);
-
-    box-shadow:
-        0 0 0 2px #56e6a5,
-        0 0 17px rgba(86,230,165,.75);
-}
 
 /* =========================================
-   16 SWITCH POSITIONS
+   TRACK BASE
 ========================================= */
 
-.rail-switch-1{
-    left:62px;
-    top:78px;
+.rail-track{
+
+    position:absolute;
+
+    z-index:5;
+
+    height:16px;
+
+    border-radius:10px;
+
+    background:
+
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 10px,
+            #765f4d 10px 14px,
+            transparent 14px 23px
+        ),
+
+        linear-gradient(
+            180deg,
+            #78817f 0 3px,
+            #262d2d 3px 6px,
+            #151a1a 6px 10px,
+            #262d2d 10px 13px,
+            #78817f 13px 16px
+        );
+
+    box-shadow:
+        0 2px 3px rgba(0,0,0,.42);
+
+    transform-origin:left center;
 }
 
-.rail-switch-2{
-    left:111px;
-    top:106px;
-}
-
-.rail-switch-3{
-    left:164px;
-    top:117px;
-}
-
-.rail-switch-4{
-    left:218px;
-    top:91px;
-}
-
-.rail-switch-5{
-    left:272px;
-    top:76px;
-}
-
-.rail-switch-6{
-    left:62px;
-    top:161px;
-}
-
-.rail-switch-7{
-    left:119px;
-    top:166px;
-}
-
-.rail-switch-8{
-    left:177px;
-    top:154px;
-}
-
-.rail-switch-9{
-    left:238px;
-    top:162px;
-}
-
-.rail-switch-10{
-    left:291px;
-    top:177px;
-}
-
-/* CORRECT */
-
-.rail-switch-11{
-    left:160px;
-    top:218px;
-}
-
-.rail-switch-12{
-    left:71px;
-    top:250px;
-}
-
-.rail-switch-13{
-    left:119px;
-    top:287px;
-}
-
-.rail-switch-14{
-    left:217px;
-    top:271px;
-}
-
-.rail-switch-15{
-    left:280px;
-    top:285px;
-}
-
-.rail-switch-16{
-    left:171px;
-    top:339px;
-}
 
 /* =========================================
-   TRAINS
+   MAIN TRACK A
+========================================= */
+
+.track-a-start{
+
+    left:0;
+    top:86px;
+
+    width:116px;
+}
+
+.track-a-mid{
+
+    left:101px;
+    top:91px;
+
+    width:143px;
+
+    transform:rotate(31deg);
+}
+
+.track-a-turn{
+
+    left:220px;
+    top:158px;
+
+    width:119px;
+
+    transform:rotate(55deg);
+}
+
+.track-a-finish{
+
+    left:268px;
+    top:254px;
+
+    width:126px;
+
+    transform:rotate(90deg);
+}
+
+
+/* =========================================
+   MAIN TRACK B
+========================================= */
+
+.track-b-start{
+
+    left:0;
+    top:279px;
+
+    width:110px;
+}
+
+.track-b-mid{
+
+    left:91px;
+    top:274px;
+
+    width:170px;
+
+    transform:rotate(-31deg);
+}
+
+.track-b-turn{
+
+    left:230px;
+    top:190px;
+
+    width:112px;
+
+    transform:rotate(-42deg);
+}
+
+.track-b-finish{
+
+    left:302px;
+    top:115px;
+
+    width:110px;
+
+    transform:rotate(-90deg);
+}
+
+
+/* =========================================
+   FALSE TRACKS
+========================================= */
+
+.false-track{
+    opacity:.82;
+}
+
+.false-track-1{
+
+    left:88px;
+    top:94px;
+
+    width:128px;
+
+    transform:rotate(69deg);
+}
+
+.false-track-2{
+
+    left:109px;
+    top:171px;
+
+    width:123px;
+
+    transform:rotate(-30deg);
+}
+
+.false-track-3{
+
+    left:171px;
+    top:119px;
+
+    width:111px;
+
+    transform:rotate(145deg);
+}
+
+.false-track-4{
+
+    left:193px;
+    top:206px;
+
+    width:121px;
+
+    transform:rotate(90deg);
+}
+
+.false-track-5{
+
+    left:190px;
+    top:293px;
+
+    width:122px;
+
+    transform:rotate(-20deg);
+}
+
+.false-track-6{
+
+    left:199px;
+    top:286px;
+
+    width:145px;
+
+    transform:rotate(47deg);
+}
+
+
+/* =========================================
+   STATIONS
+========================================= */
+
+.rail-station{
+
+    position:absolute;
+
+    z-index:15;
+
+    width:68px;
+    height:47px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:5px;
+
+    border:1px solid #566276;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #303a49,
+            #1c2531
+        );
+
+    color:#fff;
+
+    font-size:13px;
+    font-weight:900;
+
+    box-shadow:
+        0 7px 14px rgba(0,0,0,.35);
+}
+
+.station-flag{
+    font-size:16px;
+}
+
+.station-a{
+
+    right:9px;
+    bottom:8px;
+}
+
+.station-b{
+
+    left:9px;
+    bottom:8px;
+}
+
+
+/* =========================================
+   TRAIN
 ========================================= */
 
 .train{
+
     position:absolute;
 
-    z-index:14;
+    z-index:12;
 
-    width:76px;
-    height:24px;
+    width:73px;
+    height:28px;
 
-    transform-origin:center center;
+    display:flex;
+
+    align-items:center;
+
+    transform-origin:center;
 
     pointer-events:none;
 
@@ -484,194 +472,488 @@
         );
 }
 
+
+/* =========================================
+   TRAIN ENGINE
+========================================= */
+
 .train-engine{
+
     position:absolute;
 
     right:0;
-    top:2px;
 
-    width:30px;
-    height:20px;
+    width:31px;
+    height:24px;
 
     border-radius:
-        4px 8px 8px 4px;
+        6px 10px 10px 6px;
+
+    box-shadow:
+        inset 0 2px 3px
+        rgba(255,255,255,.25);
 }
 
-.train-car{
+.train-window{
+
     position:absolute;
 
-    top:3px;
+    right:6px;
+    top:6px;
+
+    width:10px;
+    height:8px;
+
+    border-radius:3px;
+
+    background:#c9ecff;
+
+    box-shadow:
+        0 0 6px
+        rgba(201,236,255,.55);
+}
+
+
+/* =========================================
+   TRAIN CARS
+========================================= */
+
+.train-car{
+
+    position:absolute;
 
     width:20px;
-    height:18px;
+    height:20px;
 
     border-radius:4px;
+
+    box-shadow:
+        inset 0 2px 2px
+        rgba(255,255,255,.18);
 }
 
 .train-car-1{
-    left:23px;
+    left:20px;
 }
 
 .train-car-2{
     left:0;
 }
 
-.train-a .train-engine,
+
+/* =========================================
+   RED TRAIN A
+========================================= */
+
+.train-a{
+
+    left:-7px;
+    top:80px;
+}
+
+.train-a .train-engine{
+
+    background:
+        linear-gradient(
+            180deg,
+            #ff655f,
+            #bb3434
+        );
+}
+
 .train-a .train-car{
+
     background:
         linear-gradient(
             180deg,
-            #d9574d,
-            #8f2725
+            #db514d,
+            #922b2b
         );
-
-    border:1px solid
-        rgba(255,255,255,.18);
 }
 
-.train-b .train-engine,
+
+/* =========================================
+   BLUE TRAIN B
+========================================= */
+
+.train-b{
+
+    right:-7px;
+    top:108px;
+
+    transform:rotate(180deg);
+}
+
+.train-b .train-engine{
+
+    background:
+        linear-gradient(
+            180deg,
+            #5d9cff,
+            #315cba
+        );
+}
+
 .train-b .train-car{
+
     background:
         linear-gradient(
             180deg,
-            #4d87d9,
-            #244d91
+            #4f85db,
+            #294c92
         );
-
-    border:1px solid
-        rgba(255,255,255,.18);
 }
 
-.train-window{
-    position:absolute;
 
-    right:6px;
-    top:4px;
-
-    width:10px;
-    height:7px;
-
-    border-radius:2px;
-
-    background:#bce7f2;
-
-    box-shadow:
-        inset 0 0 3px
-        rgba(255,255,255,.6);
-}
+/* =========================================
+   TRAIN LIGHT
+========================================= */
 
 .train-light{
+
     position:absolute;
 
     right:-5px;
-    top:8px;
+    top:10px;
 
-    width:7px;
-    height:7px;
+    width:8px;
+    height:8px;
 
-    z-index:5;
+    z-index:4;
 
     border-radius:50%;
 
-    background:#ffe690;
+    background:#ffe36e;
 
     box-shadow:
-        0 0 6px #ffe690,
-        0 0 12px rgba(255,230,144,.75);
+        0 0 6px #ffe36e,
+        0 0 13px rgba(255,227,110,.8);
 
     animation:
-        trainLight 1.2s
-        ease-in-out infinite;
+        trainLightPulse
+        .9s ease-in-out infinite;
 }
 
-@keyframes trainLight{
+@keyframes trainLightPulse{
+
     0%,100%{
-        opacity:.72;
+        opacity:.65;
     }
 
     50%{
         opacity:1;
+        transform:scale(1.2);
     }
 }
 
-/* START POSITIONS */
-
-.train-a{
-    left:-50px;
-    top:88px;
-}
-
-.train-b{
-    left:255px;
-    top:-42px;
-
-    transform:rotate(90deg);
-}
 
 /* =========================================
    SMOKE
 ========================================= */
 
 .train-smoke{
+
     position:absolute;
 
-    width:9px;
-    height:9px;
+    z-index:-1;
+
+    width:8px;
+    height:8px;
 
     border-radius:50%;
 
     background:
-        rgba(205,216,221,.38);
+        rgba(210,220,220,.30);
 
     opacity:0;
 
-    pointer-events:none;
+    animation:
+        trainSmoke
+        1.7s ease-out infinite;
 }
 
-.train .smoke-1{
-    right:23px;
-    top:-5px;
-}
+.smoke-1{
 
-.train .smoke-2{
-    right:28px;
+    left:42px;
     top:-7px;
 }
 
-.train-moving .smoke-1{
-    animation:
-        trainSmoke
-        .8s ease-out infinite;
-}
+.smoke-2{
 
-.train-moving .smoke-2{
-    animation:
-        trainSmoke
-        .8s .35s
-        ease-out infinite;
+    left:46px;
+    top:-5px;
+
+    animation-delay:.8s;
 }
 
 @keyframes trainSmoke{
+
     0%{
-        opacity:.6;
+        opacity:0;
         transform:
             translate(0,0)
-            scale(.7);
+            scale(.5);
+    }
+
+    25%{
+        opacity:.45;
     }
 
     100%{
         opacity:0;
+
         transform:
-            translate(-8px,-14px)
-            scale(1.5);
+            translate(-9px,-15px)
+            scale(1.6);
     }
 }
 
+
 /* =========================================
-   SUCCESS ROUTES
+   SWITCHES
+========================================= */
+
+.rail-switch{
+
+    position:absolute;
+
+    z-index:30;
+
+    width:27px;
+    height:27px;
+
+    padding:0;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #29323e 0%,
+            #111821 72%
+        );
+
+    box-shadow:
+        0 0 0 2px #48566a,
+        0 4px 8px rgba(0,0,0,.45);
+
+    touch-action:manipulation;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.rail-switch:active{
+
+    transform:scale(.88);
+}
+
+.switch-base{
+
+    position:absolute;
+
+    left:5px;
+    top:5px;
+
+    width:17px;
+    height:17px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+}
+
+.switch-handle{
+
+    position:absolute;
+
+    left:12px;
+    top:2px;
+
+    width:4px;
+    height:15px;
+
+    border-radius:5px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #dfe6ed,
+            #788392
+        );
+
+    transform:
+        rotate(-38deg);
+
+    transform-origin:
+        50% 13px;
+
+    transition:
+        transform .25s ease;
+}
+
+.switch-knob{
+
+    position:absolute;
+
+    left:-3px;
+    top:-3px;
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:#ff4e50;
+
+    box-shadow:
+        0 0 7px
+        rgba(255,78,80,.55);
+}
+
+
+/* =========================================
+   SWITCH POSITIONS
+========================================= */
+
+.rail-switch-1{
+    left:71px;
+    top:74px;
+}
+
+.rail-switch-2{
+    left:113px;
+    top:105px;
+}
+
+.rail-switch-3{
+    left:163px;
+    top:132px;
+}
+
+.rail-switch-4{
+    left:210px;
+    top:157px;
+}
+
+.rail-switch-5{
+    left:253px;
+    top:137px;
+}
+
+.rail-switch-6{
+    right:28px;
+    top:95px;
+}
+
+.rail-switch-7{
+    left:70px;
+    top:152px;
+}
+
+.rail-switch-8{
+    left:118px;
+    top:174px;
+}
+
+.rail-switch-9{
+    left:178px;
+    top:179px;
+}
+
+.rail-switch-10{
+    right:64px;
+    top:171px;
+}
+
+.rail-switch-11{
+    left:167px;
+    top:229px;
+}
+
+.rail-switch-12{
+    left:79px;
+    top:257px;
+}
+
+.rail-switch-13{
+    left:124px;
+    top:299px;
+}
+
+.rail-switch-14{
+    left:220px;
+    top:277px;
+}
+
+.rail-switch-15{
+    right:35px;
+    top:294px;
+}
+
+.rail-switch-16{
+    left:180px;
+    top:342px;
+}
+
+
+/* =========================================
+   SWITCH CHANGED
+========================================= */
+
+.switch-changed
+.switch-handle{
+
+    transform:
+        rotate(38deg);
+}
+
+.switch-selected{
+
+    box-shadow:
+        0 0 0 2px #ffd166,
+        0 0 15px rgba(255,209,102,.60);
+}
+
+.switch-wrong{
+
+    box-shadow:
+        0 0 0 2px #ff6666,
+        0 0 17px rgba(255,70,70,.70);
+}
+
+.switch-correct{
+
+    box-shadow:
+        0 0 0 2px #55e6a5,
+        0 0 18px rgba(85,230,165,.80);
+}
+
+
+/* =========================================
+   TRAIN START EFFECT
+========================================= */
+
+.railway-running .train{
+
+    animation-timing-function:
+        cubic-bezier(.45,.02,.35,1);
+
+    animation-fill-mode:forwards;
+}
+
+
+/* =========================================
+   SUCCESS ROUTE — TRAIN A
 ========================================= */
 
 .train-a-success{
+
     animation:
         trainASuccess
         4.2s linear forwards;
@@ -680,44 +962,49 @@
 @keyframes trainASuccess{
 
     0%{
-        left:-50px;
-        top:88px;
+        left:-7px;
+        top:80px;
         transform:rotate(0deg);
     }
 
-    20%{
-        left:65px;
-        top:88px;
+    22%{
+        left:73px;
+        top:80px;
         transform:rotate(0deg);
     }
 
-    43%{
-        left:153px;
-        top:133px;
-        transform:rotate(32deg);
+    45%{
+        left:142px;
+        top:119px;
+        transform:rotate(30deg);
     }
 
-    62%{
-        left:187px;
-        top:207px;
-        transform:rotate(90deg);
+    67%{
+        left:215px;
+        top:161px;
+        transform:rotate(31deg);
     }
 
-    80%{
-        left:225px;
-        top:294px;
-        transform:rotate(50deg);
+    83%{
+        left:270px;
+        top:219px;
+        transform:rotate(58deg);
     }
 
     100%{
         left:280px;
-        top:355px;
-        transform:rotate(50deg);
+        top:344px;
+        transform:rotate(90deg);
     }
 }
 
 
+/* =========================================
+   SUCCESS ROUTE — TRAIN B
+========================================= */
+
 .train-b-success{
+
     animation:
         trainBSuccess
         4.2s linear forwards;
@@ -726,463 +1013,341 @@
 @keyframes trainBSuccess{
 
     0%{
-        left:255px;
-        top:-42px;
-        transform:rotate(90deg);
+        right:-7px;
+        top:108px;
+        transform:rotate(180deg);
     }
 
     22%{
-        left:255px;
-        top:67px;
-        transform:rotate(90deg);
+        right:35px;
+        top:108px;
+        transform:rotate(180deg);
     }
 
-    43%{
-        left:204px;
-        top:122px;
-        transform:rotate(145deg);
+    45%{
+        right:82px;
+        top:148px;
+        transform:rotate(138deg);
     }
 
-    62%{
-        left:128px;
-        top:167px;
-        transform:rotate(150deg);
+    67%{
+        right:137px;
+        top:192px;
+        transform:rotate(148deg);
     }
 
-    80%{
-        left:79px;
-        top:243px;
-        transform:rotate(90deg);
+    84%{
+        right:203px;
+        top:237px;
+        transform:rotate(148deg);
     }
 
     100%{
-        left:79px;
-        top:350px;
+        right:278px;
+        top:344px;
         transform:rotate(90deg);
     }
 }
+
 
 /* =========================================
    WRONG ROUTE 1
 ========================================= */
 
 .train-a-wrong-1{
+
     animation:
         trainAWrong1
-        3.2s linear forwards;
-}
-
-.train-b-wrong-1{
-    animation:
-        trainBWrong1
         3.2s linear forwards;
 }
 
 @keyframes trainAWrong1{
 
     0%{
-        left:-50px;
-        top:88px;
+        left:-7px;
+        top:80px;
     }
 
     45%{
-        left:82px;
-        top:88px;
-        transform:rotate(0deg);
+        left:74px;
+        top:80px;
     }
 
     100%{
-        left:150px;
-        top:188px;
-        transform:rotate(60deg);
+        left:132px;
+        top:150px;
+        transform:rotate(65deg);
     }
+}
+
+
+.train-b-wrong-1{
+
+    animation:
+        trainBWrong1
+        3.2s linear forwards;
 }
 
 @keyframes trainBWrong1{
 
     0%{
-        left:255px;
-        top:-42px;
-        transform:rotate(90deg);
+        right:-7px;
+        top:108px;
+        transform:rotate(180deg);
     }
 
     45%{
-        left:255px;
-        top:82px;
-        transform:rotate(90deg);
+        right:46px;
+        top:108px;
+        transform:rotate(180deg);
     }
 
     100%{
-        left:171px;
-        top:176px;
+        right:120px;
+        top:155px;
         transform:rotate(145deg);
     }
 }
+
 
 /* =========================================
    WRONG ROUTE 2
 ========================================= */
 
 .train-a-wrong-2{
+
     animation:
         trainAWrong2
-        3.2s linear forwards;
-}
-
-.train-b-wrong-2{
-    animation:
-        trainBWrong2
         3.2s linear forwards;
 }
 
 @keyframes trainAWrong2{
 
     0%{
-        left:-50px;
-        top:88px;
+        left:-7px;
+        top:80px;
     }
 
     50%{
-        left:110px;
-        top:88px;
+        left:76px;
+        top:80px;
     }
 
     100%{
-        left:220px;
-        top:130px;
-        transform:rotate(25deg);
+        left:120px;
+        top:197px;
+        transform:rotate(78deg);
     }
+}
+
+
+.train-b-wrong-2{
+
+    animation:
+        trainBWrong2
+        3.2s linear forwards;
 }
 
 @keyframes trainBWrong2{
 
     0%{
-        left:255px;
-        top:-42px;
-        transform:rotate(90deg);
+        right:-7px;
+        top:108px;
+        transform:rotate(180deg);
     }
 
     50%{
-        left:255px;
-        top:100px;
-        transform:rotate(90deg);
+        right:55px;
+        top:108px;
+        transform:rotate(180deg);
     }
 
     100%{
-        left:219px;
-        top:165px;
-        transform:rotate(115deg);
+        right:110px;
+        top:218px;
+        transform:rotate(120deg);
     }
 }
+
 
 /* =========================================
    WRONG ROUTE 3
 ========================================= */
 
 .train-a-wrong-3{
+
     animation:
         trainAWrong3
-        3.2s linear forwards;
-}
-
-.train-b-wrong-3{
-    animation:
-        trainBWrong3
         3.2s linear forwards;
 }
 
 @keyframes trainAWrong3{
 
     0%{
-        left:-50px;
-        top:88px;
+        left:-7px;
+        top:80px;
     }
 
     50%{
         left:75px;
-        top:88px;
+        top:80px;
     }
 
     100%{
-        left:118px;
-        top:236px;
-        transform:rotate(72deg);
+        left:178px;
+        top:132px;
+        transform:rotate(30deg);
     }
+}
+
+
+.train-b-wrong-3{
+
+    animation:
+        trainBWrong3
+        3.2s linear forwards;
 }
 
 @keyframes trainBWrong3{
 
     0%{
-        left:255px;
-        top:-42px;
-        transform:rotate(90deg);
+        right:-7px;
+        top:108px;
+        transform:rotate(180deg);
     }
 
     50%{
-        left:255px;
-        top:92px;
-        transform:rotate(90deg);
+        right:50px;
+        top:108px;
+        transform:rotate(180deg);
     }
 
     100%{
-        left:155px;
-        top:229px;
-        transform:rotate(140deg);
+        right:145px;
+        top:139px;
+        transform:rotate(155deg);
     }
 }
+
 
 /* =========================================
    WRONG EFFECT
 ========================================= */
 
-.railway-wrong .railway-board{
+.railway-wrong{
+
     animation:
-        railwayBoardWrong
-        .4s ease;
+        railwayWrongShake
+        .35s ease;
 }
 
-@keyframes railwayBoardWrong{
+@keyframes railwayWrongShake{
 
-    0%,
-    100%{
-        translate:0;
+    0%,100%{
+        transform:translateX(0);
     }
 
-    20%{
-        translate:-3px 0;
+    25%{
+        transform:translateX(-4px);
     }
 
-    40%{
-        translate:3px 0;
+    50%{
+        transform:translateX(4px);
     }
 
-    60%{
-        translate:-2px 0;
-    }
-
-    80%{
-        translate:2px 0;
+    75%{
+        transform:translateX(-2px);
     }
 }
+
 
 /* =========================================
-   STATIONS
+   SUCCESS
 ========================================= */
 
-.rail-station{
-    position:absolute;
+.railway-solved
+.station-a,
+.railway-solved
+.station-b{
 
-    z-index:11;
-
-    width:53px;
-    height:42px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:3px;
-
-    border-radius:8px;
-
-    font-size:12px;
-    font-weight:800;
-
-    color:#e6edf5;
-
-    background:
-        linear-gradient(
-            180deg,
-            #384451,
-            #1b232c
-        );
-
-    border:1px solid
-        rgba(255,255,255,.13);
+    border-color:#55e6a5;
 
     box-shadow:
-        0 5px 12px
-        rgba(0,0,0,.35);
-}
+        0 0 0 2px rgba(85,230,165,.20),
+        0 0 20px rgba(85,230,165,.45);
 
-.station-a{
-    right:12px;
-    bottom:18px;
-}
-
-.station-b{
-    left:52px;
-    bottom:18px;
-}
-
-.station-flag{
-    font-size:16px;
-}
-
-.railway-solved .rail-station{
     animation:
         stationSuccess
-        .8s ease-in-out
-        infinite alternate;
+        .7s ease-in-out infinite alternate;
 }
 
 @keyframes stationSuccess{
 
     from{
-        box-shadow:
-            0 5px 12px
-            rgba(0,0,0,.35);
+        transform:scale(1);
     }
 
     to{
-        box-shadow:
-            0 0 18px
-            rgba(86,230,165,.45);
+        transform:scale(1.04);
     }
 }
 
-/* =========================================
-   TREES
-========================================= */
-
-.rail-tree{
-    position:absolute;
-
-    z-index:2;
-
-    font-size:25px;
-
-    opacity:.68;
-
-    filter:
-        saturate(.65)
-        brightness(.75);
-}
-
-.tree-1{
-    left:15px;
-    top:18px;
-}
-
-.tree-2{
-    left:16px;
-    top:305px;
-}
-
-.tree-3{
-    right:15px;
-    top:210px;
-}
-
-.tree-4{
-    right:65px;
-    top:374px;
-}
-
-/* =========================================
-   ROCKS
-========================================= */
-
-.rail-rock{
-    position:absolute;
-
-    z-index:2;
-
-    width:25px;
-    height:18px;
-
-    border-radius:
-        50% 55% 42% 48%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #59605f,
-            #272e2d
-        );
-
-    opacity:.65;
-}
-
-.rock-1{
-    left:31px;
-    top:220px;
-}
-
-.rock-2{
-    right:37px;
-    top:130px;
-}
-
-/* =========================================
-   IDLE TRAINS
-========================================= */
-
-.train:not(.train-moving){
-    animation:
-        trainIdle
-        1.7s ease-in-out
-        infinite;
-}
-
-@keyframes trainIdle{
-
-    0%,
-    100%{
-        filter:
-            drop-shadow(
-                0 5px 5px
-                rgba(0,0,0,.45)
-            );
-    }
-
-    50%{
-        filter:
-            drop-shadow(
-                0 5px 7px
-                rgba(255,230,144,.18)
-            );
-    }
-}
 
 /* =========================================
    RESET
 ========================================= */
 
 .railway-resetting .train{
-    transition:
-        left .2s ease,
-        top .2s ease,
-        transform .2s ease;
+
+    transition:none!important;
+    animation:none!important;
 }
 
+
 /* =========================================
-   MOBILE
+   BUTTON DISABLED
+========================================= */
+
+.rail-switch:disabled{
+
+    cursor:default;
+}
+
+
+/* =========================================
+   SMALL PHONES
 ========================================= */
 
 @media(max-width:380px){
 
-    #railwayPuzzle .railway-board{
-        width:100%;
-        height:430px;
+    .railway-board{
+
+        height:395px;
     }
 
     .rail-switch{
-        width:29px;
-        height:29px;
+
+        width:26px;
+        height:26px;
+    }
+
+    .switch-base{
+
+        width:16px;
+        height:16px;
     }
 }
 
+
 @media(max-width:340px){
 
-    #railwayPuzzle .railway-info{
-        font-size:12px;
+    .railway-board{
+
+        transform-origin:top center;
     }
 
-    .rail-switch{
-        transform:scale(.92);
-    }
+    .rail-tree{
 
-    .switch-selected{
-        transform:scale(1.06);
+        font-size:22px;
     }
 }
