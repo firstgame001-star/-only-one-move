@@ -66,6 +66,21 @@ window.ONE_MOVE_LEVELS[4] = {
                 <div class="rail-tree tree-2">🌲</div>
                 <div class="rail-tree tree-3">🌲</div>
                 <div class="rail-tree tree-4">🌲</div>
+                <div class="rail-tree tree-5">🌲</div>
+                <div class="rail-tree tree-6">🌲</div>
+                <div class="rail-tree tree-7">🌲</div>
+                <div class="rail-tree tree-8">🌲</div>
+                <div class="rail-bush bush-1">🌿</div>
+                <div class="rail-bush bush-2">🌿</div>
+                <div class="rail-bush bush-3">🌿</div>
+                <div class="rail-bush bush-4">🌿</div>
+                <div class="rail-flower flower-1">✿</div>
+                <div class="rail-flower flower-2">✿</div>
+                <div class="rail-cabin">🏠</div>
+                <div class="rail-lamp lamp-1">●</div>
+                <div class="rail-lamp lamp-2">●</div>
+                <div class="rail-lamp lamp-3">●</div>
+                <div class="rail-lamp lamp-4">●</div>
 
                 <div class="rail-rock rock-1"></div>
                 <div class="rail-rock rock-2"></div>
@@ -290,9 +305,10 @@ window.ONE_MOVE_LEVELS[4] = {
                     id="trainA"
                 >
 
-                    <div class="train-car train-car-back"></div>
+                    <span class="train-smoke smoke-1"></span><span class="train-smoke smoke-2"></span>
+                    <div class="train-car train-car-back"><span class="car-window"></span></div>
 
-                    <div class="train-car train-car-middle"></div>
+                    <div class="train-car train-car-middle"><span class="car-window"></span></div>
 
                     <div class="train-engine">
 
@@ -351,6 +367,7 @@ window.ONE_MOVE_LEVELS[4] = {
         this.locked = false;
         this.solved = false;
         this.selectedSwitch = null;
+        this.arrived = 0;
 
 
         const puzzle =
@@ -402,7 +419,7 @@ window.ONE_MOVE_LEVELS[4] = {
         this.setTrainPosition(
             "trainA",
             5,
-            75,
+            86,
             0
         );
 
@@ -410,8 +427,8 @@ window.ONE_MOVE_LEVELS[4] = {
         // Синий поезд справа
         this.setTrainPosition(
             "trainB",
-            290,
-            75,
+            345,
+            86,
             180
         );
 
@@ -508,30 +525,63 @@ window.ONE_MOVE_LEVELS[4] = {
     },
 
     animateTrain(id, points, duration, onDone) {
+        const train = document.getElementById(id);
+        if (!train || !points || points.length < 2) return;
+
+        const segments = [];
+        let totalLength = 0;
+
+        for (let i = 0; i < points.length - 1; i++) {
+            const a = points[i];
+            const b = points[i + 1];
+            const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+            segments.push({ a, b, length, start: totalLength });
+            totalLength += length;
+        }
+
         const start = performance.now();
+        let rafId = 0;
 
         const frame = now => {
-            const t = Math.min(1, (now - start) / duration);
-            const scaled = t * (points.length - 1);
-            const index = Math.min(points.length - 2, Math.floor(scaled));
-            const local = Math.min(1, scaled - index);
-            const a = points[index];
-            const b = points[index + 1];
+            const raw = Math.min(1, (now - start) / duration);
+            const t = raw < .5
+                ? 2 * raw * raw
+                : 1 - Math.pow(-2 * raw + 2, 2) / 2;
+            const distance = t * totalLength;
 
-            const x = a[0] + (b[0] - a[0]) * local;
-            const y = a[1] + (b[1] - a[1]) * local;
-            const angle = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
+            let segment = segments[segments.length - 1];
+            for (const item of segments) {
+                if (distance <= item.start + item.length) {
+                    segment = item;
+                    break;
+                }
+            }
+
+            const local = segment.length
+                ? Math.max(0, Math.min(1, (distance - segment.start) / segment.length))
+                : 0;
+
+            const x = segment.a[0] + (segment.b[0] - segment.a[0]) * local;
+            const y = segment.a[1] + (segment.b[1] - segment.a[1]) * local;
+            const angle = Math.atan2(
+                segment.b[1] - segment.a[1],
+                segment.b[0] - segment.a[0]
+            ) * 180 / Math.PI;
 
             this.setTrainPosition(id, x, y, angle);
 
-            if (t < 1 && this.locked) {
-                this.animationFrames.push(requestAnimationFrame(frame));
-            } else if (t >= 1 && typeof onDone === "function") {
+            if (raw < 1 && this.locked) {
+                rafId = requestAnimationFrame(frame);
+                this.rafByTrain[id] = rafId;
+            } else if (raw >= 1 && typeof onDone === "function") {
+                delete this.rafByTrain[id];
                 onDone();
             }
         };
 
-        this.animationFrames.push(requestAnimationFrame(frame));
+        if (!this.rafByTrain) this.rafByTrain = {};
+        rafId = requestAnimationFrame(frame);
+        this.rafByTrain[id] = rafId;
     },
 
     setTrainPosition(id, x, y, angle) {
@@ -600,5 +650,10 @@ window.ONE_MOVE_LEVELS[4] = {
 
         this.animationFrames.forEach(frame => cancelAnimationFrame(frame));
         this.animationFrames = [];
+
+        if (this.rafByTrain) {
+            Object.values(this.rafByTrain).forEach(frame => cancelAnimationFrame(frame));
+            this.rafByTrain = {};
+        }
     }
 };
