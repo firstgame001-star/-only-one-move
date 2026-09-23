@@ -10,7 +10,7 @@
 
 <title>Only One Move</title>
 
-<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=6">
 
 <style>
 *{
@@ -43,7 +43,10 @@ button{
 
 .hidden{display:none!important;}
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
 
 .top,
 .game-header{
@@ -64,16 +67,23 @@ button{
   font-weight:800;
 }
 
-.energy-click{cursor:pointer;}
+.energy-click{
+  cursor:pointer;
+}
 
-/* HOME */
+
+/* =========================
+   HOME
+========================= */
 
 .hero{
   margin-top:42px;
   text-align:center;
 }
 
-.brain{font-size:64px;}
+.brain{
+  font-size:64px;
+}
 
 .hero h1{
   margin:8px 0 5px;
@@ -95,8 +105,20 @@ button{
 .progress-top{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   color:#a0a9b8;
   font-size:14px;
+  cursor:pointer;
+}
+
+.progress-top:active{
+  opacity:.75;
+}
+
+.chapter-open-hint{
+  margin-left:5px;
+  color:#7161e8;
+  font-weight:900;
 }
 
 .progress-bar{
@@ -147,7 +169,9 @@ button{
   font-size:12px;
 }
 
-.energy-stat{cursor:pointer;}
+.energy-stat{
+  cursor:pointer;
+}
 
 .energy-timer{
   margin-top:4px;
@@ -192,8 +216,13 @@ button{
   align-items:center;
 }
 
-.menu-icon{font-size:25px;}
-.menu-title{font-weight:800;}
+.menu-icon{
+  font-size:25px;
+}
+
+.menu-title{
+  font-weight:800;
+}
 
 .menu-sub{
   color:#8992a4;
@@ -201,7 +230,218 @@ button{
   margin-top:3px;
 }
 
-/* GAME */
+
+/* =========================
+   LEVEL MAP
+========================= */
+
+.map-header{
+  display:grid;
+  grid-template-columns:50px 1fr 50px;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.map-header-center{
+  text-align:center;
+}
+
+.map-header-space{
+  width:50px;
+}
+
+.map-title{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.map-stars{
+  margin-top:6px;
+  color:#aab3c4;
+  font-size:15px;
+  font-weight:800;
+}
+
+.map-status{
+  margin:10px 0 22px;
+  padding:16px 18px;
+  background:#151c29;
+  border-radius:20px;
+  text-align:center;
+  font-size:15px;
+  font-weight:900;
+}
+
+.map-status span{
+  display:block;
+  margin-top:6px;
+  color:#929bab;
+  font-size:12px;
+  font-weight:600;
+  line-height:1.45;
+}
+
+.level-path{
+  position:relative;
+  min-height:650px;
+  padding:20px 10px 45px;
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(108,92,231,.10),
+      transparent 32%
+    ),
+    #101722;
+  border-radius:30px;
+  overflow:hidden;
+}
+
+.map-level-row{
+  position:relative;
+  height:115px;
+  display:flex;
+  align-items:center;
+}
+
+.map-left{
+  justify-content:flex-start;
+  padding-left:25px;
+}
+
+.map-center{
+  justify-content:center;
+}
+
+.map-right{
+  justify-content:flex-end;
+  padding-right:25px;
+}
+
+.map-connector{
+  position:absolute;
+  width:4px;
+  height:78px;
+  top:-38px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#293246;
+  border-radius:10px;
+  z-index:0;
+}
+
+.level-node{
+  position:relative;
+  z-index:2;
+  width:92px;
+  height:92px;
+  border:3px solid #293246;
+  border-radius:50%;
+  background:#1a2230;
+  color:white;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+  transition:
+    transform .15s ease,
+    border-color .15s ease,
+    box-shadow .15s ease;
+}
+
+.level-node:active{
+  transform:scale(.94);
+}
+
+.level-number{
+  font-size:27px;
+  font-weight:900;
+  line-height:1;
+}
+
+.node-stars{
+  min-height:18px;
+  margin-top:8px;
+  font-size:14px;
+  letter-spacing:-2px;
+  white-space:nowrap;
+}
+
+.level-completed{
+  background:
+    linear-gradient(
+      145deg,
+      #252d3c,
+      #171e2a
+    );
+  border-color:#f3b83f;
+}
+
+.level-current{
+  border-color:#725cff;
+  background:
+    linear-gradient(
+      145deg,
+      #292145,
+      #171e2a
+    );
+  box-shadow:
+    0 0 0 6px rgba(114,92,255,.12),
+    0 0 25px rgba(114,92,255,.35);
+}
+
+.level-current::after{
+  content:"ИГРАТЬ";
+  position:absolute;
+  left:50%;
+  bottom:-27px;
+  transform:translateX(-50%);
+  color:#8f7dff;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.level-locked{
+  opacity:.42;
+  filter:grayscale(.35);
+}
+
+.map-footer{
+  margin:30px 15px 5px;
+  padding:18px;
+  background:#171e2b;
+  border-radius:20px;
+  text-align:center;
+}
+
+.map-first-run{
+  color:#929bab;
+  font-size:13px;
+  line-height:1.5;
+  font-weight:700;
+}
+
+.map-replay{
+  color:#c5cbd6;
+  font-size:14px;
+  line-height:1.5;
+  font-weight:800;
+}
+
+.map-perfect{
+  color:#ffd166;
+  font-size:20px;
+  font-weight:900;
+}
+
+.map-perfect-sub{
+  margin-top:5px;
+  color:#929bab;
+  font-size:12px;
+}
+
+
+/* =========================
+   GAME
+========================= */
 
 .back{
   border:0;
@@ -326,8 +566,14 @@ button{
   font-weight:800;
 }
 
-.good{color:#55e6a5;}
-.bad{color:#ff7675;}
+.good{
+  color:#55e6a5;
+}
+
+.bad{
+  color:#ff7675;
+}
+
 
 /* =========================
    MATCHSTICKS
@@ -461,6 +707,7 @@ button{
     drop-shadow(0 0 8px rgba(244,213,141,.55));
 }
 
+
 /* =========================
    FISH LEVEL
 ========================= */
@@ -548,18 +795,15 @@ button{
   bottom:20px;
 }
 
-/* Неправильная планка слегка двигается */
 .fish-bar.bar-moved{
   transform:translateY(-15px);
 }
 
-/* Правильная планка уходит вправо */
 .fish-bar.fish-exit-open{
   transform:translateX(80px);
   opacity:.25;
 }
 
-/* Рыбка выплывает через открывшийся низ */
 .fish.fish-free{
   top:175px;
   left:72%;
@@ -569,7 +813,10 @@ button{
     scale(1.1);
 }
 
-/* OVERLAYS */
+
+/* =========================
+   OVERLAYS
+========================= */
 
 .overlay{
   position:fixed;
@@ -582,7 +829,9 @@ button{
   z-index:10000;
 }
 
-.overlay.show{display:flex;}
+.overlay.show{
+  display:flex;
+}
 
 .win{
   width:100%;
@@ -626,7 +875,10 @@ button{
   margin-top:25px;
 }
 
-/* ENERGY */
+
+/* =========================
+   ENERGY
+========================= */
 
 .energy-box,
 .rules-box{
@@ -637,9 +889,13 @@ button{
   padding:25px 20px;
 }
 
-.energy-box{text-align:center;}
+.energy-box{
+  text-align:center;
+}
 
-.energy-big{font-size:54px;}
+.energy-big{
+  font-size:54px;
+}
 
 .energy-description{
   color:#929bab;
@@ -683,7 +939,10 @@ button{
   font-weight:700;
 }
 
-/* RULES */
+
+/* =========================
+   RULES
+========================= */
 
 .rules-box{
   max-height:85vh;
@@ -715,6 +974,7 @@ button{
 </style>
 </head>
 
+
 <body>
 
 <!-- =====================
@@ -724,53 +984,81 @@ button{
 <div class="app" id="homeScreen">
 
   <div class="top">
-    <div class="logo">🧠 ONE MOVE</div>
+
+    <div class="logo">
+      🧠 ONE MOVE
+    </div>
 
     <div class="balance">
       🪙 <span data-coins>300</span>
     </div>
+
   </div>
 
+
   <div class="hero">
-    <div class="brain">🧠</div>
-    <h1>Only One Move</h1>
+
+    <div class="brain">
+      🧠
+    </div>
+
+    <h1>
+      Only One Move
+    </h1>
 
     <div class="tagline">
       Решение есть всегда. Ход только один.
     </div>
+
   </div>
+
 
   <div class="progress-card">
 
-    <div class="progress-top">
+    <div
+      class="progress-top"
+      onclick="openLevelMap(1)"
+    >
+
       <span>
         ЭТАП 1 · Уровень
         <b id="homeLevel">1</b>/5
+        <span class="chapter-open-hint">›</span>
       </span>
 
       <span>
         ⭐ <b data-stars>0</b>
       </span>
+
     </div>
 
+
     <div class="progress-bar">
+
       <div
         class="progress-fill"
         id="progressFill">
       </div>
+
     </div>
+
 
     <div
       class="chapter-progress"
-      id="chapterProgress">
+      id="chapterProgress"
+      onclick="openLevelMap(1)"
+      style="cursor:pointer;"
+    >
       ⭐ 0 / 15 до Этапа 2
     </div>
+
 
     <div class="stats">
 
       <div
         class="stat energy-stat"
-        onclick="openEnergyShop()">
+        onclick="openEnergyShop()"
+      >
 
         <div class="stat-value">
           ❤️ <span data-energy>5/5</span>
@@ -782,12 +1070,16 @@ button{
 
         <div
           class="energy-timer"
-          data-energy-timer>
+          data-energy-timer
+        >
           Полная энергия
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-value">
           🪙 <span data-coins>300</span>
         </div>
@@ -795,9 +1087,12 @@ button{
         <div class="stat-label">
           Монеты
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-value">
           🔥 <span id="streakValue">1</span>
         </div>
@@ -805,28 +1100,37 @@ button{
         <div class="stat-label">
           Серия дней
         </div>
+
       </div>
 
     </div>
 
+
     <button
       class="play"
-      onclick="openGame()">
+      onclick="openGame()"
+    >
       ▶ ПРОДОЛЖИТЬ
     </button>
 
   </div>
 
+
   <div class="menu">
 
     <button
       class="menu-btn"
-      onclick="openRules()">
+      onclick="openRules()"
+    >
 
       <div class="menu-left">
-        <div class="menu-icon">📖</div>
+
+        <div class="menu-icon">
+          📖
+        </div>
 
         <div>
+
           <div class="menu-title">
             Правила
           </div>
@@ -834,20 +1138,29 @@ button{
           <div class="menu-sub">
             ⭐, ❤️, время и этапы
           </div>
+
         </div>
+
       </div>
 
       <div>›</div>
+
     </button>
+
 
     <button
       class="menu-btn"
-      onclick="comingSoon('Ежедневная загадка')">
+      onclick="comingSoon('Ежедневная загадка')"
+    >
 
       <div class="menu-left">
-        <div class="menu-icon">🧩</div>
+
+        <div class="menu-icon">
+          🧩
+        </div>
 
         <div>
+
           <div class="menu-title">
             Ежедневная загадка
           </div>
@@ -855,20 +1168,29 @@ button{
           <div class="menu-sub">
             Новая задача каждый день
           </div>
+
         </div>
+
       </div>
 
       <div>›</div>
+
     </button>
+
 
     <button
       class="menu-btn"
-      onclick="comingSoon('60 секунд')">
+      onclick="comingSoon('60 секунд')"
+    >
 
       <div class="menu-left">
-        <div class="menu-icon">⏱</div>
+
+        <div class="menu-icon">
+          ⏱
+        </div>
 
         <div>
+
           <div class="menu-title">
             60 секунд
           </div>
@@ -876,20 +1198,29 @@ button{
           <div class="menu-sub">
             Реши как можно больше
           </div>
+
         </div>
+
       </div>
 
       <div>🔒</div>
+
     </button>
+
 
     <button
       class="menu-btn"
-      onclick="comingSoon('Рейтинг')">
+      onclick="comingSoon('Рейтинг')"
+    >
 
       <div class="menu-left">
-        <div class="menu-icon">🏆</div>
+
+        <div class="menu-icon">
+          🏆
+        </div>
 
         <div>
+
           <div class="menu-title">
             Рейтинг
           </div>
@@ -897,20 +1228,29 @@ button{
           <div class="menu-sub">
             Соревнуйся с другими
           </div>
+
         </div>
+
       </div>
 
       <div>›</div>
+
     </button>
+
 
     <button
       class="menu-btn"
-      onclick="dailyReward()">
+      onclick="dailyReward()"
+    >
 
       <div class="menu-left">
-        <div class="menu-icon">🎁</div>
+
+        <div class="menu-icon">
+          🎁
+        </div>
 
         <div>
+
           <div class="menu-title">
             Награда дня
           </div>
@@ -918,12 +1258,82 @@ button{
           <div class="menu-sub">
             Забери ежедневный бонус
           </div>
+
         </div>
+
       </div>
 
       <div>›</div>
+
     </button>
 
+  </div>
+
+</div>
+
+
+<!-- =====================
+     LEVEL MAP
+===================== -->
+
+<div
+  class="app hidden"
+  id="levelMapScreen"
+>
+
+  <div class="map-header">
+
+    <button
+      class="back"
+      onclick="closeLevelMap()"
+    >
+      ‹
+    </button>
+
+
+    <div class="map-header-center">
+
+      <div
+        class="map-title"
+        id="mapTitle"
+      >
+        ЭТАП 1
+      </div>
+
+      <div
+        class="map-stars"
+        id="mapStars"
+      >
+        ⭐ 0 / 15
+      </div>
+
+    </div>
+
+
+    <div class="map-header-space">
+    </div>
+
+  </div>
+
+
+  <div
+    class="map-status"
+    id="mapStatus"
+  >
+
+    🧠 Первый проход
+
+    <span>
+      Иди вперёд — повторы откроются после уровня 5
+    </span>
+
+  </div>
+
+
+  <div
+    class="level-path"
+    id="levelPath"
+  >
   </div>
 
 </div>
@@ -935,92 +1345,112 @@ button{
 
 <div
   class="app hidden"
-  id="gameScreen">
+  id="gameScreen"
+>
 
   <div class="game-header">
 
     <button
       class="back"
-      onclick="goHome()">
+      onclick="goHome()"
+    >
       ‹
     </button>
 
+
     <div
       class="balance energy-click"
-      onclick="openEnergyShop()">
+      onclick="openEnergyShop()"
+    >
 
       ❤️ <span data-energy>5/5</span>
       &nbsp;&nbsp;
       🪙 <span data-coins>300</span>
+
     </div>
 
   </div>
 
+
   <div
     class="level"
-    id="gameLevelLabel">
+    id="gameLevelLabel"
+  >
     ЭТАП 1 · УРОВЕНЬ 1
   </div>
 
+
   <h1
     class="game-title"
-    id="gameTitle">
+    id="gameTitle"
+  >
     Передвинь одну спичку
   </h1>
 
+
   <div
     class="subtitle"
-    id="gameSubtitle">
+    id="gameSubtitle"
+  >
     Сделай равенство правильным.<br>
     Можно передвинуть только одну спичку.
   </div>
+
 
   <div class="level-status">
 
     <div
       class="level-stars"
-      id="levelStars">
+      id="levelStars"
+    >
       ⭐⭐⭐
     </div>
 
     <div class="timer">
+
       <span id="levelTimer">
         🧠 20 сек.
       </span>
+
     </div>
 
   </div>
+
 
   <div class="board">
 
     <div
       class="tutorial-box"
-      id="tutorialBox">
+      id="tutorialBox"
+    >
     </div>
+
 
     <div
       class="instruction"
-      id="gameInstruction">
+      id="gameInstruction"
+    >
     </div>
 
 
-    <!-- =====================
-         LEVEL 1 — MATCHSTICKS
-    ====================== -->
+    <!-- LEVEL 1 -->
 
     <div
       id="matchstickPuzzle"
-      class="puzzle-container">
+      class="puzzle-container"
+    >
 
       <div
         class="equation"
-        id="matchEquation">
+        id="matchEquation"
+      >
 
         <!-- 6 -->
 
         <div
           class="digit"
-          data-symbol="6">
+          data-symbol="6"
+        >
 
           <span
             class="match h a"
@@ -1064,7 +1494,8 @@ button{
 
         <div
           class="operator"
-          data-symbol="+">
+          data-symbol="+"
+        >
 
           <span
             class="match match-h"
@@ -1083,7 +1514,8 @@ button{
 
         <div
           class="digit"
-          data-symbol="4">
+          data-symbol="4"
+        >
 
           <span
             class="match v f"
@@ -1112,7 +1544,8 @@ button{
 
         <div
           class="equals-symbol"
-          data-symbol="=">
+          data-symbol="="
+        >
 
           <span
             class="match eq-top"
@@ -1131,7 +1564,8 @@ button{
 
         <div
           class="digit"
-          data-symbol="4">
+          data-symbol="4"
+        >
 
           <span
             class="match v f"
@@ -1156,16 +1590,16 @@ button{
         </div>
 
       </div>
+
     </div>
 
 
-    <!-- =====================
-         LEVEL 2 — FISH
-    ====================== -->
+    <!-- LEVEL 2 -->
 
     <div
       id="fishPuzzle"
-      class="puzzle-container hidden">
+      class="puzzle-container hidden"
+    >
 
       <div class="fish-area">
 
@@ -1173,43 +1607,54 @@ button{
 
           <div
             class="fish"
-            id="fish">
+            id="fish"
+          >
             🐟
           </div>
+
 
           <button
             class="fish-bar fish-bar-top"
             data-bar="1"
             onclick="moveFishBar(1)"
-            aria-label="Планка 1">
+            aria-label="Планка 1"
+          >
           </button>
+
 
           <button
             class="fish-bar fish-bar-left"
             data-bar="2"
             onclick="moveFishBar(2)"
-            aria-label="Планка 2">
+            aria-label="Планка 2"
+          >
           </button>
+
 
           <button
             class="fish-bar fish-bar-right"
             data-bar="3"
             onclick="moveFishBar(3)"
-            aria-label="Планка 3">
+            aria-label="Планка 3"
+          >
           </button>
+
 
           <button
             class="fish-bar fish-bar-bottom-left"
             data-bar="5"
             onclick="moveFishBar(5)"
-            aria-label="Планка 5">
+            aria-label="Планка 5"
+          >
           </button>
+
 
           <button
             class="fish-bar fish-bar-bottom-right"
             data-bar="4"
             onclick="moveFishBar(4)"
-            aria-label="Планка 4">
+            aria-label="Планка 4"
+          >
           </button>
 
         </div>
@@ -1221,7 +1666,8 @@ button{
 
     <div
       class="moves"
-      id="movesText">
+      id="movesText"
+    >
       ⚡ Один ход
     </div>
 
@@ -1232,21 +1678,26 @@ button{
 
     <button
       class="hint"
-      onclick="showHint()">
+      onclick="showHint()"
+    >
       💡 Подсказка · 50 🪙
     </button>
 
+
     <button
       class="reset"
-      onclick="resetLevel()">
+      onclick="resetLevel()"
+    >
       ↻ Заново
     </button>
 
   </div>
 
+
   <div
     class="message"
-    id="gameMessage">
+    id="gameMessage"
+  >
   </div>
 
 </div>
@@ -1258,11 +1709,14 @@ button{
 
 <div
   class="overlay"
-  id="levelCompleteModal">
+  id="levelCompleteModal"
+>
 
   <div class="win">
 
-    <div class="check">✓</div>
+    <div class="check">
+      ✓
+    </div>
 
     <h2>
       Уровень пройден!
@@ -1274,7 +1728,8 @@ button{
 
     <div
       class="stars"
-      id="completeStars">
+      id="completeStars"
+    >
       ⭐⭐⭐
     </div>
 
@@ -1284,7 +1739,8 @@ button{
 
     <button
       class="next"
-      onclick="finishLevel()">
+      onclick="finishLevel()"
+    >
       ПРОДОЛЖИТЬ
     </button>
 
@@ -1299,7 +1755,8 @@ button{
 
 <div
   class="overlay"
-  id="energyModal">
+  id="energyModal"
+>
 
   <div class="energy-box">
 
@@ -1307,7 +1764,9 @@ button{
       ❤️
     </div>
 
-    <h2>Энергия</h2>
+    <h2>
+      Энергия
+    </h2>
 
     <div class="energy-description">
       Сердце снимается только после
@@ -1321,37 +1780,43 @@ button{
 
     <div
       class="energy-next"
-      data-energy-timer>
+      data-energy-timer
+    >
       Полная энергия
     </div>
 
     <button
       class="shop-option"
-      onclick="buyEnergy(1,100)">
+      onclick="buyEnergy(1,100)"
+    >
       ❤️ +1 — 100 🪙
     </button>
 
     <button
       class="shop-option"
-      onclick="buyEnergy(3,250)">
+      onclick="buyEnergy(3,250)"
+    >
       ❤️❤️❤️ +3 — 250 🪙
     </button>
 
     <button
       class="shop-option primary"
-      onclick="buyFullEnergy()">
+      onclick="buyFullEnergy()"
+    >
       ❤️ Восстановить всё — 350 🪙
     </button>
 
     <button
       class="shop-option"
-      onclick="comingSoon('Реклама за сердце')">
+      onclick="comingSoon('Реклама за сердце')"
+    >
       📺 Посмотреть рекламу — +1 ❤️
     </button>
 
     <button
       class="close-shop"
-      onclick="closeEnergyShop()">
+      onclick="closeEnergyShop()"
+    >
       Закрыть
     </button>
 
@@ -1366,13 +1831,17 @@ button{
 
 <div
   class="overlay"
-  id="rulesModal">
+  id="rulesModal"
+>
 
   <div class="rules-box">
 
-    <h2>📖 Правила</h2>
+    <h2>
+      📖 Правила
+    </h2>
 
     <div class="rule">
+
       <div class="rule-title">
         ⭐ Звёзды
       </div>
@@ -1383,9 +1852,12 @@ button{
         Сколько звёзд осталось при решении —
         столько получает игрок.
       </div>
+
     </div>
 
+
     <div class="rule">
+
       <div class="rule-title">
         ⏱ Время
       </div>
@@ -1397,9 +1869,12 @@ button{
         на 50-й — ещё ⭐.
         Ошибки и штрафы времени складываются.
       </div>
+
     </div>
 
+
     <div class="rule">
+
       <div class="rule-title">
         ❤️ Энергия
       </div>
@@ -1409,9 +1884,12 @@ button{
         Когда закончились все ⭐,
         попытка проиграна и снимается 1 ❤️.
       </div>
+
     </div>
 
+
     <div class="rule">
+
       <div class="rule-title">
         🏆 Этапы
       </div>
@@ -1419,12 +1897,18 @@ button{
       <div class="rule-text">
         В одном этапе 5 уровней.
         Максимум — 15 ⭐.
-        Для следующего этапа нужно
-        собрать необходимое количество звёзд.
+        Пока все 5 уровней этапа не пройдены
+        хотя бы один раз, возвращаться к уже
+        пройденным уровням нельзя.
+        После завершения этапа можно улучшать
+        результаты и добирать звёзды.
       </div>
+
     </div>
 
+
     <div class="rule">
+
       <div class="rule-title">
         🧠 Один ход
       </div>
@@ -1435,11 +1919,14 @@ button{
         элементы — очевидный вариант не всегда
         правильный.
       </div>
+
     </div>
+
 
     <button
       class="close-shop"
-      onclick="closeRules()">
+      onclick="closeRules()"
+    >
       Закрыть
     </button>
 
@@ -1452,15 +1939,16 @@ button{
      CORE
 ===================== -->
 
-<script src="js/storage.js?v=5"></script>
-<script src="js/energy.js?v=5"></script>
-<script src="js/game.js?v=5"></script>
-<script src="js/matchsticks.js?v=5"></script>
+<script src="js/storage.js?v=6"></script>
+<script src="js/energy.js?v=6"></script>
+<script src="js/game.js?v=6"></script>
+<script src="js/matchsticks.js?v=6"></script>
+<script src="js/objects.js?v=2"></script>
 
-<!-- НОВЫЙ ДВИЖОК ОБЪЕКТОВ -->
-<script src="js/objects.js?v=1"></script>
+<!-- КАРТА УРОВНЕЙ -->
+<script src="js/levelmap.js?v=1"></script>
 
-<script src="levels/easy.js?v=5"></script>
+<script src="levels/easy.js?v=6"></script>
 
 
 <script>
@@ -1474,6 +1962,9 @@ const homeScreen =
 
 const gameScreen =
   document.getElementById("gameScreen");
+
+const levelMapScreen =
+  document.getElementById("levelMapScreen");
 
 const movesText =
   document.getElementById("movesText");
@@ -1511,6 +2002,7 @@ function initializeApp(){
     );
 
   if(streak){
+
     streak.textContent =
       data.streak || 1;
   }
@@ -1544,11 +2036,13 @@ function migrateOldSave(){
     localStorage.getItem("streak");
 
   if(oldCoins !== null){
+
     data.coins =
       Number(oldCoins) || 0;
   }
 
   if(oldLevel !== null){
+
     data.level =
       Math.max(
         1,
@@ -1557,6 +2051,7 @@ function migrateOldSave(){
   }
 
   if(oldStreak !== null){
+
     data.streak =
       Math.max(
         1,
@@ -1574,7 +2069,7 @@ function migrateOldSave(){
 
 
 /* =========================
-   CURRENT AVAILABLE LEVEL
+   PLAYABLE LEVEL
 ========================= */
 
 function getPlayableLevel(){
@@ -1583,12 +2078,11 @@ function getPlayableLevel(){
     getPlayerData();
 
   /*
-      Пока реализованы только
+      Сейчас физически созданы
       уровни 1 и 2.
 
-      Даже если старое сохранение
-      показывает 3+, не пытаемся
-      открыть несуществующий уровень.
+      Когда сделаем 3-й,
+      поменяем максимум на 3.
   */
 
   return Math.min(
@@ -1601,6 +2095,10 @@ function getPlayableLevel(){
 }
 
 
+/* =========================
+   HOME LEVEL
+========================= */
+
 function updateHomeLevel(){
 
   const element =
@@ -1612,8 +2110,17 @@ function updateHomeLevel(){
     return;
   }
 
+  const data =
+    getPlayerData();
+
+  const chapterLevel =
+    ((Math.max(1, data.level) - 1) % 5) + 1;
+
   element.textContent =
-    getPlayableLevel();
+    Math.min(
+      chapterLevel,
+      5
+    );
 }
 
 
@@ -1623,8 +2130,17 @@ function updateHomeLevel(){
 
 function updateProgress(){
 
-  const level =
-    getPlayableLevel();
+  const data =
+    getPlayerData();
+
+  const current =
+    Math.min(
+      Math.max(
+        Number(data.level) || 1,
+        1
+      ),
+      5
+    );
 
   const fill =
     document.getElementById(
@@ -1634,7 +2150,7 @@ function updateProgress(){
   if(fill){
 
     fill.style.width =
-      ((level - 1) / 5 * 100) +
+      ((current - 1) / 4 * 100) +
       "%";
   }
 }
@@ -1674,10 +2190,7 @@ function updateChapterUI(){
   }
 
   element.textContent =
-    `⭐ ${Math.min(
-      progress.total,
-      progress.required
-    )} / ${progress.required} до Этапа 2`;
+    `⭐ ${progress.earned} / 15 · Открыть Этап 1 ›`;
 }
 
 
@@ -1704,6 +2217,10 @@ function openGame(){
     "hidden"
   );
 
+  levelMapScreen.classList.add(
+    "hidden"
+  );
+
   gameScreen.classList.remove(
     "hidden"
   );
@@ -1719,14 +2236,10 @@ function openGame(){
 function loadLevel(levelNumber){
 
   displayedLevel =
-    levelNumber;
+    Number(levelNumber);
 
   stopLevelTimer();
   cancelCurrentDrag();
-
-  /*
-      Скрываем все типы головоломок.
-  */
 
   document
     .querySelectorAll(
@@ -1740,11 +2253,9 @@ function loadLevel(levelNumber){
     });
 
 
-  /*
-      LEVEL 1
-  */
+  /* LEVEL 1 */
 
-  if(levelNumber === 1){
+  if(displayedLevel === 1){
 
     setupLevelOne();
 
@@ -1754,6 +2265,7 @@ function loadLevel(levelNumber){
       typeof startMatchstickPuzzle ===
       "function"
     ){
+
       startMatchstickPuzzle();
     }
 
@@ -1761,11 +2273,9 @@ function loadLevel(levelNumber){
   }
 
 
-  /*
-      LEVEL 2
-  */
+  /* LEVEL 2 */
 
-  if(levelNumber === 2){
+  if(displayedLevel === 2){
 
     setupLevelTwo();
 
@@ -1775,11 +2285,24 @@ function loadLevel(levelNumber){
       typeof startObjectPuzzle ===
       "function"
     ){
+
       startObjectPuzzle();
     }
 
     return;
   }
+
+
+  /*
+      Уровни 3+ пока ещё
+      физически не созданы.
+  */
+
+  showAppNotice(
+    `Уровень ${displayedLevel} скоро добавим 🧩`
+  );
+
+  goHome();
 }
 
 
@@ -1895,6 +2418,7 @@ function setupLevelTwo(){
     typeof resetFishPuzzle ===
     "function"
   ){
+
     resetFishPuzzle();
   }
 }
@@ -1914,6 +2438,10 @@ function goHome(){
     "hidden"
   );
 
+  levelMapScreen.classList.add(
+    "hidden"
+  );
+
   homeScreen.classList.remove(
     "hidden"
   );
@@ -1924,6 +2452,7 @@ function goHome(){
     );
 
   if(complete){
+
     complete.classList.remove(
       "show"
     );
@@ -1935,6 +2464,7 @@ function goHome(){
     );
 
   if(lose){
+
     lose.classList.remove(
       "show"
     );
@@ -1984,6 +2514,7 @@ function startMatchDrag(event){
     typeof selectMatchstick ===
     "function"
   ){
+
     selectMatchstick(match);
   }
 
@@ -2127,9 +2658,11 @@ function endMatchDrag(event){
       typeof wrongMatchstickMove ===
       "function"
     ){
+
       wrongMatchstickMove();
 
     }else{
+
       registerWrongMove();
     }
   }
@@ -2278,6 +2811,7 @@ function processMatchMove(
         !levelSolved &&
         !levelFailed
       ){
+
         solveLevel(30);
       }
 
@@ -2292,9 +2826,11 @@ function processMatchMove(
     typeof wrongMatchstickMove ===
     "function"
   ){
+
     wrongMatchstickMove();
 
   }else{
+
     registerWrongMove();
   }
 }
@@ -2342,10 +2878,9 @@ function resetMatchstickVisual(){
 }
 
 
-/*
-   matchsticks.js вызывает эту функцию
-   после неправильного хода.
-*/
+/* =========================
+   GENERIC PUZZLE RESET
+========================= */
 
 function resetPuzzleVisual(){
 
@@ -2365,6 +2900,7 @@ function resetPuzzleVisual(){
       typeof resetFishPuzzle ===
       "function"
     ){
+
       resetFishPuzzle();
     }
 
@@ -2375,7 +2911,7 @@ function resetPuzzleVisual(){
 
 
 /* =========================
-   MATCH DRAG CLEANUP
+   DRAG CLEANUP
 ========================= */
 
 function restoreDraggedMatch(){
@@ -2390,6 +2926,7 @@ function restoreDraggedMatch(){
     typeof clearMatchstickSelection ===
     "function"
   ){
+
     clearMatchstickSelection();
   }
 
@@ -2477,7 +3014,7 @@ function showHint(){
 
 
 /* =========================
-   RESET BUTTON
+   RESET
 ========================= */
 
 function resetLevel(){
@@ -2488,11 +3025,6 @@ function resetLevel(){
   ){
     return;
   }
-
-  /*
-      Пока сохраняем старое поведение:
-      кнопка начинает попытку заново.
-  */
 
   loadLevel(
     displayedLevel
@@ -2512,18 +3044,22 @@ function finishLevel(){
     );
 
   if(modal){
+
     modal.classList.remove(
       "show"
     );
   }
 
+
   /*
-      После первого уровня
-      storage.js уже устанавливает
-      текущий уровень = 2.
+      Уровень 1 впервые пройден.
+      Сразу ведём на уровень 2.
   */
 
-  if(activeLevel === 1){
+  if(
+    activeLevel === 1 &&
+    !isLevelCompleted(2)
+  ){
 
     updateMainUI();
     updateProgress();
@@ -2535,12 +3071,42 @@ function finishLevel(){
     return;
   }
 
+
   /*
-      Уровень 3 пока не создан.
-      После рыбки возвращаемся домой.
+      После уровня 2 возвращаем
+      игрока на карту.
+
+      Там он увидит:
+      1 — результат,
+      2 — результат,
+      3 — следующий уровень 🔒/доступен,
+      в зависимости от реализации.
   */
 
-  goHome();
+  updateMainUI();
+  updateProgress();
+  updateChapterUI();
+  updateHomeLevel();
+
+  gameScreen.classList.add(
+    "hidden"
+  );
+
+  homeScreen.classList.add(
+    "hidden"
+  );
+
+  levelMapScreen.classList.remove(
+    "hidden"
+  );
+
+  if(
+    typeof renderLevelMap ===
+    "function"
+  ){
+
+    renderLevelMap(1);
+  }
 }
 
 
@@ -2585,7 +3151,7 @@ initializeApp();
 
 <!-- APP -->
 
-<script src="js/app.js?v=5"></script>
+<script src="js/app.js?v=6"></script>
 
 </body>
 </html>
