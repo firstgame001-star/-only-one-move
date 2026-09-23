@@ -6,7 +6,7 @@
 const GAME_CONFIG = {
     thinkTime: 20,          // 20 секунд на размышление
     maxWrongMoves: 3,       // 3 ошибки = проигрыш
-    tutorialLevels: 5,      // 1–5 без потери сердца
+    tutorialLevels: 0,      // 1–5 без потери сердца
     hintPrice: 50
 };
 
