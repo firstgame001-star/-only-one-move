@@ -1,7 +1,7 @@
 /* =========================================
    ONLY ONE MOVE — LEVEL MAP
    20 этапов × 5 уровней
-   SVG SCENERY VERSION
+   SVG SCENERY VERSION 2
 ========================================= */
 
 let openedChapter = 1;
@@ -120,20 +120,15 @@ function createMapSVG() {
                     width="180%"
                     height="180%"
                 >
-
                     <feGaussianBlur
                         stdDeviation="5"
                         result="blur"
                     />
 
                     <feMerge>
-
                         <feMergeNode in="blur"/>
-
                         <feMergeNode in="SourceGraphic"/>
-
                     </feMerge>
-
                 </filter>
 
 
@@ -146,7 +141,6 @@ function createMapSVG() {
                     x2="1"
                     y2="1"
                 >
-
                     <stop
                         offset="0%"
                         stop-color="#9df5ff"
@@ -161,7 +155,6 @@ function createMapSVG() {
                         offset="100%"
                         stop-color="#7b5cff"
                     />
-
                 </linearGradient>
 
 
@@ -172,20 +165,15 @@ function createMapSVG() {
                     width="300%"
                     height="300%"
                 >
-
                     <feGaussianBlur
                         stdDeviation="4"
                         result="glow"
                     />
 
                     <feMerge>
-
                         <feMergeNode in="glow"/>
-
                         <feMergeNode in="SourceGraphic"/>
-
                     </feMerge>
-
                 </filter>
 
 
@@ -198,7 +186,6 @@ function createMapSVG() {
                     x2="0"
                     y2="1"
                 >
-
                     <stop
                         offset="0%"
                         stop-color="#536077"
@@ -208,7 +195,6 @@ function createMapSVG() {
                         offset="100%"
                         stop-color="#252e3e"
                     />
-
                 </linearGradient>
 
 
@@ -221,7 +207,6 @@ function createMapSVG() {
                     x2="0"
                     y2="1"
                 >
-
                     <stop
                         offset="0%"
                         stop-color="#9b7049"
@@ -231,7 +216,6 @@ function createMapSVG() {
                         offset="100%"
                         stop-color="#59402d"
                     />
-
                 </linearGradient>
 
             </defs>
@@ -244,51 +228,51 @@ function createMapSVG() {
             <g opacity=".8">
 
                 <circle
-                    cx="30"
-                    cy="42"
+                    cx="28"
+                    cy="65"
+                    r="2.1"
+                    fill="#9c8cff"
+                />
+
+                <circle
+                    cx="300"
+                    cy="52"
+                    r="2"
+                    fill="#8edcff"
+                />
+
+                <circle
+                    cx="317"
+                    cy="185"
+                    r="1.8"
+                    fill="#9c8cff"
+                />
+
+                <circle
+                    cx="28"
+                    cy="218"
+                    r="2"
+                    fill="#8edcff"
+                />
+
+                <circle
+                    cx="311"
+                    cy="296"
                     r="2.3"
                     fill="#9c8cff"
                 />
 
                 <circle
-                    cx="304"
-                    cy="62"
-                    r="2"
-                    fill="#8edcff"
-                />
-
-                <circle
-                    cx="318"
-                    cy="176"
+                    cx="25"
+                    cy="365"
                     r="1.8"
                     fill="#9c8cff"
                 />
 
                 <circle
-                    cx="26"
-                    cy="212"
+                    cx="300"
+                    cy="438"
                     r="2"
-                    fill="#8edcff"
-                />
-
-                <circle
-                    cx="310"
-                    cy="290"
-                    r="2.4"
-                    fill="#9c8cff"
-                />
-
-                <circle
-                    cx="24"
-                    cy="363"
-                    r="1.8"
-                    fill="#9c8cff"
-                />
-
-                <circle
-                    cx="295"
-                    cy="453"
-                    r="2.2"
                     fill="#8edcff"
                 />
 
@@ -296,10 +280,10 @@ function createMapSVG() {
 
 
             <!-- =================================
-                 ROCKS — LEFT TOP
+                 LEFT TOP ROCKS
             ================================== -->
 
-            <g transform="translate(10 93)">
+            <g transform="translate(8 135)">
 
                 <ellipse
                     cx="18"
@@ -328,10 +312,10 @@ function createMapSVG() {
             </g>
 
 
-            <!-- GRASS LEFT -->
+            <!-- LEFT TOP GRASS -->
 
             <g
-                transform="translate(24 118)"
+                transform="translate(22 153)"
                 stroke-linecap="round"
             >
 
@@ -360,11 +344,11 @@ function createMapSVG() {
 
 
             <!-- =================================
-                 CRYSTAL — RIGHT TOP
+                 RIGHT TOP CRYSTAL
             ================================== -->
 
             <g
-                transform="translate(304 78)"
+                transform="translate(310 48)"
                 filter="url(#crystalGlow)"
             >
 
@@ -393,10 +377,10 @@ function createMapSVG() {
             </g>
 
 
-            <!-- SMALL CRYSTAL RIGHT -->
+            <!-- RIGHT TOP SMALL CRYSTAL -->
 
             <g
-                transform="translate(318 111)"
+                transform="translate(321 76)"
                 opacity=".75"
             >
 
@@ -415,10 +399,10 @@ function createMapSVG() {
 
 
             <!-- =================================
-                 ROCK RIGHT MIDDLE
+                 RIGHT MIDDLE ROCK
             ================================== -->
 
-            <g transform="translate(298 224)">
+            <g transform="translate(306 232)">
 
                 <ellipse
                     cx="15"
@@ -447,10 +431,10 @@ function createMapSVG() {
             </g>
 
 
-            <!-- GRASS RIGHT -->
+            <!-- RIGHT MIDDLE GRASS -->
 
             <g
-                transform="translate(315 250)"
+                transform="translate(320 259)"
                 stroke-linecap="round"
             >
 
@@ -479,11 +463,11 @@ function createMapSVG() {
 
 
             <!-- =================================
-                 CRYSTALS LEFT MIDDLE
+                 LEFT MIDDLE CRYSTALS
             ================================== -->
 
             <g
-                transform="translate(25 287)"
+                transform="translate(18 310)"
                 filter="url(#crystalGlow)"
             >
 
@@ -514,11 +498,11 @@ function createMapSVG() {
 
 
             <!-- =================================
-                 SIGN RIGHT
+                 RIGHT SIGN
             ================================== -->
 
             <g
-                transform="translate(278 340) rotate(-7)"
+                transform="translate(292 350) rotate(-7)"
             >
 
                 <rect
@@ -564,7 +548,7 @@ function createMapSVG() {
                  BOTTOM LEFT ROCKS
             ================================== -->
 
-            <g transform="translate(15 427)">
+            <g transform="translate(10 449)">
 
                 <ellipse
                     cx="16"
@@ -588,7 +572,7 @@ function createMapSVG() {
             <!-- BOTTOM LEFT GRASS -->
 
             <g
-                transform="translate(43 435)"
+                transform="translate(37 457)"
                 stroke-linecap="round"
             >
 
@@ -621,7 +605,7 @@ function createMapSVG() {
             ================================== -->
 
             <g
-                transform="translate(307 455)"
+                transform="translate(310 438)"
                 filter="url(#crystalGlow)"
             >
 
@@ -636,6 +620,17 @@ function createMapSVG() {
                     fill="url(#crystalGradient)"
                 />
 
+                <polyline
+                    points="
+                        0,-19
+                        0,18
+                        10,-5
+                    "
+                    fill="none"
+                    stroke="rgba(255,255,255,.35)"
+                    stroke-width="1"
+                />
+
             </g>
 
 
@@ -645,11 +640,11 @@ function createMapSVG() {
 
             <path
                 d="
-                    M 65 55
-                    C 190 40, 285 75, 260 145
-                    C 235 205, 90 190, 95 260
-                    C 100 330, 275 300, 250 380
-                    C 230 435, 155 420, 165 455
+                    M 65 70
+                    C 190 55, 285 85, 260 155
+                    C 235 215, 90 200, 95 270
+                    C 100 340, 275 310, 250 390
+                    C 230 440, 155 430, 165 455
                 "
                 fill="none"
                 stroke="#263146"
@@ -665,11 +660,11 @@ function createMapSVG() {
 
             <path
                 d="
-                    M 65 55
-                    C 190 40, 285 75, 260 145
-                    C 235 205, 90 190, 95 260
-                    C 100 330, 275 300, 250 380
-                    C 230 435, 155 420, 165 455
+                    M 65 70
+                    C 190 55, 285 85, 260 155
+                    C 235 215, 90 200, 95 270
+                    C 100 340, 275 310, 250 390
+                    C 230 440, 155 430, 165 455
                 "
                 fill="none"
                 stroke="#765cff"
@@ -686,11 +681,11 @@ function createMapSVG() {
 
             <path
                 d="
-                    M 65 55
-                    C 190 40, 285 75, 260 145
-                    C 235 205, 90 190, 95 260
-                    C 100 330, 275 300, 250 380
-                    C 230 435, 155 420, 165 455
+                    M 65 70
+                    C 190 55, 285 85, 260 155
+                    C 235 215, 90 200, 95 270
+                    C 100 340, 275 310, 250 390
+                    C 230 440, 155 430, 165 455
                 "
                 fill="none"
                 stroke="url(#roadGradient)"
@@ -741,7 +736,6 @@ function renderLevelMap(chapterId) {
 
 
     if (stars && progress) {
-
         stars.textContent =
             `⭐ ${progress.earned} / 15`;
     }
@@ -814,11 +808,6 @@ function renderLevelMap(chapterId) {
         "hidden";
 
 
-    /*
-       Дорога + декорации теперь
-       находятся В ОДНОМ SVG.
-    */
-
     compactMap.innerHTML =
         createMapSVG();
 
@@ -831,22 +820,22 @@ function renderLevelMap(chapterId) {
 
         {
             left: "5%",
-            top: "2%"
+            top: "4%"
         },
 
         {
             right: "5%",
-            top: "20%"
+            top: "22%"
         },
 
         {
             left: "13%",
-            top: "40%"
+            top: "41%"
         },
 
         {
             right: "11%",
-            top: "60%"
+            top: "61%"
         },
 
         {
@@ -895,11 +884,8 @@ function renderLevelMap(chapterId) {
             "compact-node-wrap";
 
 
-        /*
-           Ставим уровни ВЫШЕ SVG.
-        */
-
-        wrapper.style.zIndex = "10";
+        wrapper.style.zIndex =
+            "10";
 
 
         const position =
@@ -907,14 +893,12 @@ function renderLevelMap(chapterId) {
 
 
         if (position.left) {
-
             wrapper.style.left =
                 position.left;
         }
 
 
         if (position.right) {
-
             wrapper.style.right =
                 position.right;
         }
@@ -978,8 +962,8 @@ function renderLevelMap(chapterId) {
 
 
         /*
-           Пройденный уровень
-           не затемняем.
+           Пройденные уровни не затемняем,
+           даже когда повтор ещё закрыт.
         */
 
         if (
@@ -993,7 +977,9 @@ function renderLevelMap(chapterId) {
         }
 
 
-        /* NUMBER */
+        /* =================================
+           NUMBER
+        ================================= */
 
         const number =
             document.createElement("div");
@@ -1053,7 +1039,9 @@ function renderLevelMap(chapterId) {
         button.appendChild(starRow);
 
 
-        /* CLICK */
+        /* =================================
+           CLICK
+        ================================= */
 
         button.onclick = () => {
 
@@ -1087,7 +1075,7 @@ function renderLevelMap(chapterId) {
 
 
         /* =================================
-           CURRENT
+           CURRENT LABEL
         ================================= */
 
         if (current) {
@@ -1217,7 +1205,8 @@ function handleMapLevelClick(level) {
 
 
     /*
-       Сейчас готовы уровни 1 и 2.
+       Пока реально готовы
+       уровни 1 и 2.
     */
 
     if (level > 2) {
