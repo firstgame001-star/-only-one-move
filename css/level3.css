@@ -1,18 +1,26 @@
 /* =====================================
    ONLY ONE MOVE
    LEVEL 3 — LASER LABYRINTH
-   16 VISIBLE MIRRORS
+   16 MIRRORS — CLEAN LAYOUT
 ===================================== */
 
 #laserPuzzle{
     width:100%;
 }
 
+
+/* =====================================
+   BOARD
+===================================== */
+
 #laserPuzzle .laser-board{
     position:relative;
+
     width:min(100%,350px);
     height:430px;
+
     margin:8px auto 0;
+
     overflow:hidden;
 
     border:1px solid rgba(116,145,190,.25);
@@ -43,6 +51,7 @@
 .laser-grid{
     position:absolute;
     inset:0;
+
     opacity:.20;
     pointer-events:none;
 
@@ -60,10 +69,13 @@
     background-size:35px 35px;
 }
 
+
 .laser-board::before{
     content:"";
+
     position:absolute;
     inset:0;
+
     pointer-events:none;
 
     background:
@@ -86,6 +98,7 @@
 
 .laser-source{
     position:absolute;
+
     left:-5px;
     top:47px;
 
@@ -112,10 +125,13 @@
         0 0 0 4px rgba(0,0,0,.22);
 }
 
+
 .laser-source-core{
     width:12px;
     height:12px;
+
     border-radius:50%;
+
     background:#ff4141;
 
     box-shadow:
@@ -127,7 +143,9 @@
         laserSourcePulse 1.1s ease-in-out infinite;
 }
 
+
 @keyframes laserSourcePulse{
+
     0%,
     100%{
         transform:scale(.9);
@@ -138,6 +156,7 @@
         transform:scale(1.15);
         opacity:1;
     }
+
 }
 
 
@@ -161,6 +180,7 @@
     justify-content:center;
 
     border-radius:50%;
+
     background:#101722;
 
     box-shadow:
@@ -168,27 +188,34 @@
         inset 0 0 18px rgba(0,0,0,.8);
 }
 
+
 .laser-target-ring{
     position:absolute;
+
     border-radius:50%;
+
     border:2px solid #596579;
 }
+
 
 .laser-target .ring-1{
     width:38px;
     height:38px;
 }
 
+
 .laser-target .ring-2{
     width:25px;
     height:25px;
 }
+
 
 .laser-target-core{
     width:11px;
     height:11px;
 
     border-radius:50%;
+
     background:#6b7484;
 
     transition:
@@ -199,12 +226,16 @@
 
 
 /* =====================================
-   BLOCKS
+   BLOCKS / X
 ===================================== */
 
 .laser-block{
     position:absolute;
-    z-index:4;
+
+    z-index:6;
+
+    width:43px;
+    height:43px;
 
     border:1px solid #354052;
     border-radius:7px;
@@ -221,54 +252,71 @@
         0 4px 10px rgba(0,0,0,.25);
 }
 
+
+/* X 1 */
+
 .block-1{
     left:143px;
     top:64px;
-    width:43px;
-    height:43px;
 }
+
+
+/* X 2 */
 
 .block-2{
     right:21px;
     top:88px;
-    width:43px;
-    height:43px;
 }
+
+
+/* X 3 */
 
 .block-3{
     left:40px;
     top:192px;
-    width:43px;
-    height:43px;
 }
+
+
+/* X 4 */
 
 .block-4{
     left:147px;
     top:244px;
-    width:43px;
-    height:43px;
 }
+
+
+/*
+   X 5
+   Сдвинут вправо.
+   Больше не находится под зеркалом.
+*/
 
 .block-5{
-    right:74px;
-    top:276px;
-    width:43px;
-    height:43px;
+    right:20px;
+    top:260px;
 }
+
+
+/*
+   X 6
+   Сдвинут в свободную нижнюю
+   центральную область.
+*/
 
 .block-6{
-    left:176px;
-    bottom:28px;
-    width:43px;
-    height:43px;
+    left:143px;
+    bottom:23px;
 }
 
 
-/* X inside blocks */
+/* =====================================
+   X SYMBOL
+===================================== */
 
 .laser-block::before,
 .laser-block::after{
     content:"";
+
     position:absolute;
 
     left:7px;
@@ -278,12 +326,15 @@
     height:3px;
 
     border-radius:3px;
+
     background:#080c12;
 }
+
 
 .laser-block::before{
     transform:rotate(45deg);
 }
+
 
 .laser-block::after{
     transform:rotate(-45deg);
@@ -303,6 +354,7 @@
     z-index:20;
 
     padding:0;
+
     border:0;
     outline:0;
 
@@ -327,6 +379,7 @@
     touch-action:manipulation;
 }
 
+
 .laser-mirror::before{
     content:"";
 
@@ -338,9 +391,12 @@
     width:26px;
     height:26px;
 
-    border:1px solid rgba(151,171,199,.25);
+    border:
+        1px solid rgba(151,171,199,.25);
+
     border-radius:50%;
 }
+
 
 .mirror-glass{
     position:absolute;
@@ -368,9 +424,11 @@
     transform-origin:center;
 }
 
+
 .angle-forward .mirror-glass{
     transform:rotate(45deg);
 }
+
 
 .angle-back .mirror-glass{
     transform:rotate(-45deg);
@@ -378,13 +436,11 @@
 
 
 /* =====================================
-   ALL 16 MIRRORS
-
-   Каждый находится в отдельной позиции.
+   16 MIRRORS
 ===================================== */
 
 
-/* 1 — верх слева */
+/* 1 */
 
 .mirror-1{
     left:84px;
@@ -392,7 +448,7 @@
 }
 
 
-/* 2 — верх центр */
+/* 2 */
 
 .mirror-2{
     left:201px;
@@ -400,7 +456,7 @@
 }
 
 
-/* 3 — верх справа */
+/* 3 */
 
 .mirror-3{
     right:18px;
@@ -408,7 +464,7 @@
 }
 
 
-/* 4 — слева под источником */
+/* 4 */
 
 .mirror-4{
     left:35px;
@@ -416,7 +472,7 @@
 }
 
 
-/* 5 — первый маршрут */
+/* 5 */
 
 .mirror-5{
     left:94px;
@@ -424,7 +480,7 @@
 }
 
 
-/* 6 — центр сверху */
+/* 6 */
 
 .mirror-6{
     left:190px;
@@ -432,7 +488,7 @@
 }
 
 
-/* 7 — справа сверху */
+/* 7 */
 
 .mirror-7{
     right:28px;
@@ -440,7 +496,7 @@
 }
 
 
-/* 8 — слева центр */
+/* 8 */
 
 .mirror-8{
     left:91px;
@@ -448,7 +504,7 @@
 }
 
 
-/* 9 — центр */
+/* 9 */
 
 .mirror-9{
     left:194px;
@@ -456,72 +512,76 @@
 }
 
 
-/* 10 — справа центр */
+/* 10 */
 
 .mirror-10{
     right:27px;
-    top:216px;
+    top:205px;
 }
 
 
-/* 11 — нижняя левая зона */
+/* 11 */
 
 .mirror-11{
-    left:45px;
-    top:258px;
+    left:48px;
+    top:255px;
 }
 
 
-/* 12 — нижний центр слева */
+/* 12 */
 
 .mirror-12{
     left:105px;
-    top:305px;
+    top:300px;
 }
 
 
-/* =====================================
-   FOUR EXTRA MIRRORS
-===================================== */
-
-
 /*
-   13 — правильное зеркало.
-   Никакого визуального выделения.
+   13 — ПРАВИЛЬНОЕ ЗЕРКАЛО
+
+   Оно теперь стоит отдельно.
+   X его не перекрывает.
 */
 
 .mirror-13{
     left:202px;
-    top:274px;
+    top:270px;
 }
 
 
-/* 14 — дополнительное справа */
+/*
+   14 — справа снизу,
+   но выше цели.
+*/
 
 .mirror-14{
-    right:23px;
-    top:316px;
+    right:29px;
+    top:318px;
 }
 
 
-/* 15 — дополнительное снизу слева */
+/*
+   15 — нижний левый угол.
+*/
 
 .mirror-15{
-    left:59px;
-    top:365px;
+    left:51px;
+    top:356px;
 }
 
 
-/* 16 — дополнительное снизу по центру */
+/*
+   16 — нижняя зона справа от центра.
+*/
 
 .mirror-16{
-    left:151px;
-    top:374px;
+    left:220px;
+    top:359px;
 }
 
 
 /* =====================================
-   BEAMS
+   LASER BEAMS
 ===================================== */
 
 .laser-beam,
@@ -539,6 +599,7 @@
     transform-origin:left center;
 }
 
+
 .laser-beam{
     background:#ff4040;
 
@@ -550,14 +611,16 @@
 
 
 /* =====================================
-   STARTING ROUTE
+   START ROUTE
 ===================================== */
 
 .beam-1{
     left:22px;
     top:63px;
+
     width:79px;
 }
+
 
 .beam-2{
     left:100px;
@@ -568,12 +631,14 @@
     transform:rotate(90deg);
 }
 
+
 .beam-3{
     left:100px;
     top:118px;
 
     width:107px;
 }
+
 
 .beam-4{
     left:205px;
@@ -584,15 +649,17 @@
     transform:rotate(90deg);
 }
 
+
 .beam-5{
     left:205px;
     top:288px;
+
     width:18px;
 }
 
 
 /* =====================================
-   CORRECT FINAL ROUTE
+   CORRECT ROUTE
 ===================================== */
 
 .final-beam{
@@ -602,36 +669,40 @@
         opacity .18s ease;
 }
 
+
 .final-beam-1{
     left:219px;
-    top:290px;
+    top:287px;
 
     width:73px;
 }
 
+
 .final-beam-2{
     left:290px;
-    top:290px;
+    top:287px;
 
-    width:65px;
+    width:69px;
 
     transform:rotate(90deg);
 }
 
+
 .final-beam-3{
     left:290px;
-    top:353px;
+    top:354px;
 
     width:34px;
 
     transform:rotate(135deg);
 }
 
+
 .final-beam-4{
     left:266px;
-    top:377px;
+    top:378px;
 
-    width:31px;
+    width:30px;
 
     transform:rotate(90deg);
 }
@@ -643,6 +714,7 @@
 
 .false-route{
     position:absolute;
+
     inset:0;
 
     z-index:10;
@@ -654,6 +726,7 @@
     transition:
         opacity .15s ease;
 }
+
 
 .false-beam{
     background:#ff5252;
@@ -675,6 +748,7 @@
     transform:rotate(45deg);
 }
 
+
 .false-a-2{
     left:166px;
     top:129px;
@@ -694,6 +768,7 @@
     width:87px;
 }
 
+
 .false-b-2{
     left:291px;
     top:118px;
@@ -702,6 +777,7 @@
 
     transform:rotate(90deg);
 }
+
 
 .false-b-3{
     left:291px;
@@ -724,6 +800,7 @@
     transform:rotate(145deg);
 }
 
+
 .false-c-2{
     left:130px;
     top:341px;
@@ -742,9 +819,11 @@
     opacity:1;
 }
 
+
 .show-false-b .false-route-b{
     opacity:1;
 }
+
 
 .show-false-c .false-route-c{
     opacity:1;
@@ -752,7 +831,7 @@
 
 
 /* =====================================
-   MIRROR INTERACTION
+   MIRROR TURN
 ===================================== */
 
 .mirror-turning{
@@ -763,10 +842,16 @@
         0 0 18px rgba(157,205,235,.40);
 }
 
+
+/* =====================================
+   WRONG MIRROR
+===================================== */
+
 .mirror-wrong{
     animation:
         laserMirrorWrong .35s ease;
 }
+
 
 @keyframes laserMirrorWrong{
 
@@ -789,17 +874,19 @@
     100%{
         translate:0;
     }
+
 }
 
 
 /* =====================================
-   WRONG
+   WRONG BOARD
 ===================================== */
 
 .laser-wrong .laser-board{
     animation:
         laserBoardWrong .38s ease;
 }
+
 
 @keyframes laserBoardWrong{
 
@@ -815,11 +902,12 @@
             inset 0 0 50px rgba(255,50,50,.18),
             0 0 25px rgba(255,50,50,.16);
     }
+
 }
 
 
 /* =====================================
-   CORRECT
+   CORRECT MIRROR
 ===================================== */
 
 .mirror-correct{
@@ -838,6 +926,7 @@
     opacity:1;
 }
 
+
 .laser-solved .laser-target-core{
     background:#55e6a5;
 
@@ -849,10 +938,16 @@
         0 0 28px rgba(85,230,165,.55);
 }
 
+
 .laser-solved .laser-target{
     animation:
-        laserTargetSuccess .8s ease-in-out infinite alternate;
+        laserTargetSuccess
+        .8s
+        ease-in-out
+        infinite
+        alternate;
 }
+
 
 @keyframes laserTargetSuccess{
 
@@ -868,6 +963,7 @@
             0 0 22px rgba(85,230,165,.38),
             inset 0 0 18px rgba(0,0,0,.8);
     }
+
 }
 
 
@@ -880,6 +976,7 @@
     animation:
         laserFlow .7s linear infinite;
 }
+
 
 @keyframes laserFlow{
 
@@ -894,6 +991,7 @@
     100%{
         filter:brightness(.9);
     }
+
 }
 
 
@@ -931,10 +1029,12 @@
         height:32px;
     }
 
+
     .laser-mirror::before{
         width:24px;
         height:24px;
     }
+
 
     .mirror-glass{
         width:24px;
