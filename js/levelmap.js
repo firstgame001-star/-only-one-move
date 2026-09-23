@@ -14,27 +14,17 @@ function openLevelMap(chapterId = 1) {
 
     openedChapter = Number(chapterId) || 1;
 
-    const home =
-        document.getElementById("homeScreen");
-
-    const game =
-        document.getElementById("gameScreen");
-
-    const map =
-        document.getElementById("levelMapScreen");
+    const home = document.getElementById("homeScreen");
+    const game = document.getElementById("gameScreen");
+    const map = document.getElementById("levelMapScreen");
 
     if (!map) {
         console.error("Не найден #levelMapScreen");
         return;
     }
 
-    if (home) {
-        home.classList.add("hidden");
-    }
-
-    if (game) {
-        game.classList.add("hidden");
-    }
+    if (home) home.classList.add("hidden");
+    if (game) game.classList.add("hidden");
 
     map.classList.remove("hidden");
 
@@ -48,19 +38,11 @@ function openLevelMap(chapterId = 1) {
 
 function closeLevelMap() {
 
-    const map =
-        document.getElementById("levelMapScreen");
+    const map = document.getElementById("levelMapScreen");
+    const home = document.getElementById("homeScreen");
 
-    const home =
-        document.getElementById("homeScreen");
-
-    if (map) {
-        map.classList.add("hidden");
-    }
-
-    if (home) {
-        home.classList.remove("hidden");
-    }
+    if (map) map.classList.add("hidden");
+    if (home) home.classList.remove("hidden");
 
     if (typeof updateMainUI === "function") {
         updateMainUI();
@@ -81,17 +63,267 @@ function closeLevelMap() {
 
 
 /* =========================================
+   DECORATIONS
+========================================= */
+
+function createGrass() {
+
+    const grass = document.createElement("div");
+
+    grass.className = "map-decor map-grass";
+
+    grass.innerHTML = `
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    `;
+
+    return grass;
+}
+
+
+function createRock(small = false) {
+
+    const rock = document.createElement("div");
+
+    rock.className =
+        "map-decor map-rock" +
+        (small ? " small" : "");
+
+    return rock;
+}
+
+
+function createCrystal(small = false) {
+
+    const crystal = document.createElement("div");
+
+    crystal.className =
+        "map-decor map-crystal" +
+        (small ? " small" : "");
+
+    return crystal;
+}
+
+
+function createSign() {
+
+    const sign = document.createElement("div");
+
+    sign.className = "map-decor map-sign";
+
+    sign.textContent = "➜";
+
+    return sign;
+}
+
+
+function createSpark() {
+
+    const spark = document.createElement("div");
+
+    spark.className = "map-decor map-spark";
+
+    return spark;
+}
+
+
+function placeDecoration(
+    map,
+    element,
+    left,
+    top,
+    rotate = 0
+) {
+
+    element.style.left = left;
+    element.style.top = top;
+
+    if (rotate !== 0) {
+        element.style.transform =
+            `rotate(${rotate}deg)`;
+    }
+
+    map.appendChild(element);
+}
+
+
+/* =========================================
+   ADD MAP SCENERY
+========================================= */
+
+function addMapScenery(map) {
+
+    /* LEFT TOP */
+
+    placeDecoration(
+        map,
+        createRock(),
+        "1%",
+        "13%",
+        -8
+    );
+
+    placeDecoration(
+        map,
+        createGrass(),
+        "8%",
+        "19%",
+        -5
+    );
+
+    placeDecoration(
+        map,
+        createCrystal(true),
+        "3%",
+        "31%",
+        -10
+    );
+
+
+    /* RIGHT TOP */
+
+    placeDecoration(
+        map,
+        createCrystal(),
+        "89%",
+        "7%",
+        10
+    );
+
+    placeDecoration(
+        map,
+        createGrass(),
+        "88%",
+        "31%",
+        7
+    );
+
+
+    /* LEFT MIDDLE */
+
+    placeDecoration(
+        map,
+        createRock(true),
+        "2%",
+        "48%",
+        8
+    );
+
+    placeDecoration(
+        map,
+        createCrystal(),
+        "5%",
+        "60%",
+        -8
+    );
+
+
+    /* RIGHT MIDDLE */
+
+    placeDecoration(
+        map,
+        createRock(),
+        "87%",
+        "48%",
+        7
+    );
+
+    placeDecoration(
+        map,
+        createGrass(),
+        "91%",
+        "61%",
+        -6
+    );
+
+
+    /* SIGN */
+
+    placeDecoration(
+        map,
+        createSign(),
+        "77%",
+        "72%",
+        -6
+    );
+
+
+    /* BOTTOM LEFT */
+
+    placeDecoration(
+        map,
+        createGrass(),
+        "5%",
+        "82%",
+        4
+    );
+
+    placeDecoration(
+        map,
+        createRock(true),
+        "16%",
+        "89%",
+        -5
+    );
+
+
+    /* BOTTOM RIGHT */
+
+    placeDecoration(
+        map,
+        createCrystal(),
+        "88%",
+        "87%",
+        9
+    );
+
+
+    /* GLOWING PARTICLES */
+
+    const sparks = [
+
+        ["17%", "8%"],
+        ["76%", "14%"],
+        ["93%", "22%"],
+        ["7%", "38%"],
+        ["82%", "43%"],
+        ["18%", "67%"],
+        ["91%", "76%"],
+        ["29%", "91%"],
+        ["72%", "94%"]
+
+    ];
+
+
+    sparks.forEach(
+        ([left, top], index) => {
+
+            const spark = createSpark();
+
+            spark.style.left = left;
+            spark.style.top = top;
+
+            spark.style.animationDelay =
+                `${index * 0.18}s`;
+
+            map.appendChild(spark);
+        }
+    );
+}
+
+
+/* =========================================
    RENDER MAP
 ========================================= */
 
 function renderLevelMap(chapterId) {
 
-    const chapter =
-        getChapterData(chapterId);
+    const chapter = getChapterData(chapterId);
 
-    if (!chapter) {
-        return;
-    }
+    if (!chapter) return;
+
 
     const title =
         document.getElementById("mapTitle");
@@ -106,35 +338,30 @@ function renderLevelMap(chapterId) {
         document.getElementById("levelPath");
 
 
-    /* =====================================
-       HEADER
-    ===================================== */
+    /* HEADER */
 
     if (title) {
-        title.textContent =
-            `ЭТАП ${chapterId}`;
+        title.textContent = `ЭТАП ${chapterId}`;
     }
 
 
     const progress =
         getChapterProgress(chapterId);
 
+
     if (stars && progress) {
+
         stars.textContent =
             `⭐ ${progress.earned} / 15`;
     }
 
 
-    /* =====================================
-       STATUS
-    ===================================== */
+    /* STATUS */
 
     if (status) {
 
         if (
-            isChapterFirstRunComplete(
-                chapterId
-            )
+            isChapterFirstRunComplete(chapterId)
         ) {
 
             status.innerHTML = `
@@ -170,15 +397,14 @@ function renderLevelMap(chapterId) {
     }
 
 
-    if (!path) {
-        return;
-    }
+    if (!path) return;
+
 
     path.innerHTML = "";
 
 
     /* =====================================
-       COMPACT MAP
+       MAP
     ===================================== */
 
     const compactMap =
@@ -188,21 +414,19 @@ function renderLevelMap(chapterId) {
         "compact-level-map";
 
 
-    /*
-       SVG-дорожка.
-
-       Она декоративная.
-       Кнопки уровней располагаются
-       поверх неё.
-    */
+    /* =====================================
+       BACKGROUND ROAD
+    ===================================== */
 
     compactMap.innerHTML = `
+
         <svg
             class="level-road"
             viewBox="0 0 340 480"
             preserveAspectRatio="none"
             aria-hidden="true"
         >
+
             <defs>
 
                 <linearGradient
@@ -212,13 +436,14 @@ function renderLevelMap(chapterId) {
                     x2="1"
                     y2="1"
                 >
+
                     <stop
                         offset="0%"
                         stop-color="#ffd166"
                     />
 
                     <stop
-                        offset="30%"
+                        offset="32%"
                         stop-color="#765cff"
                     />
 
@@ -226,7 +451,9 @@ function renderLevelMap(chapterId) {
                         offset="100%"
                         stop-color="#354056"
                     />
+
                 </linearGradient>
+
 
                 <filter id="roadGlow">
 
@@ -237,9 +464,7 @@ function renderLevelMap(chapterId) {
 
                     <feMerge>
 
-                        <feMergeNode
-                            in="blur"
-                        />
+                        <feMergeNode in="blur" />
 
                         <feMergeNode
                             in="SourceGraphic"
@@ -251,59 +476,78 @@ function renderLevelMap(chapterId) {
 
             </defs>
 
-            <path
-                d="
-                    M 82 58
-                    C 200 55, 275 75, 255 145
-                    C 235 205, 110 180, 95 255
-                    C 80 320, 265 300, 250 375
-                    C 240 425, 160 430, 170 455
-                "
-                fill="none"
-                stroke="#263146"
-                stroke-width="8"
-                stroke-linecap="round"
-            />
+
+            <!-- SHADOW ROAD -->
 
             <path
                 d="
-                    M 82 58
-                    C 200 55, 275 75, 255 145
+                    M 65 55
+                    C 190 40, 285 75, 260 145
+                    C 235 205, 90 190, 95 260
+                    C 100 330, 275 300, 250 380
+                    C 230 435, 155 420, 165 455
+                "
+                fill="none"
+                stroke="#263146"
+                stroke-width="10"
+                stroke-linecap="round"
+            />
+
+
+            <!-- GLOW ROAD -->
+
+            <path
+                d="
+                    M 65 55
+                    C 190 40, 285 75, 260 145
+                    C 235 205, 90 190, 95 260
+                    C 100 330, 275 300, 250 380
+                    C 230 435, 155 420, 165 455
                 "
                 fill="none"
                 stroke="url(#roadGradient)"
-                stroke-width="7"
+                stroke-width="5"
                 stroke-linecap="round"
                 filter="url(#roadGlow)"
+                opacity=".75"
             />
 
         </svg>
     `;
 
 
+    /*
+       ВАЖНО:
+       Декорации теперь реально
+       добавляются в DOM.
+    */
+
+    addMapScenery(compactMap);
+
+
     /* =====================================
-       POSITIONS
+       LEVEL POSITIONS
     ===================================== */
 
     const positions = [
 
         {
-            left: "7%",
-            top: "3%"
+            left: "5%",
+            top: "2%"
         },
 
         {
-            right: "7%",
+            right: "5%",
             top: "20%"
         },
 
         {
-            left: "15%",
+            left: "13%",
             top: "40%"
         },
 
         {
-            right: "13%",
+            right: "11%",
             top: "60%"
         },
 
@@ -328,14 +572,18 @@ function renderLevelMap(chapterId) {
         const index =
             level - chapter.firstLevel;
 
+
         const completed =
             isLevelCompleted(level);
+
 
         const bestStars =
             getBestStars(level);
 
+
         const playable =
             canPlayLevel(level);
+
 
         const current =
             !completed && playable;
@@ -344,34 +592,34 @@ function renderLevelMap(chapterId) {
         const wrapper =
             document.createElement("div");
 
+
         wrapper.className =
             "compact-node-wrap";
 
 
-        /*
-            Position
-        */
-
         const position =
             positions[index];
 
+
         if (position.left) {
+
             wrapper.style.left =
                 position.left;
         }
 
+
         if (position.right) {
+
             wrapper.style.right =
                 position.right;
         }
+
 
         wrapper.style.top =
             position.top;
 
 
-        /* =================================
-           LOCK ICON
-        ================================= */
+        /* LOCK */
 
         if (
             !completed &&
@@ -381,22 +629,24 @@ function renderLevelMap(chapterId) {
             const lock =
                 document.createElement("div");
 
+
             lock.className =
                 "compact-lock";
 
+
             lock.textContent =
                 "🔒";
+
 
             wrapper.appendChild(lock);
         }
 
 
-        /* =================================
-           BUTTON
-        ================================= */
+        /* BUTTON */
 
         const button =
             document.createElement("button");
+
 
         button.className =
             "compact-level-node";
@@ -418,7 +668,16 @@ function renderLevelMap(chapterId) {
         }
 
 
-        if (!playable) {
+        /*
+           ИСПРАВЛЕНО:
+           завершённый уровень не затемняем,
+           даже если повтор пока закрыт.
+        */
+
+        if (
+            !completed &&
+            !playable
+        ) {
 
             button.classList.add(
                 "compact-locked"
@@ -426,29 +685,28 @@ function renderLevelMap(chapterId) {
         }
 
 
-        /*
-            Number always stays visible.
-            We don't replace it with 🔒.
-        */
+        /* NUMBER */
 
         const number =
             document.createElement("div");
 
+
         number.className =
             "compact-level-number";
+
 
         number.textContent =
             level;
 
+
         button.appendChild(number);
 
 
-        /* =================================
-           STARS
-        ================================= */
+        /* STARS */
 
         const starRow =
             document.createElement("div");
+
 
         starRow.className =
             "compact-stars";
@@ -457,6 +715,7 @@ function renderLevelMap(chapterId) {
         if (completed) {
 
             let text = "";
+
 
             for (
                 let star = 1;
@@ -470,8 +729,8 @@ function renderLevelMap(chapterId) {
                         : "☆";
             }
 
-            starRow.textContent =
-                text;
+
+            starRow.textContent = text;
 
         } else {
 
@@ -480,79 +739,65 @@ function renderLevelMap(chapterId) {
         }
 
 
-        button.appendChild(
-            starRow
-        );
+        button.appendChild(starRow);
 
 
-        /* =================================
-           CLICK
-        ================================= */
+        /* CLICK */
 
         button.onclick = () => {
 
-            handleMapLevelClick(
-                level
-            );
+            handleMapLevelClick(level);
         };
 
 
-        wrapper.appendChild(
-            button
-        );
+        wrapper.appendChild(button);
 
 
-        /* =================================
-           COMPLETED CHECK
-        ================================= */
+        /* CHECK */
 
         if (completed) {
 
             const check =
                 document.createElement("div");
 
+
             check.className =
                 "compact-check";
+
 
             check.textContent =
                 "✓";
 
-            wrapper.appendChild(
-                check
-            );
+
+            wrapper.appendChild(check);
         }
 
 
-        /* =================================
-           CURRENT LABEL
-        ================================= */
+        /* CURRENT */
 
         if (current) {
 
             const label =
                 document.createElement("div");
 
+
             label.className =
                 "compact-play-label";
+
 
             label.textContent =
                 "ИГРАТЬ";
 
-            wrapper.appendChild(
-                label
-            );
+
+            wrapper.appendChild(label);
         }
 
 
-        compactMap.appendChild(
-            wrapper
-        );
+        compactMap.appendChild(wrapper);
     }
 
 
-    path.appendChild(
-        compactMap
-    );
+    path.appendChild(compactMap);
 
 
     /* =====================================
@@ -562,20 +807,17 @@ function renderLevelMap(chapterId) {
     const footer =
         document.createElement("div");
 
+
     footer.className =
         "compact-map-footer";
 
 
     if (
-        isChapterFirstRunComplete(
-            chapterId
-        )
+        isChapterFirstRunComplete(chapterId)
     ) {
 
         const improvement =
-            getLevelsToImprove(
-                chapterId
-            );
+            getLevelsToImprove(chapterId);
 
 
         if (
@@ -622,9 +864,7 @@ function renderLevelMap(chapterId) {
     }
 
 
-    path.appendChild(
-        footer
-    );
+    path.appendChild(footer);
 }
 
 
@@ -643,6 +883,7 @@ function handleMapLevelClick(level) {
         const reason =
             getLevelLockReason(level);
 
+
         if (
             typeof showAppNotice ===
             "function"
@@ -655,13 +896,14 @@ function handleMapLevelClick(level) {
             alert(reason);
         }
 
+
         return;
     }
 
 
     /*
-        Сейчас реально готовы
-        уровни 1 и 2.
+       Пока реально готовы
+       только уровни 1 и 2.
     */
 
     if (level > 2) {
@@ -681,6 +923,7 @@ function handleMapLevelClick(level) {
                 `Уровень ${level} скоро добавим 🧩`
             );
         }
+
 
         return;
     }
@@ -702,6 +945,7 @@ function handleMapLevelClick(level) {
             openEnergyShop();
         }
 
+
         return;
     }
 
@@ -710,6 +954,7 @@ function handleMapLevelClick(level) {
         document.getElementById(
             "levelMapScreen"
         );
+
 
     const game =
         document.getElementById(
