@@ -2,58 +2,107 @@
 // ONLY ONE MOVE — GAME ENGINE
 // =====================================
 
-let activeLevel = null;
-let levelStartedAt = null;
-let levelTimerInterval = null;
-let levelSeconds = 0;
-let wrongAttempts = 0;
+const THINK_TIME = 20;
+const MAX_WRONG_MOVES = 3;
+
+let activeLevel = 1;
 let levelSolved = false;
+
+let thinkSeconds = THINK_TIME;
+let playSeconds = 0;
+
+let wrongAttempts = 0;
+
+let thinkInterval = null;
+let playInterval = null;
 
 
 // =====================================
-// ЗАПУСК УРОВНЯ
+// START LEVEL
 // =====================================
 
 function startLevel(levelNumber) {
+
     activeLevel = levelNumber;
-    wrongAttempts = 0;
+
     levelSolved = false;
-    levelSeconds = 0;
-    levelStartedAt = Date.now();
+    wrongAttempts = 0;
+
+    thinkSeconds = THINK_TIME;
+    playSeconds = 0;
 
     stopLevelTimer();
 
-    levelTimerInterval = setInterval(() => {
-        levelSeconds = Math.floor(
-            (Date.now() - levelStartedAt) / 1000
-        );
+    updateTimerDisplay();
+
+    // 20 секунд на размышление
+    thinkInterval = setInterval(() => {
+
+        thinkSeconds--;
+
+        if (thinkSeconds <= 0) {
+
+            thinkSeconds = 0;
+
+            clearInterval(thinkInterval);
+            thinkInterval = null;
+
+            startPlayTimer();
+
+        }
 
         updateTimerDisplay();
+
     }, 1000);
-
-    updateTimerDisplay();
 }
 
 
 // =====================================
-// ТАЙМЕР
+// TIMER AFTER THINKING
 // =====================================
 
-function stopLevelTimer() {
-    if (levelTimerInterval !== null) {
-        clearInterval(levelTimerInterval);
-        levelTimerInterval = null;
-    }
+function startPlayTimer() {
+
+    playSeconds = 0;
+
+    playInterval = setInterval(() => {
+
+        playSeconds++;
+
+        updateTimerDisplay();
+
+    }, 1000);
 }
 
+
+// =====================================
+// TIMER DISPLAY
+// =====================================
 
 function updateTimerDisplay() {
-    const timer = document.getElementById("levelTimer");
+
+    const timer =
+        document.getElementById("levelTimer");
 
     if (!timer) return;
 
-    const minutes = Math.floor(levelSeconds / 60);
-    const seconds = levelSeconds % 60;
+
+    // Пока идёт время на размышление
+    if (thinkSeconds > 0) {
+
+        timer.textContent =
+            "🧠 " + thinkSeconds + " сек.";
+
+        return;
+    }
+
+
+    // После размышления
+    const minutes =
+        Math.floor(playSeconds / 60);
+
+    const seconds =
+        playSeconds % 60;
 
     timer.textContent =
         String(minutes).padStart(2, "0") +
@@ -63,18 +112,50 @@ function updateTimerDisplay() {
 
 
 // =====================================
-// ЗВЁЗДЫ
+// STOP TIMER
+// =====================================
+
+function stopLevelTimer() {
+
+    if (thinkInterval) {
+        clearInterval(thinkInterval);
+        thinkInterval = null;
+    }
+
+    if (playInterval) {
+        clearInterval(playInterval);
+        playInterval = null;
+    }
+}
+
+
+// =====================================
+// STARS ⭐
 // =====================================
 
 function calculateStars() {
-    // Пока единые правила.
-    // Позже пороги будут зависеть от сложности уровня.
 
-    if (levelSeconds <= 20) {
+    /*
+       Решил во время размышления:
+       ⭐⭐⭐
+    */
+
+    if (thinkSeconds > 0) {
         return 3;
     }
 
-    if (levelSeconds <= 45) {
+    /*
+       После окончания 20 секунд:
+       до 20 дополнительных секунд = ⭐⭐⭐
+       до 45 дополнительных секунд = ⭐⭐
+       дальше = ⭐
+    */
+
+    if (playSeconds <= 20) {
+        return 3;
+    }
+
+    if (playSeconds <= 45) {
         return 2;
     }
 
@@ -83,251 +164,592 @@ function calculateStars() {
 
 
 // =====================================
-// НЕПРАВИЛЬНЫЙ ХОД
+// WRONG MOVE ❌
 // =====================================
 
 function registerWrongMove() {
+
     if (levelSolved) return;
 
     wrongAttempts++;
 
-    // Первые 5 уровней — обучение.
-    // Сердца там не тратятся.
-    if (activeLevel <= 5) {
-        showGameMessage(
-            "Не совсем 👀 Попробуй ещё раз."
-        );
-        return;
-    }
+    const attemptsLeft =
+        MAX_WRONG_MOVES - wrongAttempts;
 
-    const attemptsLeft = 3 - wrongAttempts;
 
+    // Ещё есть попытки
     if (attemptsLeft > 0) {
+
         showGameMessage(
-            `Неверно. До потери ❤️: ${attemptsLeft}`
+            `❌ Неверно. Осталось попыток: ${attemptsLeft}`,
+            "bad"
         );
 
         return;
     }
 
-    // Три ошибки = минус одно сердце
+
+    // Третья ошибка = проигрыш
+    loseLevel();
+}
+
+
+// =====================================
+// LOSE
+// =====================================
+
+function loseLevel() {
+
+    stopLevelTimer();
+
     wrongAttempts = 0;
 
-    const used = useEnergy();
+    // С уровня 1 теряем сердце
+    const heartUsed =
+        useEnergy();
 
-    if (!used) {
+
+    if (!heartUsed) {
+
         showNoEnergy();
+
         return;
     }
 
-    const energyData = getEnergyData();
 
     updateEnergyUI();
 
+
+    const energy =
+        getEnergyData();
+
+
     showGameMessage(
-        `−1 ❤️ Осталось ${energyData.energy}/${MAX_ENERGY}`
+        `💔 Попытка не удалась. −1 ❤️`,
+        "bad"
     );
 
-    if (energyData.energy <= 0) {
-        setTimeout(() => {
-            showNoEnergy();
-        }, 700);
+
+    setTimeout(() => {
+
+        showLoseModal(
+            energy.energy
+        );
+
+    }, 600);
+}
+
+
+// =====================================
+// LOSE WINDOW
+// =====================================
+
+function showLoseModal(energyLeft) {
+
+    let modal =
+        document.getElementById(
+            "loseModal"
+        );
+
+
+    // Создаём окно автоматически,
+    // если его ещё нет в HTML
+
+    if (!modal) {
+
+        modal =
+            document.createElement(
+                "div"
+            );
+
+        modal.id = "loseModal";
+        modal.className = "overlay";
+
+        modal.innerHTML = `
+            <div class="win">
+
+                <div style="
+                    font-size:64px;
+                    margin-bottom:12px;
+                ">
+                    💔
+                </div>
+
+                <h2>
+                    Попытка не удалась
+                </h2>
+
+                <div style="
+                    color:#929bab;
+                    margin-top:10px;
+                ">
+                    Ты использовал 3 неверных хода
+                </div>
+
+                <div style="
+                    font-size:22px;
+                    font-weight:900;
+                    margin-top:20px;
+                ">
+                    ❤️
+                    <span id="loseEnergy">
+                        0
+                    </span>
+                    /5
+                </div>
+
+                <button
+                    class="next"
+                    onclick="retryAfterLose()">
+
+                    ↻ ПОПРОБОВАТЬ СНОВА
+
+                </button>
+
+                <button
+                    class="shop-option"
+                    onclick="openEnergyFromLose()">
+
+                    ❤️ Восстановить энергию
+
+                </button>
+
+                <button
+                    class="close-shop"
+                    onclick="homeAfterLose()">
+
+                    ← На главную
+
+                </button>
+
+            </div>
+        `;
+
+        document.body.appendChild(
+            modal
+        );
+    }
+
+
+    const energyText =
+        document.getElementById(
+            "loseEnergy"
+        );
+
+    if (energyText) {
+        energyText.textContent =
+            energyLeft;
+    }
+
+
+    modal.classList.add("show");
+}
+
+
+// =====================================
+// RETRY
+// =====================================
+
+function retryAfterLose() {
+
+    const energy =
+        getEnergyData();
+
+
+    // Играть с 0 ❤️ нельзя
+    if (energy.energy <= 0) {
+
+        closeLoseModal();
+
+        showNoEnergy();
+
+        return;
+    }
+
+
+    closeLoseModal();
+
+
+    // Эта функция находится
+    // в index.html
+    if (
+        typeof resetPuzzleVisual ===
+        "function"
+    ) {
+        resetPuzzleVisual();
+    }
+
+
+    startLevel(activeLevel);
+}
+
+
+// =====================================
+// ENERGY FROM LOSE
+// =====================================
+
+function openEnergyFromLose() {
+
+    closeLoseModal();
+
+    if (
+        typeof openEnergyShop ===
+        "function"
+    ) {
+        openEnergyShop();
     }
 }
 
 
 // =====================================
-// ПРАВИЛЬНОЕ РЕШЕНИЕ
+// HOME AFTER LOSE
 // =====================================
 
-function solveLevel(coinReward = 30) {
+function homeAfterLose() {
+
+    closeLoseModal();
+
+    if (
+        typeof goHome ===
+        "function"
+    ) {
+        goHome();
+    }
+}
+
+
+function closeLoseModal() {
+
+    const modal =
+        document.getElementById(
+            "loseModal"
+        );
+
+    if (modal) {
+        modal.classList.remove(
+            "show"
+        );
+    }
+}
+
+
+// =====================================
+// CORRECT SOLUTION ✅
+// =====================================
+
+function solveLevel(
+    coinReward = 30
+) {
+
     if (levelSolved) return;
 
     levelSolved = true;
 
     stopLevelTimer();
 
-    const stars = calculateStars();
 
-    const result = completeLevel(
-        activeLevel,
-        stars,
-        coinReward
-    );
+    const stars =
+        calculateStars();
+
+
+    const result =
+        completeLevel(
+            activeLevel,
+            stars,
+            coinReward
+        );
+
 
     updateMainUI();
 
+
+    if (
+        typeof updateProgress ===
+        "function"
+    ) {
+        updateProgress();
+    }
+
+
     showLevelComplete({
-        level: activeLevel,
-        stars,
-        seconds: levelSeconds,
+
+        level:
+            activeLevel,
+
+        stars:
+            stars,
+
+        seconds:
+            playSeconds,
+
         coinReward:
-            result.firstCompletion ? coinReward : 0,
-        firstCompletion: result.firstCompletion
+            result.firstCompletion
+                ? coinReward
+                : 0,
+
+        firstCompletion:
+            result.firstCompletion
+
     });
 }
 
 
 // =====================================
-// ОКНО ПРОХОЖДЕНИЯ
+// WIN WINDOW
 // =====================================
 
 function showLevelComplete(result) {
-    const modal =
-        document.getElementById("levelCompleteModal");
 
-    if (!modal) {
-        console.log("Уровень пройден!", result);
-        return;
-    }
+    const modal =
+        document.getElementById(
+            "levelCompleteModal"
+        );
+
+    if (!modal) return;
+
 
     const starsElement =
-        document.getElementById("completeStars");
+        document.getElementById(
+            "completeStars"
+        );
 
     const timeElement =
-        document.getElementById("completeTime");
+        document.getElementById(
+            "completeTime"
+        );
 
     const rewardElement =
-        document.getElementById("completeReward");
+        document.getElementById(
+            "completeReward"
+        );
+
 
     if (starsElement) {
+
         starsElement.textContent =
-            "⭐".repeat(result.stars);
+            "⭐".repeat(
+                result.stars
+            );
     }
+
 
     if (timeElement) {
-        timeElement.textContent =
-            `Время: ${result.seconds} сек.`;
-    }
 
-    if (rewardElement) {
-        if (result.firstCompletion) {
-            rewardElement.textContent =
-                `+${result.coinReward} 🪙`;
+        if (
+            thinkSeconds > 0
+        ) {
+
+            timeElement.textContent =
+                "Решено во время обдумывания!";
+
         } else {
-            rewardElement.textContent =
-                "Уровень уже был пройден";
+
+            timeElement.textContent =
+                `Время: ${result.seconds} сек.`;
         }
     }
 
-    modal.classList.add("show");
+
+    if (rewardElement) {
+
+        if (
+            result.firstCompletion
+        ) {
+
+            rewardElement.textContent =
+                `+${result.coinReward} 🪙`;
+
+        } else {
+
+            rewardElement.textContent =
+                "Лучший результат сохранён";
+        }
+    }
+
+
+    setTimeout(() => {
+
+        modal.classList.add(
+            "show"
+        );
+
+    }, 400);
 }
 
 
 // =====================================
-// НЕТ ЭНЕРГИИ
+// NO ENERGY ❤️
 // =====================================
 
 function showNoEnergy() {
+
     stopLevelTimer();
 
-    const timer = getEnergyTimer();
+    if (
+        typeof openEnergyShop ===
+        "function"
+    ) {
 
-    const modal =
-        document.getElementById("energyModal");
-
-    if (!modal) {
-        alert(
-            `❤️ Энергия закончилась.\n` +
-            `Следующее сердце через ${timer}`
-        );
+        openEnergyShop();
 
         return;
     }
 
-    modal.classList.add("show");
 
-    updateEnergyUI();
+    alert(
+        "❤️ Энергия закончилась"
+    );
 }
 
 
 // =====================================
-// СООБЩЕНИЯ
+// GAME MESSAGE
 // =====================================
 
-function showGameMessage(message) {
-    const element =
-        document.getElementById("gameMessage");
+function showGameMessage(
+    text,
+    type = ""
+) {
 
-    if (!element) {
-        console.log(message);
-        return;
-    }
+    const message =
+        document.getElementById(
+            "gameMessage"
+        );
 
-    element.textContent = message;
-    element.classList.add("show");
+    if (!message) return;
+
+
+    message.className =
+        "message " + type;
+
+    message.textContent =
+        text;
+
 
     setTimeout(() => {
-        element.classList.remove("show");
+
+        if (!levelSolved) {
+            message.textContent = "";
+        }
+
     }, 1800);
 }
 
 
 // =====================================
-// ОБНОВЛЕНИЕ ❤️
+// ENERGY UI ❤️
 // =====================================
 
 function updateEnergyUI() {
-    const data = getEnergyData();
 
-    const energyElements =
-        document.querySelectorAll("[data-energy]");
+    if (
+        typeof getEnergyData !==
+        "function"
+    ) return;
 
-    energyElements.forEach(element => {
-        element.textContent =
-            `${data.energy}/${MAX_ENERGY}`;
-    });
 
-    const timerElements =
-        document.querySelectorAll(
-            "[data-energy-timer]"
-        );
+    const data =
+        getEnergyData();
 
-    timerElements.forEach(element => {
-        if (data.energy >= MAX_ENERGY) {
-            element.textContent = "Полная энергия";
-        } else {
+
+    document
+        .querySelectorAll(
+            "[data-energy]"
+        )
+        .forEach(element => {
+
             element.textContent =
-                `+1 через ${getEnergyTimer()}`;
-        }
-    });
+                `${data.energy}/${MAX_ENERGY}`;
+
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-energy-timer]"
+        )
+        .forEach(element => {
+
+            if (
+                data.energy >=
+                MAX_ENERGY
+            ) {
+
+                element.textContent =
+                    "Полная энергия";
+
+            } else {
+
+                element.textContent =
+                    `+1 ❤️ через ${getEnergyTimer()}`;
+            }
+
+        });
 }
 
 
 // =====================================
-// ГЛАВНЫЙ ИНТЕРФЕЙС
+// MAIN UI
 // =====================================
 
 function updateMainUI() {
-    const data = getPlayerData();
 
-    const coinElements =
-        document.querySelectorAll("[data-coins]");
+    if (
+        typeof getPlayerData !==
+        "function"
+    ) return;
 
-    coinElements.forEach(element => {
-        element.textContent = data.coins;
-    });
 
-    const levelElements =
-        document.querySelectorAll("[data-level]");
+    const data =
+        getPlayerData();
 
-    levelElements.forEach(element => {
-        element.textContent = data.level;
-    });
 
-    const starElements =
-        document.querySelectorAll("[data-stars]");
+    document
+        .querySelectorAll(
+            "[data-coins]"
+        )
+        .forEach(element => {
 
-    starElements.forEach(element => {
-        element.textContent = data.totalStars;
-    });
+            element.textContent =
+                data.coins;
+
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-level]"
+        )
+        .forEach(element => {
+
+            element.textContent =
+                data.level;
+
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-stars]"
+        )
+        .forEach(element => {
+
+            element.textContent =
+                data.totalStars;
+
+        });
+
 
     updateEnergyUI();
 }
 
 
-// Обновляем таймер энергии постоянно,
-// пока приложение открыто
+// =====================================
+// ENERGY CLOCK
+// =====================================
+
 setInterval(() => {
+
     updateEnergyUI();
+
 }, 1000);
