@@ -1011,3 +1011,32 @@
 @keyframes successRail{50%{stroke:#6ff2a2;filter:drop-shadow(0 0 5px #45dc83)}}
 .railway-wrong .railway-board{animation:railShake .28s linear 2}
 @keyframes railShake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+
+
+/* ===== LEVEL 4 TRAIN ALIGNMENT + DENSER FOREST ===== */
+.train{
+  width:64px;
+  height:24px;
+  transform-origin:50% 50%!important;
+}
+.train-engine{left:36px;width:28px;height:22px;top:1px}
+.train-car{width:19px;height:18px;top:3px}
+.train-car-back{left:0}.train-car-middle{left:18px}
+.railway-running .train{animation:none!important}
+.railway-board{
+  background:
+    radial-gradient(circle at 20% 22%,rgba(33,117,68,.26),transparent 25%),
+    radial-gradient(circle at 82% 62%,rgba(32,101,65,.22),transparent 27%),
+    radial-gradient(circle at 50% 12%,rgba(81,139,76,.16),transparent 28%),
+    linear-gradient(180deg,#0b3021 0%,#09261c 50%,#071c16 100%)!important;
+}
+.railway-board:before{
+  content:"";
+  position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.48;
+  background:
+    radial-gradient(ellipse at 8% 35%,#174b2d 0 5%,transparent 6%),
+    radial-gradient(ellipse at 92% 18%,#174b2d 0 6%,transparent 7%),
+    radial-gradient(ellipse at 88% 72%,#153f29 0 5%,transparent 6%),
+    radial-gradient(ellipse at 16% 83%,#153f29 0 6%,transparent 7%),
+    radial-gradient(ellipse at 50% 92%,#174b2d 0 5%,transparent 6%);
+}
