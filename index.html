@@ -1,1065 +1,1245 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
-
-  <title>Only One Move</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: #090d13;
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      overscroll-behavior: none;
-    }
-
-    body {
-      min-height: 100vh;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 500px;
-      min-height: 100vh;
-      margin: 0 auto;
-      padding: 24px 20px 40px;
-    }
-
-    /* ---------- TOP ---------- */
-
-    .top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-size: 21px;
-      font-weight: 900;
-      letter-spacing: -0.4px;
-    }
-
-    .coins {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 11px 16px;
-      border-radius: 22px;
-      background: #171d29;
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    /* ---------- HEADER ---------- */
-
-    .level {
-      margin-top: 54px;
-      text-align: center;
-      color: #8992a4;
-      font-size: 14px;
-      letter-spacing: 4px;
-    }
-
-    h1 {
-      margin: 14px 0 8px;
-      text-align: center;
-      font-size: 29px;
-      line-height: 1.2;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #929bab;
-      font-size: 17px;
-      line-height: 1.55;
-    }
-
-    /* ---------- GAME BOARD ---------- */
-
-    .board {
-      position: relative;
-      min-height: 340px;
-      margin-top: 36px;
-      padding: 28px 10px;
-      overflow: hidden;
-      border-radius: 28px;
-      background: #121824;
-    }
-
-    .instruction {
-      text-align: center;
-      color: #8f98a9;
-      font-size: 14px;
-    }
-
-    .equation {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 50px;
-    }
-
-    /* ---------- MATCH DIGITS ---------- */
-
-    .digit {
-      position: relative;
-      width: 50px;
-      height: 88px;
-      flex: 0 0 50px;
-    }
-
-    .match {
-      position: absolute;
-      display: block;
-      border-radius: 10px;
-      background: linear-gradient(
-        90deg,
-        #e6b967,
-        #ffe4a0,
-        #e6b967
-      );
-      box-shadow: 0 0 8px rgba(255, 218, 140, 0.15);
-    }
-
-    .horizontal {
-      left: 7px;
-      width: 36px;
-      height: 7px;
-    }
-
-    .vertical {
-      width: 7px;
-      height: 36px;
-    }
-
-    .seg-a {
-      top: 0;
-    }
-
-    .seg-g {
-      top: 40px;
-    }
-
-    .seg-d {
-      bottom: 0;
-    }
-
-    .seg-f {
-      top: 6px;
-      left: 0;
-    }
-
-    .seg-b {
-      top: 6px;
-      right: 0;
-    }
-
-    .seg-e {
-      bottom: 6px;
-      left: 0;
-    }
-
-    .seg-c {
-      right: 0;
-      bottom: 6px;
-    }
-
-    /* ---------- PLUS ---------- */
-
-    .operator {
-      position: relative;
-      width: 44px;
-      height: 64px;
-      flex: 0 0 44px;
-    }
-
-    .plus-horizontal {
-      position: absolute;
-      top: 28px;
-      left: 3px;
-      width: 38px;
-      height: 7px;
-      border-radius: 10px;
-      background: linear-gradient(
-        90deg,
-        #e6b967,
-        #ffe4a0,
-        #e6b967
-      );
-    }
-
-    .plus-vertical {
-      position: absolute;
-      top: 12px;
-      left: 19px;
-      width: 7px;
-      height: 38px;
-      border-radius: 10px;
-      background: linear-gradient(
-        180deg,
-        #e6b967,
-        #ffe4a0,
-        #e6b967
-      );
-      cursor: grab;
-      touch-action: none;
-      z-index: 20;
-    }
-
-    .equals {
-      flex-shrink: 0;
-      color: #ffffff;
-      font-size: 39px;
-      font-weight: 800;
-    }
-
-    /* ---------- DROP TARGET ---------- */
-
-    .drop-target {
-      position: absolute;
-      top: 6px;
-      right: 0;
-      width: 7px;
-      height: 36px;
-      border: 2px dashed #626c80;
-      border-radius: 10px;
-      opacity: 0;
-      transition: opacity 0.15s ease;
-    }
-
-    .drop-target.visible {
-      opacity: 1;
-    }
-
-    .drop-target.solved {
-      border: 0;
-      opacity: 1;
-      background: linear-gradient(
-        180deg,
-        #e6b967,
-        #ffe4a0,
-        #e6b967
-      );
-    }
-
-    /* ---------- DRAGGING ---------- */
-
-    .drag-copy {
-      position: fixed !important;
-      width: 7px !important;
-      height: 38px !important;
-      margin: 0 !important;
-      pointer-events: none;
-      z-index: 9999;
-      border-radius: 10px;
-      background: linear-gradient(
-        180deg,
-        #e6b967,
-        #ffe4a0,
-        #e6b967
-      );
-      box-shadow: 0 0 18px rgba(255, 218, 140, 0.35);
-    }
-
-    .moves {
-      margin-top: 52px;
-      text-align: center;
-      color: #a4adbd;
-      font-size: 16px;
-    }
-
-    /* ---------- BUTTONS ---------- */
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 22px;
-    }
-
-    .action-button {
-      min-height: 68px;
-      border: 0;
-      border-radius: 19px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .hint-button {
-      flex: 1;
-      background: #171d29;
-      color: #ffffff;
-    }
-
-    .reset-button {
-      flex: 1;
-      background: #6c5ce7;
-      color: #ffffff;
-    }
-
-    .message {
-      min-height: 30px;
-      margin-top: 19px;
-      text-align: center;
-      font-size: 15px;
-      font-weight: 800;
-    }
-
-    .message.good {
-      color: #55e6a5;
-    }
-
-    .message.bad {
-      color: #ff7675;
-    }
-
-    /* ---------- WIN SCREEN ---------- */
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 25px;
-      background: rgba(5, 8, 13, 0.96);
-    }
-
-    .overlay.show {
-      display: flex;
-    }
-
-    .win-card {
-      width: 100%;
-      max-width: 390px;
-      text-align: center;
-    }
-
-    .check {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 82px;
-      height: 82px;
-      margin: 0 auto 18px;
-      border-radius: 50%;
-      background: #55e6a5;
-      color: #09110e;
-      font-size: 44px;
-      font-weight: 900;
-    }
-
-    .win-card h2 {
-      margin: 0;
-      font-size: 31px;
-    }
-
-    .win-text {
-      margin-top: 10px;
-      color: #a2abbb;
-      font-size: 16px;
-    }
-
-    .stars {
-      margin: 24px 0 14px;
-      font-size: 38px;
-    }
-
-    .reward {
-      font-size: 19px;
-      font-weight: 800;
-    }
-
-    .next-button {
-      width: 100%;
-      margin-top: 28px;
-      padding: 18px;
-      border: 0;
-      border-radius: 19px;
-      background: #6c5ce7;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    /* ---------- MOBILE ---------- */
-
-    @media (max-width: 380px) {
-      .equation {
-        gap: 7px;
-        transform: scale(0.92);
-      }
-
-      h1 {
-        font-size: 26px;
-      }
-
-      .actions {
-        flex-direction: column;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Only One Move</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:#090d13;
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+
+body{
+  min-height:100vh
+}
+
+button{
+  font-family:inherit;
+  cursor:pointer
+}
+
+.app{
+  width:100%;
+  max-width:500px;
+  min-height:100vh;
+  margin:auto;
+  padding:22px 20px 40px
+}
+
+.hidden{
+  display:none!important
+}
+
+/* HEADER */
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.logo{
+  font-size:20px;
+  font-weight:900
+}
+
+.balance{
+  background:#171d29;
+  padding:10px 15px;
+  border-radius:22px;
+  font-weight:800
+}
+
+/* HOME */
+
+.hero{
+  margin-top:42px;
+  text-align:center
+}
+
+.brain{
+  font-size:64px
+}
+
+.hero h1{
+  margin:8px 0 5px;
+  font-size:31px
+}
+
+.tagline{
+  color:#929bab;
+  font-size:16px
+}
+
+.progress-card{
+  margin-top:34px;
+  background:#121824;
+  border-radius:26px;
+  padding:22px
+}
+
+.progress-top{
+  display:flex;
+  justify-content:space-between;
+  color:#a0a9b8;
+  font-size:14px
+}
+
+.progress-bar{
+  height:9px;
+  background:#202736;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:15px
+}
+
+.progress-fill{
+  width:1%;
+  height:100%;
+  background:#6c5ce7
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:16px
+}
+
+.stat{
+  background:#171d29;
+  border-radius:18px;
+  padding:14px 5px;
+  text-align:center
+}
+
+.stat-value{
+  font-size:20px;
+  font-weight:900
+}
+
+.stat-label{
+  margin-top:4px;
+  color:#8f98a9;
+  font-size:12px
+}
+
+.play{
+  width:100%;
+  margin-top:20px;
+  border:0;
+  border-radius:20px;
+  padding:19px;
+  background:#6c5ce7;
+  color:white;
+  font-size:17px;
+  font-weight:900
+}
+
+.menu{
+  margin-top:20px;
+  display:grid;
+  gap:11px
+}
+
+.menu-btn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border:0;
+  border-radius:19px;
+  padding:17px;
+  background:#151b27;
+  color:white;
+  text-align:left
+}
+
+.menu-left{
+  display:flex;
+  gap:13px;
+  align-items:center
+}
+
+.menu-icon{
+  font-size:25px
+}
+
+.menu-title{
+  font-weight:800
+}
+
+.menu-sub{
+  color:#8992a4;
+  font-size:12px;
+  margin-top:3px
+}
+
+/* GAME */
+
+.game-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.back{
+  border:0;
+  background:#171d29;
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  font-size:20px
+}
+
+.level{
+  margin-top:38px;
+  text-align:center;
+  color:#8992a4;
+  letter-spacing:4px;
+  font-size:13px
+}
+
+.game-title{
+  text-align:center;
+  font-size:28px;
+  margin:14px 0 7px
+}
+
+.subtitle{
+  text-align:center;
+  color:#929bab;
+  line-height:1.5
+}
+
+.timer{
+  text-align:center;
+  margin-top:15px;
+  font-size:18px;
+  font-weight:900
+}
+
+.board{
+  margin-top:25px;
+  min-height:330px;
+  padding:28px 10px;
+  background:#121824;
+  border-radius:28px
+}
+
+.instruction{
+  text-align:center;
+  color:#919aaa;
+  font-size:14px
+}
+
+.equation{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-top:52px
+}
+
+/* MATCH DIGITS */
+
+.digit{
+  width:50px;
+  height:88px;
+  position:relative;
+  flex:0 0 50px
+}
+
+.match{
+  position:absolute;
+  display:block;
+  border-radius:10px;
+  background:#f4d58d
+}
+
+.h{
+  left:7px;
+  width:36px;
+  height:7px
+}
+
+.v{
+  width:7px;
+  height:36px
+}
+
+.a{top:0}
+.g{top:40px}
+.d{bottom:0}
+.f{left:0;top:6px}
+.b{right:0;top:6px}
+.e{left:0;bottom:6px}
+.c{right:0;bottom:6px}
+
+.operator{
+  width:44px;
+  height:64px;
+  position:relative
+}
+
+.plus-h{
+  position:absolute;
+  width:38px;
+  height:7px;
+  left:3px;
+  top:28px;
+  border-radius:10px;
+  background:#f4d58d
+}
+
+.plus-v{
+  position:absolute;
+  width:7px;
+  height:38px;
+  left:19px;
+  top:12px;
+  border-radius:10px;
+  background:#f4d58d;
+  touch-action:none
+}
+
+.equals{
+  font-size:39px;
+  font-weight:800
+}
+
+.target{
+  position:absolute;
+  right:0;
+  top:6px;
+  width:7px;
+  height:36px;
+  border:2px dashed #657087;
+  border-radius:10px;
+  opacity:0
+}
+
+.target.visible{
+  opacity:1
+}
+
+.target.solved{
+  border:0;
+  background:#f4d58d;
+  opacity:1
+}
+
+.drag-copy{
+  position:fixed!important;
+  width:7px!important;
+  height:38px!important;
+  border-radius:10px;
+  background:#f4d58d;
+  pointer-events:none;
+  z-index:9999
+}
+
+.moves{
+  margin-top:50px;
+  text-align:center;
+  color:#a4adbd
+}
+
+.actions{
+  display:flex;
+  gap:12px;
+  margin-top:20px
+}
+
+.actions button{
+  flex:1;
+  border:0;
+  border-radius:18px;
+  padding:16px;
+  font-weight:800
+}
+
+.hint{
+  background:#171d29;
+  color:white
+}
+
+.reset{
+  background:#6c5ce7;
+  color:white
+}
+
+.message{
+  min-height:28px;
+  margin-top:17px;
+  text-align:center;
+  font-weight:800
+}
+
+.good{color:#55e6a5}
+.bad{color:#ff7675}
+
+/* WIN */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  background:rgba(5,8,13,.96);
+  z-index:10000
+}
+
+.overlay.show{
+  display:flex
+}
+
+.win{
+  width:100%;
+  max-width:390px;
+  text-align:center
+}
+
+.check{
+  width:80px;
+  height:80px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#55e6a5;
+  color:#06110d;
+  font-size:42px;
+  font-weight:900
+}
+
+.win h2{
+  font-size:30px;
+  margin:18px 0 8px
+}
+
+.stars{
+  font-size:38px;
+  margin:20px 0
+}
+
+.next{
+  width:100%;
+  border:0;
+  border-radius:19px;
+  padding:18px;
+  background:#6c5ce7;
+  color:white;
+  font-weight:900;
+  font-size:16px;
+  margin-top:25px
+}
+</style>
 </head>
 
 <body>
 
-  <main class="app">
+<!-- HOME -->
+<div class="app" id="homeScreen">
 
-    <header class="top">
-      <div class="logo">
-        🧠 ONE MOVE
-      </div>
+  <div class="top">
+    <div class="logo">🧠 ONE MOVE</div>
+    <div class="balance">🪙 <span id="homeCoins">300</span></div>
+  </div>
 
-      <div class="coins">
-        🪙 <span id="coinValue">300</span>
-      </div>
-    </header>
+  <div class="hero">
+    <div class="brain">🧠</div>
+    <h1>Only One Move</h1>
+    <div class="tagline">Решение есть всегда. Ход только один.</div>
+  </div>
 
-    <div class="level">
-      УРОВЕНЬ 1
+  <div class="progress-card">
+
+    <div class="progress-top">
+      <span>Уровень <b id="homeLevel">1</b> / 100</span>
+      <span>⭐ <b id="starsValue">0</b></span>
     </div>
 
-    <h1>
-      Передвинь одну спичку
-    </h1>
-
-    <div class="subtitle">
-      Сделай равенство правильным.<br>
-      У тебя только один ход.
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <section class="board">
+    <div class="stats">
 
-      <div class="instruction">
-        Зажми и перетащи одну спичку
+      <div class="stat">
+        <div class="stat-value">❤️ <span id="energyValue">5</span>/5</div>
+        <div class="stat-label">Энергия</div>
       </div>
 
-      <div class="equation">
-
-        <!-- ЦИФРА 6 -->
-        <div class="digit">
-
-          <span class="match horizontal seg-a"></span>
-
-          <span class="match vertical seg-f"></span>
-
-          <span class="match horizontal seg-g"></span>
-
-          <span class="match vertical seg-e"></span>
-
-          <span class="match horizontal seg-d"></span>
-
-          <span class="match vertical seg-c"></span>
-
-          <!--
-            Сюда переносится спичка.
-            После переноса 6 превращается в 8.
-          -->
-          <span
-            class="drop-target"
-            id="dropTarget"
-          ></span>
-
-        </div>
-
-        <!-- ЗНАК + -->
-        <div class="operator">
-
-          <span class="plus-horizontal"></span>
-
-          <span
-            class="plus-vertical"
-            id="movableMatch"
-          ></span>
-
-        </div>
-
-        <!-- ЦИФРА 4 -->
-        <div class="digit">
-
-          <span class="match vertical seg-f"></span>
-
-          <span class="match horizontal seg-g"></span>
-
-          <span class="match vertical seg-b"></span>
-
-          <span class="match vertical seg-c"></span>
-
-        </div>
-
-        <div class="equals">
-          =
-        </div>
-
-        <!-- ЦИФРА 4 -->
-        <div class="digit">
-
-          <span class="match vertical seg-f"></span>
-
-          <span class="match horizontal seg-g"></span>
-
-          <span class="match vertical seg-b"></span>
-
-          <span class="match vertical seg-c"></span>
-
-        </div>
-
+      <div class="stat">
+        <div class="stat-value">🪙 <span id="statCoins">300</span></div>
+        <div class="stat-label">Монеты</div>
       </div>
 
-      <div
-        class="moves"
-        id="movesText"
-      >
-        ⚡ Остался 1 ход
+      <div class="stat">
+        <div class="stat-value">🔥 <span id="streakValue">1</span></div>
+        <div class="stat-label">Серия дней</div>
       </div>
-
-    </section>
-
-    <div class="actions">
-
-      <button
-        class="action-button hint-button"
-        id="hintButton"
-      >
-        💡 Подсказка · 50 🪙
-      </button>
-
-      <button
-        class="action-button reset-button"
-        id="resetButton"
-      >
-        ↻ Заново
-      </button>
 
     </div>
 
-    <div
-      class="message"
-      id="message"
-    ></div>
+    <button class="play" onclick="openGame()">
+      ▶ ПРОДОЛЖИТЬ
+    </button>
 
-  </main>
+  </div>
 
-  <!-- ПОБЕДА -->
+  <div class="menu">
 
-  <div
-    class="overlay"
-    id="winOverlay"
-  >
-
-    <div class="win-card">
-
-      <div class="check">
-        ✓
+    <button class="menu-btn" onclick="comingSoon('Ежедневная загадка')">
+      <div class="menu-left">
+        <div class="menu-icon">🧩</div>
+        <div>
+          <div class="menu-title">Ежедневная загадка</div>
+          <div class="menu-sub">Новая задача каждый день</div>
+        </div>
       </div>
+      <div>›</div>
+    </button>
 
-      <h2>
-        Уровень пройден!
-      </h2>
-
-      <div class="win-text">
-        Ты решил головоломку одним ходом
+    <button class="menu-btn" onclick="comingSoon('60 секунд')">
+      <div class="menu-left">
+        <div class="menu-icon">⏱</div>
+        <div>
+          <div class="menu-title">60 секунд</div>
+          <div class="menu-sub">Реши как можно больше</div>
+        </div>
       </div>
+      <div>🔒</div>
+    </button>
 
-      <div class="stars">
-        ⭐⭐⭐
+    <button class="menu-btn" onclick="comingSoon('Рейтинг')">
+      <div class="menu-left">
+        <div class="menu-icon">🏆</div>
+        <div>
+          <div class="menu-title">Рейтинг</div>
+          <div class="menu-sub">Соревнуйся с другими</div>
+        </div>
       </div>
+      <div>›</div>
+    </button>
 
-      <div class="reward">
-        +30 🪙
+    <button class="menu-btn" onclick="dailyReward()">
+      <div class="menu-left">
+        <div class="menu-icon">🎁</div>
+        <div>
+          <div class="menu-title">Награда дня</div>
+          <div class="menu-sub">Забери ежедневный бонус</div>
+        </div>
       </div>
+      <div>›</div>
+    </button>
 
-      <button
-        class="next-button"
-        id="nextButton"
-      >
-        СЛЕДУЮЩИЙ УРОВЕНЬ
-      </button>
+  </div>
 
+</div>
+
+
+<!-- GAME -->
+<div class="app hidden" id="gameScreen">
+
+  <div class="game-header">
+
+    <button class="back" onclick="goHome()">‹</button>
+
+    <div class="balance">
+      ❤️ <span id="gameEnergy">5</span>
+      &nbsp;&nbsp;
+      🪙 <span id="gameCoins">300</span>
     </div>
 
   </div>
 
-  <script>
+  <div class="level">УРОВЕНЬ 1</div>
 
-    /* ==============================
-       GAME STATE
-    ============================== */
+  <h1 class="game-title">Передвинь одну спичку</h1>
 
-    let coins = 300;
+  <div class="subtitle">
+    Сделай равенство правильным.<br>
+    У тебя только один ход.
+  </div>
 
-    let solved = false;
+  <div class="timer">
+    ⏱ <span id="timer">0</span> сек.
+  </div>
 
-    let dragging = false;
+  <div class="board">
 
-    let dragCopy = null;
+    <div class="instruction">
+      Зажми и перетащи одну спичку
+    </div>
+
+    <div class="equation">
+
+      <!-- 6 -->
+      <div class="digit">
+
+        <span class="match h a"></span>
+        <span class="match v f"></span>
+        <span class="match h g"></span>
+        <span class="match v e"></span>
+        <span class="match h d"></span>
+        <span class="match v c"></span>
+
+        <span class="target" id="dropTarget"></span>
+
+      </div>
+
+      <!-- + -->
+      <div class="operator">
+
+        <span class="plus-h"></span>
+
+        <span
+          class="plus-v"
+          id="movableMatch"
+        ></span>
+
+      </div>
+
+      <!-- 4 -->
+      <div class="digit">
+        <span class="match v f"></span>
+        <span class="match h g"></span>
+        <span class="match v b"></span>
+        <span class="match v c"></span>
+      </div>
+
+      <div class="equals">=</div>
+
+      <!-- 4 -->
+      <div class="digit">
+        <span class="match v f"></span>
+        <span class="match h g"></span>
+        <span class="match v b"></span>
+        <span class="match v c"></span>
+      </div>
+
+    </div>
+
+    <div class="moves" id="movesText">
+      ⚡ Остался 1 ход
+    </div>
+
+  </div>
+
+  <div class="actions">
+
+    <button class="hint" onclick="showHint()">
+      💡 Подсказка · 50 🪙
+    </button>
+
+    <button class="reset" onclick="resetLevel()">
+      ↻ Заново
+    </button>
+
+  </div>
+
+  <div class="message" id="message"></div>
+
+</div>
 
 
-    /* ==============================
-       ELEMENTS
-    ============================== */
+<!-- WIN -->
+<div class="overlay" id="winOverlay">
 
-    const movableMatch =
-      document.getElementById("movableMatch");
+  <div class="win">
 
-    const dropTarget =
-      document.getElementById("dropTarget");
+    <div class="check">✓</div>
 
-    const coinValue =
-      document.getElementById("coinValue");
+    <h2>Уровень пройден!</h2>
 
-    const message =
-      document.getElementById("message");
+    <div id="resultText">
+      Решено за 0 секунд
+    </div>
 
-    const movesText =
-      document.getElementById("movesText");
+    <div class="stars" id="winStars">
+      ⭐⭐⭐
+    </div>
 
-    const hintButton =
-      document.getElementById("hintButton");
+    <div>
+      +30 🪙
+    </div>
 
-    const resetButton =
-      document.getElementById("resetButton");
+    <button class="next" onclick="finishLevel()">
+      ПРОДОЛЖИТЬ
+    </button>
 
-    const winOverlay =
-      document.getElementById("winOverlay");
+  </div>
 
-    const nextButton =
-      document.getElementById("nextButton");
+</div>
 
 
-    /* ==============================
-       START DRAG
-    ============================== */
+<script>
 
-    movableMatch.addEventListener(
-      "pointerdown",
-      startDrag
+/* =========================
+   SAVE DATA
+========================= */
+
+let coins =
+  Number(localStorage.getItem("coins")) || 300;
+
+let energy =
+  Number(localStorage.getItem("energy")) || 5;
+
+let level =
+  Number(localStorage.getItem("level")) || 1;
+
+let totalStars =
+  Number(localStorage.getItem("stars")) || 0;
+
+let streak =
+  Number(localStorage.getItem("streak")) || 1;
+
+
+/* =========================
+   GAME VARIABLES
+========================= */
+
+let solved = false;
+let dragging = false;
+let dragCopy = null;
+
+let timerValue = 0;
+let timerInterval = null;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const homeScreen =
+  document.getElementById("homeScreen");
+
+const gameScreen =
+  document.getElementById("gameScreen");
+
+const movableMatch =
+  document.getElementById("movableMatch");
+
+const dropTarget =
+  document.getElementById("dropTarget");
+
+const message =
+  document.getElementById("message");
+
+const movesText =
+  document.getElementById("movesText");
+
+const winOverlay =
+  document.getElementById("winOverlay");
+
+
+/* =========================
+   UPDATE UI
+========================= */
+
+function updateUI(){
+
+  document.getElementById("homeCoins").textContent = coins;
+  document.getElementById("statCoins").textContent = coins;
+  document.getElementById("gameCoins").textContent = coins;
+
+  document.getElementById("energyValue").textContent = energy;
+  document.getElementById("gameEnergy").textContent = energy;
+
+  document.getElementById("homeLevel").textContent = level;
+  document.getElementById("starsValue").textContent = totalStars;
+  document.getElementById("streakValue").textContent = streak;
+
+  document.getElementById("progressFill").style.width =
+    Math.min(level,100) + "%";
+
+}
+
+updateUI();
+
+
+/* =========================
+   SAVE
+========================= */
+
+function saveGame(){
+
+  localStorage.setItem("coins", coins);
+  localStorage.setItem("energy", energy);
+  localStorage.setItem("level", level);
+  localStorage.setItem("stars", totalStars);
+  localStorage.setItem("streak", streak);
+
+}
+
+
+/* =========================
+   HOME / GAME
+========================= */
+
+function openGame(){
+
+  homeScreen.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+
+  startTimer();
+
+}
+
+function goHome(){
+
+  stopTimer();
+
+  gameScreen.classList.add("hidden");
+  homeScreen.classList.remove("hidden");
+
+  updateUI();
+
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+function startTimer(){
+
+  timerValue = 0;
+
+  document.getElementById("timer").textContent = 0;
+
+  clearInterval(timerInterval);
+
+  timerInterval = setInterval(()=>{
+
+    timerValue++;
+
+    document.getElementById("timer").textContent =
+      timerValue;
+
+  },1000);
+
+}
+
+function stopTimer(){
+
+  clearInterval(timerInterval);
+
+}
+
+
+/* =========================
+   DRAG
+========================= */
+
+movableMatch.addEventListener(
+  "pointerdown",
+  startDrag
+);
+
+function startDrag(event){
+
+  if(solved) return;
+
+  event.preventDefault();
+
+  dragging = true;
+
+  dragCopy =
+    document.createElement("div");
+
+  dragCopy.className =
+    "drag-copy";
+
+  document.body.appendChild(
+    dragCopy
+  );
+
+  movableMatch.style.opacity =
+    ".15";
+
+  dropTarget.classList.add(
+    "visible"
+  );
+
+  moveDragged(
+    event.clientX,
+    event.clientY
+  );
+
+  document.addEventListener(
+    "pointermove",
+    dragMove
+  );
+
+  document.addEventListener(
+    "pointerup",
+    dropMove,
+    {once:true}
+  );
+
+}
+
+function dragMove(event){
+
+  if(!dragging) return;
+
+  event.preventDefault();
+
+  moveDragged(
+    event.clientX,
+    event.clientY
+  );
+
+}
+
+function moveDragged(x,y){
+
+  if(!dragCopy) return;
+
+  dragCopy.style.left =
+    (x - 3.5) + "px";
+
+  dragCopy.style.top =
+    (y - 19) + "px";
+
+}
+
+
+/* =========================
+   DROP
+========================= */
+
+function dropMove(event){
+
+  dragging = false;
+
+  document.removeEventListener(
+    "pointermove",
+    dragMove
+  );
+
+  if(dragCopy){
+
+    dragCopy.remove();
+    dragCopy = null;
+
+  }
+
+  const rect =
+    dropTarget.getBoundingClientRect();
+
+  const tolerance = 30;
+
+  const correct =
+
+    event.clientX >=
+      rect.left - tolerance &&
+
+    event.clientX <=
+      rect.right + tolerance &&
+
+    event.clientY >=
+      rect.top - tolerance &&
+
+    event.clientY <=
+      rect.bottom + tolerance;
+
+
+  if(correct){
+
+    solveLevel();
+
+  }else{
+
+    movableMatch.style.opacity = "1";
+
+    dropTarget.classList.remove(
+      "visible"
     );
 
+    message.className =
+      "message bad";
 
-    function startDrag(event) {
+    message.textContent =
+      "Не туда. Попробуй ещё раз.";
 
-      if (solved) {
-        return;
-      }
+    setTimeout(()=>{
 
-      event.preventDefault();
+      if(!solved)
+        message.textContent = "";
 
-      dragging = true;
+    },1200);
 
-      const rect =
-        movableMatch.getBoundingClientRect();
+  }
 
+}
 
-      /* Создаём копию спички */
 
-      dragCopy =
-        document.createElement("div");
+/* =========================
+   SOLVE
+========================= */
 
-      dragCopy.className =
-        "drag-copy";
+function solveLevel(){
 
-      document.body.appendChild(
-        dragCopy
-      );
+  solved = true;
 
+  stopTimer();
 
-      movableMatch.style.opacity =
-        "0.15";
+  movableMatch.style.display =
+    "none";
 
+  dropTarget.classList.remove(
+    "visible"
+  );
 
-      dropTarget.classList.add(
-        "visible"
-      );
+  dropTarget.classList.add(
+    "solved"
+  );
 
+  movesText.textContent =
+    "✓ Ход выполнен";
 
-      moveDraggedMatch(
-        event.clientX,
-        event.clientY
-      );
+  message.className =
+    "message good";
 
+  message.textContent =
+    "8 − 4 = 4 ✓";
 
-      document.addEventListener(
-        "pointermove",
-        dragMatch
-      );
 
+  let earnedStars = 1;
 
-      document.addEventListener(
-        "pointerup",
-        dropMatch,
-        { once: true }
-      );
+  if(timerValue <= 20){
 
-    }
+    earnedStars = 3;
 
+  }else if(timerValue <= 45){
 
-    /* ==============================
-       DRAG
-    ============================== */
+    earnedStars = 2;
 
-    function dragMatch(event) {
+  }
 
-      if (!dragging) {
-        return;
-      }
 
-      event.preventDefault();
+  if(earnedStars === 3){
 
-      moveDraggedMatch(
-        event.clientX,
-        event.clientY
-      );
+    document.getElementById("winStars")
+      .textContent = "⭐⭐⭐";
 
-    }
+  }else if(earnedStars === 2){
 
+    document.getElementById("winStars")
+      .textContent = "⭐⭐";
 
-    function moveDraggedMatch(x, y) {
+  }else{
 
-      if (!dragCopy) {
-        return;
-      }
+    document.getElementById("winStars")
+      .textContent = "⭐";
 
-      dragCopy.style.left =
-        (x - 3.5) + "px";
+  }
 
-      dragCopy.style.top =
-        (y - 19) + "px";
 
-    }
+  document.getElementById("resultText")
+    .textContent =
+    "Решено за " +
+    timerValue +
+    " сек.";
 
 
-    /* ==============================
-       DROP
-    ============================== */
+  coins += 30;
 
-    function dropMatch(event) {
+  totalStars += earnedStars;
 
-      dragging = false;
+  saveGame();
 
+  updateUI();
 
-      document.removeEventListener(
-        "pointermove",
-        dragMatch
-      );
 
+  setTimeout(()=>{
 
-      if (dragCopy) {
+    winOverlay.classList.add(
+      "show"
+    );
 
-        dragCopy.remove();
+  },700);
 
-        dragCopy = null;
+}
 
-      }
 
+/* =========================
+   HINT
+========================= */
 
-      const targetRect =
-        dropTarget.getBoundingClientRect();
+function showHint(){
 
+  if(solved) return;
 
-      /*
-        Немного увеличиваем область,
-        куда пользователь может попасть пальцем.
-      */
+  if(coins < 50){
 
-      const tolerance = 30;
+    message.className =
+      "message bad";
 
+    message.textContent =
+      "Недостаточно монет";
 
-      const droppedCorrectly =
+    return;
 
-        event.clientX >=
-          targetRect.left - tolerance &&
+  }
 
-        event.clientX <=
-          targetRect.right + tolerance &&
+  coins -= 50;
 
-        event.clientY >=
-          targetRect.top - tolerance &&
+  saveGame();
+  updateUI();
 
-        event.clientY <=
-          targetRect.bottom + tolerance;
+  message.className =
+    "message";
 
+  message.textContent =
+    "💡 Знак «+» необязательно должен остаться плюсом.";
 
-      if (droppedCorrectly) {
+  dropTarget.classList.add(
+    "visible"
+  );
 
-        solveLevel();
+  setTimeout(()=>{
 
-      } else {
-
-        wrongMove();
-
-      }
-
-    }
-
-
-    /* ==============================
-       WRONG MOVE
-    ============================== */
-
-    function wrongMove() {
-
-      movableMatch.style.opacity =
-        "1";
-
+    if(!solved && !dragging){
 
       dropTarget.classList.remove(
         "visible"
       );
 
-
-      message.className =
-        "message bad";
-
-
-      message.textContent =
-        "Не туда. Попробуй ещё раз.";
-
-
-      setTimeout(() => {
-
-        if (!solved) {
-
-          message.textContent = "";
-
-        }
-
-      }, 1400);
-
     }
 
+  },2500);
 
-    /* ==============================
-       CORRECT SOLUTION
-    ============================== */
-
-    function solveLevel() {
-
-      solved = true;
+}
 
 
-      /*
-        Убираем вертикальную
-        спичку из плюса.
-      */
+/* =========================
+   RESET
+========================= */
 
-      movableMatch.style.display =
-        "none";
+function resetLevel(){
 
+  solved = false;
 
-      /*
-        Ставим её в цифру 6,
-        превращая 6 в 8.
-      */
+  movableMatch.style.display =
+    "block";
 
-      dropTarget.classList.remove(
-        "visible"
-      );
+  movableMatch.style.opacity =
+    "1";
 
-      dropTarget.classList.add(
-        "solved"
-      );
+  dropTarget.classList.remove(
+    "visible",
+    "solved"
+  );
 
+  movesText.textContent =
+    "⚡ Остался 1 ход";
 
-      /*
-        Теперь плюс визуально
-        становится минусом.
-      */
+  message.textContent = "";
 
+  winOverlay.classList.remove(
+    "show"
+  );
 
-      movesText.textContent =
-        "✓ Ход выполнен";
+  startTimer();
 
-
-      message.className =
-        "message good";
+}
 
 
-      message.textContent =
-        "8 − 4 = 4 ✓";
+/* =========================
+   FINISH
+========================= */
+
+function finishLevel(){
+
+  winOverlay.classList.remove(
+    "show"
+  );
+
+  /*
+    Пока второго уровня ещё нет.
+    После его добавления здесь
+    будем увеличивать level.
+  */
+
+  goHome();
+
+}
 
 
-      /* Награда */
+/* =========================
+   DAILY
+========================= */
 
-      coins += 30;
+function dailyReward(){
 
-      updateCoins();
+  const today =
+    new Date().toDateString();
 
-
-      /*
-        Через небольшую паузу
-        показываем победу.
-      */
-
-      setTimeout(() => {
-
-        winOverlay.classList.add(
-          "show"
-        );
-
-      }, 800);
-
-    }
-
-
-    /* ==============================
-       HINT
-    ============================== */
-
-    hintButton.addEventListener(
-      "click",
-      showHint
+  const lastClaim =
+    localStorage.getItem(
+      "dailyReward"
     );
 
+  if(lastClaim === today){
 
-    function showHint() {
-
-      if (solved) {
-        return;
-      }
-
-
-      if (coins < 50) {
-
-        message.className =
-          "message bad";
-
-        message.textContent =
-          "Недостаточно монет";
-
-        return;
-
-      }
-
-
-      coins -= 50;
-
-      updateCoins();
-
-
-      message.className =
-        "message";
-
-
-      message.textContent =
-        "💡 Знак «+» необязательно должен остаться плюсом.";
-
-
-      dropTarget.classList.add(
-        "visible"
-      );
-
-
-      setTimeout(() => {
-
-        if (!dragging && !solved) {
-
-          dropTarget.classList.remove(
-            "visible"
-          );
-
-        }
-
-      }, 2800);
-
-    }
-
-
-    /* ==============================
-       COINS
-    ============================== */
-
-    function updateCoins() {
-
-      coinValue.textContent =
-        coins;
-
-    }
-
-
-    /* ==============================
-       RESET
-    ============================== */
-
-    resetButton.addEventListener(
-      "click",
-      resetLevel
+    alert(
+      "Сегодня награда уже получена 🎁"
     );
 
+    return;
 
-    function resetLevel() {
+  }
 
-      solved = false;
+  coins += 50;
 
-      dragging = false;
+  localStorage.setItem(
+    "dailyReward",
+    today
+  );
 
+  saveGame();
 
-      movableMatch.style.display =
-        "block";
+  updateUI();
 
-      movableMatch.style.opacity =
-        "1";
+  alert(
+    "🎁 +50 монет!"
+  );
 
-
-      dropTarget.classList.remove(
-        "visible"
-      );
-
-      dropTarget.classList.remove(
-        "solved"
-      );
+}
 
 
-      movesText.textContent =
-        "⚡ Остался 1 ход";
+/* =========================
+   COMING SOON
+========================= */
 
+function comingSoon(name){
 
-      message.textContent =
-        "";
+  alert(
+    name + " — скоро 👀"
+  );
 
+}
 
-      winOverlay.classList.remove(
-        "show"
-      );
-
-    }
-
-
-    /* ==============================
-       NEXT LEVEL
-    ============================== */
-
-    nextButton.addEventListener(
-      "click",
-      function () {
-
-        alert(
-          "Уровень 2 добавим следующим 👀"
-        );
-
-      }
-    );
-
-  </script>
+</script>
 
 </body>
 </html>
