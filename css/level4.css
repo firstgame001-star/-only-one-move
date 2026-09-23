@@ -1,3 +1,40 @@
+/* ===== LEVEL 4: SVG RAILS ===== */
+.railway-svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:5;
+    overflow:visible;
+    pointer-events:none;
+    filter:drop-shadow(0 3px 3px rgba(0,0,0,.45));
+}
+.rail-ballast path{
+    fill:none;
+    stroke:#2b3231;
+    stroke-width:18;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.rail-sleepers line{
+    stroke:#795f49;
+    stroke-width:5;
+    stroke-linecap:round;
+    opacity:.95;
+}
+.rail-steel path{
+    fill:none;
+    stroke:#a4adac;
+    stroke-width:3.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.junction-core{
+    fill:#56615f;
+    stroke:#b1bab8;
+    stroke-width:2;
+}
+
 /* =========================================
    ONLY ONE MOVE
    LEVEL 4 — RAILWAY
