@@ -592,9 +592,11 @@ window.ONE_MOVE_LEVELS[4] = {
         const sx = board.clientWidth / 350;
         const sy = board.clientHeight / 405;
 
-        train.style.left = (x * sx - train.offsetWidth / 2) + "px";
-        train.style.top = (y * sy - train.offsetHeight / 2) + "px";
-        train.style.transform = `rotate(${angle}deg)`;
+        // Route coordinates are the exact centre line of the SVG track.
+        // The train is centred on that point, then rotated around its own centre.
+        train.style.left = (x * sx) + "px";
+        train.style.top = (y * sy) + "px";
+        train.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     },
 
     trainArrived() {
