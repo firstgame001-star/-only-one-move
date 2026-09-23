@@ -1,36 +1,24 @@
 const START_STARS = 3;
-
 const FREE_THINK_TIME = 20;
 
-const TIME_STAR_PENALTIES = [
-    30,
-    40,
-    50
-];
-
 let activeLevel = 1;
-
 let levelSolved = false;
 let levelFailed = false;
 
 let currentStars = START_STARS;
-
 let wrongAttempts = 0;
 
 let elapsedSeconds = 0;
-
 let levelStartedAt = null;
-
 let levelTimerInterval = null;
 
 /*
-    Храним уже применённые
-    временные штрафы.
-
-    Благодаря этому штрафы времени
-    складываются с ошибками игрока.
+    Отдельные флаги для временных штрафов.
+    Ошибки игрока на них никак не влияют.
 */
-let appliedTimePenalties = new Set();
+let penalty30Applied = false;
+let penalty40Applied = false;
+let penalty50Applied = false;
 
 
 /* =========================
@@ -47,14 +35,14 @@ function startLevel(levelNumber) {
     levelFailed = false;
 
     currentStars = START_STARS;
-
     wrongAttempts = 0;
 
     elapsedSeconds = 0;
-
     levelStartedAt = Date.now();
 
-    appliedTimePenalties = new Set();
+    penalty30Applied = false;
+    penalty40Applied = false;
+    penalty50Applied = false;
 
     updateStarsDisplay();
     updateTimerDisplay();
@@ -62,9 +50,7 @@ function startLevel(levelNumber) {
     levelTimerInterval = setInterval(() => {
 
         if (levelSolved || levelFailed) {
-
             stopLevelTimer();
-
             return;
         }
 
@@ -74,9 +60,11 @@ function startLevel(levelNumber) {
 
         checkTimePenalty();
 
-        updateTimerDisplay();
+        if (!levelFailed) {
+            updateTimerDisplay();
+        }
 
-    }, 250);
+    }, 200);
 }
 
 
@@ -90,37 +78,58 @@ function checkTimePenalty() {
         return;
     }
 
-    for (const threshold of TIME_STAR_PENALTIES) {
+    /*
+        30 СЕКУНД
+        Всегда сжигаем ровно 1 звезду.
+    */
+    if (
+        elapsedSeconds >= 30 &&
+        penalty30Applied === false
+    ) {
 
-        if (
-            elapsedSeconds >= threshold &&
-            !appliedTimePenalties.has(threshold)
-        ) {
+        penalty30Applied = true;
 
-            /*
-                Сначала отмечаем штраф,
-                чтобы он никогда не применился
-                второй раз.
-            */
-            appliedTimePenalties.add(threshold);
+        burnStar("time");
 
-            burnStar("time");
-
-            /*
-                Если после штрафа уровень
-                проигран — дальше ничего
-                не проверяем.
-            */
-            if (levelFailed) {
-                return;
-            }
+        if (levelFailed) {
+            return;
         }
+    }
+
+    /*
+        40 СЕКУНД
+    */
+    if (
+        elapsedSeconds >= 40 &&
+        penalty40Applied === false
+    ) {
+
+        penalty40Applied = true;
+
+        burnStar("time");
+
+        if (levelFailed) {
+            return;
+        }
+    }
+
+    /*
+        50 СЕКУНД
+    */
+    if (
+        elapsedSeconds >= 50 &&
+        penalty50Applied === false
+    ) {
+
+        penalty50Applied = true;
+
+        burnStar("time");
     }
 }
 
 
 /* =========================
-   BURN ONE STAR
+   BURN STAR
 ========================= */
 
 function burnStar(reason) {
@@ -129,14 +138,19 @@ function burnStar(reason) {
         return;
     }
 
-    currentStars = Math.max(
-        0,
-        currentStars - 1
-    );
+    currentStars--;
+
+    if (currentStars < 0) {
+        currentStars = 0;
+    }
 
     updateStarsDisplay();
 
-    if (currentStars <= 0) {
+    /*
+        Если звёзд больше нет —
+        сразу проигрыш.
+    */
+    if (currentStars === 0) {
 
         failLevel(reason);
 
@@ -157,6 +171,13 @@ function burnStar(reason) {
             "bad"
         );
     }
+
+    /*
+        Сразу обновляем таймер,
+        чтобы количество звёзд возле него
+        тоже соответствовало реальному.
+    */
+    updateTimerDisplay();
 }
 
 
@@ -190,20 +211,21 @@ function failLevel(reason) {
 
     stopLevelTimer();
 
+    currentStars = 0;
+
+    updateStarsDisplay();
+
     let heartLost = false;
 
     if (typeof useEnergy === "function") {
-
         heartLost = useEnergy();
     }
 
     if (typeof updateEnergyUI === "function") {
-
         updateEnergyUI();
     }
 
-    let reasonText =
-        "Звёзды закончились";
+    let reasonText = "Звёзды закончились";
 
     if (reason === "time") {
 
@@ -233,22 +255,15 @@ function showLoseModal(
 ) {
 
     let modal =
-        document.getElementById(
-            "loseModal"
-        );
+        document.getElementById("loseModal");
 
     if (!modal) {
 
         modal =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
-        modal.id =
-            "loseModal";
-
-        modal.className =
-            "overlay";
+        modal.id = "loseModal";
+        modal.className = "overlay";
 
         modal.innerHTML = `
             <div class="win">
@@ -279,9 +294,7 @@ function showLoseModal(
                     font-weight:900;
                 ">
                     ❤️
-                    <span id="loseEnergy">
-                        0
-                    </span>/5
+                    <span id="loseEnergy">0</span>/5
                 </div>
 
                 <div
@@ -314,20 +327,14 @@ function showLoseModal(
             </div>
         `;
 
-        document.body.appendChild(
-            modal
-        );
+        document.body.appendChild(modal);
     }
 
     const reason =
-        document.getElementById(
-            "loseReason"
-        );
+        document.getElementById("loseReason");
 
     if (reason) {
-
-        reason.textContent =
-            reasonText;
+        reason.textContent = reasonText;
     }
 
     const energy =
@@ -336,20 +343,14 @@ function showLoseModal(
             : { energy: 0 };
 
     const energyText =
-        document.getElementById(
-            "loseEnergy"
-        );
+        document.getElementById("loseEnergy");
 
     if (energyText) {
-
-        energyText.textContent =
-            energy.energy;
+        energyText.textContent = energy.energy;
     }
 
     const lostText =
-        document.getElementById(
-            "heartLostText"
-        );
+        document.getElementById("heartLostText");
 
     if (lostText) {
 
@@ -359,9 +360,7 @@ function showLoseModal(
                 : "❤️ Энергия закончилась";
     }
 
-    modal.classList.add(
-        "show"
-    );
+    modal.classList.add("show");
 }
 
 
@@ -379,7 +378,6 @@ function retryAfterLose() {
     if (energy.energy <= 0) {
 
         closeLoseModal();
-
         showNoEnergy();
 
         return;
@@ -388,26 +386,16 @@ function retryAfterLose() {
     closeLoseModal();
 
     if (
-        typeof resetPuzzleVisual ===
-        "function"
+        typeof resetPuzzleVisual === "function"
     ) {
-
         resetPuzzleVisual();
     }
 
-    startLevel(
-        activeLevel
-    );
+    startLevel(activeLevel);
 
-    /*
-        Для спичек снова запускаем
-        состояние головоломки.
-    */
     if (
-        typeof startMatchstickPuzzle ===
-        "function"
+        typeof startMatchstickPuzzle === "function"
     ) {
-
         startMatchstickPuzzle();
     }
 }
@@ -416,15 +404,10 @@ function retryAfterLose() {
 function closeLoseModal() {
 
     const modal =
-        document.getElementById(
-            "loseModal"
-        );
+        document.getElementById("loseModal");
 
     if (modal) {
-
-        modal.classList.remove(
-            "show"
-        );
+        modal.classList.remove("show");
     }
 }
 
@@ -434,10 +417,8 @@ function openEnergyFromLose() {
     closeLoseModal();
 
     if (
-        typeof openEnergyShop ===
-        "function"
+        typeof openEnergyShop === "function"
     ) {
-
         openEnergyShop();
     }
 }
@@ -448,10 +429,8 @@ function homeAfterLose() {
     closeLoseModal();
 
     if (
-        typeof goHome ===
-        "function"
+        typeof goHome === "function"
     ) {
-
         goHome();
     }
 }
@@ -461,9 +440,7 @@ function homeAfterLose() {
    SOLVE LEVEL
 ========================= */
 
-function solveLevel(
-    coinReward = 30
-) {
+function solveLevel(coinReward = 30) {
 
     if (levelSolved || levelFailed) {
         return;
@@ -473,20 +450,8 @@ function solveLevel(
 
     stopLevelTimer();
 
-    /*
-        Если игрок решил уровень
-        с одной звездой —
-        получает одну.
-
-        С нулём решить уже невозможно,
-        потому что failLevel вызывается
-        сразу после потери последней.
-    */
     const starsEarned =
-        Math.max(
-            1,
-            currentStars
-        );
+        currentStars;
 
     const result =
         completeLevel(
@@ -499,17 +464,13 @@ function solveLevel(
 
     showLevelComplete({
 
-        level:
-            activeLevel,
+        level: activeLevel,
 
-        stars:
-            starsEarned,
+        stars: starsEarned,
 
-        seconds:
-            elapsedSeconds,
+        seconds: elapsedSeconds,
 
-        wrongAttempts:
-            wrongAttempts,
+        wrongAttempts: wrongAttempts,
 
         coinReward:
             result.firstCompletion
@@ -558,22 +519,18 @@ function showLevelComplete(result) {
     if (starsElement) {
 
         starsElement.textContent =
-            "⭐".repeat(
-                result.stars
-            );
+            "⭐".repeat(result.stars);
     }
 
     if (timeElement) {
 
         timeElement.textContent =
-            `Время: ${result.seconds} сек.`;
+            `Время: ${elapsedSeconds} сек.`;
     }
 
     if (rewardElement) {
 
-        if (
-            result.firstCompletion
-        ) {
+        if (result.firstCompletion) {
 
             rewardElement.textContent =
                 `+${result.coinReward} 🪙`;
@@ -582,18 +539,14 @@ function showLevelComplete(result) {
 
             rewardElement.textContent =
                 `Лучший результат: ${
-                    "⭐".repeat(
-                        result.bestStars
-                    )
+                    "⭐".repeat(result.bestStars)
                 }`;
         }
     }
 
     setTimeout(() => {
 
-        modal.classList.add(
-            "show"
-        );
+        modal.classList.add("show");
 
     }, 250);
 }
@@ -607,9 +560,7 @@ function updateStarsDisplay() {
 
     const text =
         currentStars > 0
-            ? "⭐".repeat(
-                currentStars
-            )
+            ? "⭐".repeat(currentStars)
             : "💔";
 
     const levelStars =
@@ -618,9 +569,7 @@ function updateStarsDisplay() {
         );
 
     if (levelStars) {
-
-        levelStars.textContent =
-            text;
+        levelStars.textContent = text;
     }
 
     document
@@ -629,8 +578,7 @@ function updateStarsDisplay() {
         )
         .forEach(element => {
 
-            element.textContent =
-                text;
+            element.textContent = text;
         });
 }
 
@@ -651,17 +599,13 @@ function updateTimerDisplay() {
     }
 
     /*
-        Первые 20 секунд —
-        свободное размышление.
+        0–19 секунд:
+        бесплатное время на размышление.
     */
-    if (
-        elapsedSeconds <
-        FREE_THINK_TIME
-    ) {
+    if (elapsedSeconds < 20) {
 
         const left =
-            FREE_THINK_TIME -
-            elapsedSeconds;
+            20 - elapsedSeconds;
 
         timer.textContent =
             `🧠 ${left} сек.`;
@@ -669,41 +613,47 @@ function updateTimerDisplay() {
         return;
     }
 
-
     /*
-        После 20 секунд показываем,
-        сколько осталось до следующего
-        временного штрафа.
+        20–29 секунд:
+        отсчёт до штрафа на 30.
     */
-
-    const nextPenalty =
-        TIME_STAR_PENALTIES.find(
-            threshold =>
-                !appliedTimePenalties.has(
-                    threshold
-                )
-        );
-
-    if (
-        nextPenalty !== undefined
-    ) {
+    if (elapsedSeconds < 30) {
 
         const left =
-            Math.max(
-                0,
-                nextPenalty -
-                elapsedSeconds
-            );
-
-        const starsText =
-            currentStars > 0
-                ? "⭐".repeat(
-                    currentStars
-                )
-                : "💔";
+            30 - elapsedSeconds;
 
         timer.textContent =
-            `${starsText} ${left} сек.`;
+            `${getCurrentStarsText()} ${left} сек.`;
+
+        return;
+    }
+
+    /*
+        30–39:
+        отсчёт до штрафа на 40.
+    */
+    if (elapsedSeconds < 40) {
+
+        const left =
+            40 - elapsedSeconds;
+
+        timer.textContent =
+            `${getCurrentStarsText()} ${left} сек.`;
+
+        return;
+    }
+
+    /*
+        40–49:
+        отсчёт до штрафа на 50.
+    */
+    if (elapsedSeconds < 50) {
+
+        const left =
+            50 - elapsedSeconds;
+
+        timer.textContent =
+            `${getCurrentStarsText()} ${left} сек.`;
 
         return;
     }
@@ -713,15 +663,25 @@ function updateTimerDisplay() {
 }
 
 
+function getCurrentStarsText() {
+
+    if (currentStars <= 0) {
+        return "💔";
+    }
+
+    return "⭐".repeat(
+        currentStars
+    );
+}
+
+
 /* =========================
    STOP TIMER
 ========================= */
 
 function stopLevelTimer() {
 
-    if (
-        levelTimerInterval !== null
-    ) {
+    if (levelTimerInterval !== null) {
 
         clearInterval(
             levelTimerInterval
@@ -747,42 +707,26 @@ function showGameMessage(
         );
 
     if (!message) {
-
         console.log(text);
-
         return;
     }
 
-    message.textContent =
-        text;
+    message.textContent = text;
 
-    message.className =
-        "message";
+    message.className = "message";
 
     if (type) {
-
-        message.classList.add(
-            type
-        );
+        message.classList.add(type);
     }
 
     setTimeout(() => {
 
-        /*
-            Не удаляем новое сообщение,
-            если за это время оно уже
-            изменилось.
-        */
         if (
-            message.textContent ===
-            text
+            message.textContent === text
         ) {
 
-            message.textContent =
-                "";
-
-            message.className =
-                "message";
+            message.textContent = "";
+            message.className = "message";
         }
 
     }, 1600);
@@ -798,8 +742,7 @@ function showNoEnergy() {
     stopLevelTimer();
 
     if (
-        typeof openEnergyShop ===
-        "function"
+        typeof openEnergyShop === "function"
     ) {
 
         openEnergyShop();
@@ -820,10 +763,8 @@ function showNoEnergy() {
 function updateEnergyUI() {
 
     if (
-        typeof getEnergyData !==
-        "function"
+        typeof getEnergyData !== "function"
     ) {
-
         return;
     }
 
@@ -847,8 +788,7 @@ function updateEnergyUI() {
         .forEach(element => {
 
             if (
-                data.energy >=
-                MAX_ENERGY
+                data.energy >= MAX_ENERGY
             ) {
 
                 element.textContent =
@@ -870,10 +810,8 @@ function updateEnergyUI() {
 function updateMainUI() {
 
     if (
-        typeof getPlayerData !==
-        "function"
+        typeof getPlayerData !== "function"
     ) {
-
         return;
     }
 
