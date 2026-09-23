@@ -1,20 +1,12 @@
-// =====================================
-// ONLY ONE MOVE — GAME ENGINE
-// =====================================
-
-// ---------- НАСТРОЙКИ ----------
-
 const START_STARS = 3;
 
-const FREE_THINK_TIME = 20;     // первые 20 сек.
-const STAR_BURN_INTERVAL = 10;  // затем каждые 10 сек. сгорает ⭐
+const FREE_THINK_TIME = 20;
 
-const MAX_LEVEL_TIME =
-    FREE_THINK_TIME +
-    STAR_BURN_INTERVAL * START_STARS; // 50 сек.
-
-
-// ---------- СОСТОЯНИЕ УРОВНЯ ----------
+const TIME_STAR_PENALTIES = [
+    30,
+    40,
+    50
+];
 
 let activeLevel = 1;
 
@@ -26,14 +18,24 @@ let currentStars = START_STARS;
 let wrongAttempts = 0;
 
 let elapsedSeconds = 0;
+
 let levelStartedAt = null;
 
 let levelTimerInterval = null;
 
+/*
+    Храним уже применённые
+    временные штрафы.
 
-// =====================================
-// START LEVEL
-// =====================================
+    Благодаря этому штрафы времени
+    складываются с ошибками игрока.
+*/
+let appliedTimePenalties = new Set();
+
+
+/* =========================
+   START LEVEL
+========================= */
 
 function startLevel(levelNumber) {
 
@@ -52,20 +54,23 @@ function startLevel(levelNumber) {
 
     levelStartedAt = Date.now();
 
+    appliedTimePenalties = new Set();
+
     updateStarsDisplay();
     updateTimerDisplay();
 
     levelTimerInterval = setInterval(() => {
 
         if (levelSolved || levelFailed) {
+
             stopLevelTimer();
+
             return;
         }
 
-        elapsedSeconds =
-            Math.floor(
-                (Date.now() - levelStartedAt) / 1000
-            );
+        elapsedSeconds = Math.floor(
+            (Date.now() - levelStartedAt) / 1000
+        );
 
         checkTimePenalty();
 
@@ -75,9 +80,9 @@ function startLevel(levelNumber) {
 }
 
 
-// =====================================
-// TIME PENALTIES
-// =====================================
+/* =========================
+   TIME PENALTIES
+========================= */
 
 function checkTimePenalty() {
 
@@ -85,67 +90,79 @@ function checkTimePenalty() {
         return;
     }
 
-    /*
-        0–29 сек.  = ⭐⭐⭐
-        30–39 сек. = ⭐⭐
-        40–49 сек. = ⭐
-        50 сек.     = 💔 проигрыш
+    for (const threshold of TIME_STAR_PENALTIES) {
 
-        Но ошибки тоже могут уже
-        уменьшить количество звёзд.
-    */
+        if (
+            elapsedSeconds >= threshold &&
+            !appliedTimePenalties.has(threshold)
+        ) {
 
-    let starsAllowedByTime = 3;
+            /*
+                Сначала отмечаем штраф,
+                чтобы он никогда не применился
+                второй раз.
+            */
+            appliedTimePenalties.add(threshold);
 
-    if (elapsedSeconds >= 50) {
-        starsAllowedByTime = 0;
-    }
-    else if (elapsedSeconds >= 40) {
-        starsAllowedByTime = 1;
-    }
-    else if (elapsedSeconds >= 30) {
-        starsAllowedByTime = 2;
-    }
+            burnStar("time");
 
-
-    /*
-        Время может только уменьшать
-        звёзды, но никогда не возвращать их.
-    */
-
-    if (starsAllowedByTime < currentStars) {
-
-        const difference =
-            currentStars - starsAllowedByTime;
-
-        currentStars =
-            starsAllowedByTime;
-
-        updateStarsDisplay();
-
-
-        if (currentStars <= 0) {
-
-            failLevel("time");
-
-            return;
-        }
-
-
-        if (difference > 0) {
-
-            showGameMessage(
-                `⏱ Время! −⭐ Осталось: ${currentStars}`,
-                "bad"
-            );
+            /*
+                Если после штрафа уровень
+                проигран — дальше ничего
+                не проверяем.
+            */
+            if (levelFailed) {
+                return;
+            }
         }
     }
 }
 
 
-// =====================================
-// WRONG MOVE
-// =====================================
+/* =========================
+   BURN ONE STAR
+========================= */
+
+function burnStar(reason) {
+
+    if (levelSolved || levelFailed) {
+        return;
+    }
+
+    currentStars = Math.max(
+        0,
+        currentStars - 1
+    );
+
+    updateStarsDisplay();
+
+    if (currentStars <= 0) {
+
+        failLevel(reason);
+
+        return;
+    }
+
+    if (reason === "time") {
+
+        showGameMessage(
+            `⏱ Время! −⭐ Осталось: ${currentStars}`,
+            "bad"
+        );
+
+    } else {
+
+        showGameMessage(
+            `❌ Ошибка! −⭐ Осталось: ${currentStars}`,
+            "bad"
+        );
+    }
+}
+
+
+/* =========================
+   WRONG MOVE
+========================= */
 
 function registerWrongMove() {
 
@@ -155,34 +172,13 @@ function registerWrongMove() {
 
     wrongAttempts++;
 
-    currentStars--;
-
-    updateStarsDisplay();
-
-
-    // Звёзд больше нет
-    if (currentStars <= 0) {
-
-        currentStars = 0;
-
-        updateStarsDisplay();
-
-        failLevel("mistakes");
-
-        return;
-    }
-
-
-    showGameMessage(
-        `❌ Ошибка! −⭐ Осталось: ${currentStars}`,
-        "bad"
-    );
+    burnStar("mistakes");
 }
 
 
-// =====================================
-// FAIL LEVEL 💔
-// =====================================
+/* =========================
+   FAIL LEVEL
+========================= */
 
 function failLevel(reason) {
 
@@ -194,45 +190,31 @@ function failLevel(reason) {
 
     stopLevelTimer();
 
-
     let heartLost = false;
 
-
-    // Сердце теряется с первого уровня
-    if (
-        typeof useEnergy === "function"
-    ) {
+    if (typeof useEnergy === "function") {
 
         heartLost = useEnergy();
     }
 
-
-    if (
-        typeof updateEnergyUI === "function"
-    ) {
+    if (typeof updateEnergyUI === "function") {
 
         updateEnergyUI();
     }
 
-
     let reasonText =
         "Звёзды закончились";
-
 
     if (reason === "time") {
 
         reasonText =
-            "Время вышло";
+            "Время и ошибки исчерпали все звёзды";
 
-    }
-
-    else if (reason === "mistakes") {
+    } else if (reason === "mistakes") {
 
         reasonText =
-            "Слишком много неверных ходов";
-
+            "Все звёзды потеряны";
     }
-
 
     showLoseModal(
         reasonText,
@@ -241,9 +223,9 @@ function failLevel(reason) {
 }
 
 
-// =====================================
-// LOSE MODAL
-// =====================================
+/* =========================
+   LOSE MODAL
+========================= */
 
 function showLoseModal(
     reasonText,
@@ -255,17 +237,18 @@ function showLoseModal(
             "loseModal"
         );
 
-
-    // Создаём окно автоматически
     if (!modal) {
 
         modal =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        modal.id = "loseModal";
+        modal.id =
+            "loseModal";
 
-        modal.className = "overlay";
-
+        modal.className =
+            "overlay";
 
         modal.innerHTML = `
             <div class="win">
@@ -298,8 +281,7 @@ function showLoseModal(
                     ❤️
                     <span id="loseEnergy">
                         0
-                    </span>
-                    /5
+                    </span>/5
                 </div>
 
                 <div
@@ -314,34 +296,28 @@ function showLoseModal(
                 <button
                     class="next"
                     onclick="retryAfterLose()">
-
                     ↻ ПОПРОБОВАТЬ СНОВА
-
                 </button>
 
                 <button
                     class="shop-option"
                     onclick="openEnergyFromLose()">
-
                     ❤️ ВОССТАНОВИТЬ ЭНЕРГИЮ
-
                 </button>
 
                 <button
                     class="close-shop"
                     onclick="homeAfterLose()">
-
                     ← На главную
-
                 </button>
 
             </div>
         `;
 
-
-        document.body.appendChild(modal);
+        document.body.appendChild(
+            modal
+        );
     }
-
 
     const reason =
         document.getElementById(
@@ -349,16 +325,15 @@ function showLoseModal(
         );
 
     if (reason) {
+
         reason.textContent =
             reasonText;
     }
-
 
     const energy =
         typeof getEnergyData === "function"
             ? getEnergyData()
             : { energy: 0 };
-
 
     const energyText =
         document.getElementById(
@@ -370,7 +345,6 @@ function showLoseModal(
         energyText.textContent =
             energy.energy;
     }
-
 
     const lostText =
         document.getElementById(
@@ -385,14 +359,15 @@ function showLoseModal(
                 : "❤️ Энергия закончилась";
     }
 
-
-    modal.classList.add("show");
+    modal.classList.add(
+        "show"
+    );
 }
 
 
-// =====================================
-// RETRY AFTER LOSE
-// =====================================
+/* =========================
+   RETRY
+========================= */
 
 function retryAfterLose() {
 
@@ -400,7 +375,6 @@ function retryAfterLose() {
         typeof getEnergyData === "function"
             ? getEnergyData()
             : { energy: 0 };
-
 
     if (energy.energy <= 0) {
 
@@ -411,9 +385,7 @@ function retryAfterLose() {
         return;
     }
 
-
     closeLoseModal();
-
 
     if (
         typeof resetPuzzleVisual ===
@@ -423,14 +395,23 @@ function retryAfterLose() {
         resetPuzzleVisual();
     }
 
+    startLevel(
+        activeLevel
+    );
 
-    startLevel(activeLevel);
+    /*
+        Для спичек снова запускаем
+        состояние головоломки.
+    */
+    if (
+        typeof startMatchstickPuzzle ===
+        "function"
+    ) {
+
+        startMatchstickPuzzle();
+    }
 }
 
-
-// =====================================
-// CLOSE LOSE
-// =====================================
 
 function closeLoseModal() {
 
@@ -441,19 +422,16 @@ function closeLoseModal() {
 
     if (modal) {
 
-        modal.classList.remove("show");
+        modal.classList.remove(
+            "show"
+        );
     }
 }
 
 
-// =====================================
-// ENERGY FROM LOSE
-// =====================================
-
 function openEnergyFromLose() {
 
     closeLoseModal();
-
 
     if (
         typeof openEnergyShop ===
@@ -465,14 +443,9 @@ function openEnergyFromLose() {
 }
 
 
-// =====================================
-// HOME AFTER LOSE
-// =====================================
-
 function homeAfterLose() {
 
     closeLoseModal();
-
 
     if (
         typeof goHome ===
@@ -484,9 +457,9 @@ function homeAfterLose() {
 }
 
 
-// =====================================
-// CORRECT SOLUTION
-// =====================================
+/* =========================
+   SOLVE LEVEL
+========================= */
 
 function solveLevel(
     coinReward = 30
@@ -496,18 +469,24 @@ function solveLevel(
         return;
     }
 
-
     levelSolved = true;
 
     stopLevelTimer();
 
+    /*
+        Если игрок решил уровень
+        с одной звездой —
+        получает одну.
 
+        С нулём решить уже невозможно,
+        потому что failLevel вызывается
+        сразу после потери последней.
+    */
     const starsEarned =
         Math.max(
             1,
             currentStars
         );
-
 
     const result =
         completeLevel(
@@ -516,9 +495,7 @@ function solveLevel(
             coinReward
         );
 
-
     updateMainUI();
-
 
     showLevelComplete({
 
@@ -548,9 +525,9 @@ function solveLevel(
 }
 
 
-// =====================================
-// WIN MODAL
-// =====================================
+/* =========================
+   COMPLETE MODAL
+========================= */
 
 function showLevelComplete(result) {
 
@@ -562,7 +539,6 @@ function showLevelComplete(result) {
     if (!modal) {
         return;
     }
-
 
     const starsElement =
         document.getElementById(
@@ -579,7 +555,6 @@ function showLevelComplete(result) {
             "completeReward"
         );
 
-
     if (starsElement) {
 
         starsElement.textContent =
@@ -588,71 +563,65 @@ function showLevelComplete(result) {
             );
     }
 
-
     if (timeElement) {
 
         timeElement.textContent =
             `Время: ${result.seconds} сек.`;
     }
 
-
     if (rewardElement) {
 
-        if (result.firstCompletion) {
+        if (
+            result.firstCompletion
+        ) {
 
             rewardElement.textContent =
                 `+${result.coinReward} 🪙`;
 
-        }
-
-        else {
+        } else {
 
             rewardElement.textContent =
-                `Лучший результат: ${"⭐".repeat(result.bestStars)}`;
+                `Лучший результат: ${
+                    "⭐".repeat(
+                        result.bestStars
+                    )
+                }`;
         }
     }
 
-
     setTimeout(() => {
 
-        modal.classList.add("show");
+        modal.classList.add(
+            "show"
+        );
 
-    }, 350);
+    }, 250);
 }
 
 
-// =====================================
-// STARS UI
-// =====================================
+/* =========================
+   STARS UI
+========================= */
 
 function updateStarsDisplay() {
 
-    /*
-        Если позже добавим специальный
-        #levelStars — обновится он.
-
-        Пока также ищем элементы
-        с data-level-stars.
-    */
-
-
     const text =
         currentStars > 0
-            ? "⭐".repeat(currentStars)
+            ? "⭐".repeat(
+                currentStars
+            )
             : "💔";
-
 
     const levelStars =
         document.getElementById(
             "levelStars"
         );
 
-
     if (levelStars) {
 
-        levelStars.textContent = text;
+        levelStars.textContent =
+            text;
     }
-
 
     document
         .querySelectorAll(
@@ -660,14 +629,15 @@ function updateStarsDisplay() {
         )
         .forEach(element => {
 
-            element.textContent = text;
+            element.textContent =
+                text;
         });
 }
 
 
-// =====================================
-// TIMER UI
-// =====================================
+/* =========================
+   TIMER UI
+========================= */
 
 function updateTimerDisplay() {
 
@@ -680,26 +650,18 @@ function updateTimerDisplay() {
         return;
     }
 
-
     /*
-        0–20:
-        время на размышление
-
-        20–30:
-        предупреждение до первой потери ⭐
-
-        30–40:
-        до следующей ⭐
-
-        40–50:
-        последняя ⭐
+        Первые 20 секунд —
+        свободное размышление.
     */
-
-
-    if (elapsedSeconds < 20) {
+    if (
+        elapsedSeconds <
+        FREE_THINK_TIME
+    ) {
 
         const left =
-            20 - elapsedSeconds;
+            FREE_THINK_TIME -
+            elapsedSeconds;
 
         timer.textContent =
             `🧠 ${left} сек.`;
@@ -708,54 +670,58 @@ function updateTimerDisplay() {
     }
 
 
-    if (elapsedSeconds < 30) {
+    /*
+        После 20 секунд показываем,
+        сколько осталось до следующего
+        временного штрафа.
+    */
+
+    const nextPenalty =
+        TIME_STAR_PENALTIES.find(
+            threshold =>
+                !appliedTimePenalties.has(
+                    threshold
+                )
+        );
+
+    if (
+        nextPenalty !== undefined
+    ) {
 
         const left =
-            30 - elapsedSeconds;
+            Math.max(
+                0,
+                nextPenalty -
+                elapsedSeconds
+            );
+
+        const starsText =
+            currentStars > 0
+                ? "⭐".repeat(
+                    currentStars
+                )
+                : "💔";
 
         timer.textContent =
-            `⭐⭐⭐ ${left} сек.`;
+            `${starsText} ${left} сек.`;
 
         return;
     }
-
-
-    if (elapsedSeconds < 40) {
-
-        const left =
-            40 - elapsedSeconds;
-
-        timer.textContent =
-            `⭐⭐ ${left} сек.`;
-
-        return;
-    }
-
-
-    if (elapsedSeconds < 50) {
-
-        const left =
-            50 - elapsedSeconds;
-
-        timer.textContent =
-            `⭐ ${left} сек.`;
-
-        return;
-    }
-
 
     timer.textContent =
         "💔 Время вышло";
 }
 
 
-// =====================================
-// STOP TIMER
-// =====================================
+/* =========================
+   STOP TIMER
+========================= */
 
 function stopLevelTimer() {
 
-    if (levelTimerInterval !== null) {
+    if (
+        levelTimerInterval !== null
+    ) {
 
         clearInterval(
             levelTimerInterval
@@ -766,9 +732,9 @@ function stopLevelTimer() {
 }
 
 
-// =====================================
-// GAME MESSAGE
-// =====================================
+/* =========================
+   GAME MESSAGE
+========================= */
 
 function showGameMessage(
     text,
@@ -780,7 +746,6 @@ function showGameMessage(
             "gameMessage"
         );
 
-
     if (!message) {
 
         console.log(text);
@@ -788,43 +753,49 @@ function showGameMessage(
         return;
     }
 
+    message.textContent =
+        text;
 
-    message.textContent = text;
-
-    message.classList.add("show");
-
+    message.className =
+        "message";
 
     if (type) {
 
-        message.classList.add(type);
+        message.classList.add(
+            type
+        );
     }
-
 
     setTimeout(() => {
 
-        message.classList.remove(
-            "show"
-        );
+        /*
+            Не удаляем новое сообщение,
+            если за это время оно уже
+            изменилось.
+        */
+        if (
+            message.textContent ===
+            text
+        ) {
 
-        if (type) {
+            message.textContent =
+                "";
 
-            message.classList.remove(
-                type
-            );
+            message.className =
+                "message";
         }
 
     }, 1600);
 }
 
 
-// =====================================
-// NO ENERGY
-// =====================================
+/* =========================
+   NO ENERGY
+========================= */
 
 function showNoEnergy() {
 
     stopLevelTimer();
-
 
     if (
         typeof openEnergyShop ===
@@ -836,16 +807,15 @@ function showNoEnergy() {
         return;
     }
 
-
     alert(
         "❤️ Энергия закончилась"
     );
 }
 
 
-// =====================================
-// ENERGY UI
-// =====================================
+/* =========================
+   ENERGY UI
+========================= */
 
 function updateEnergyUI() {
 
@@ -857,10 +827,8 @@ function updateEnergyUI() {
         return;
     }
 
-
     const data =
         getEnergyData();
-
 
     document
         .querySelectorAll(
@@ -872,7 +840,6 @@ function updateEnergyUI() {
                 `${data.energy}/${MAX_ENERGY}`;
         });
 
-
     document
         .querySelectorAll(
             "[data-energy-timer]"
@@ -880,14 +847,14 @@ function updateEnergyUI() {
         .forEach(element => {
 
             if (
-                data.energy >= MAX_ENERGY
+                data.energy >=
+                MAX_ENERGY
             ) {
 
                 element.textContent =
                     "Полная энергия";
-            }
 
-            else {
+            } else {
 
                 element.textContent =
                     `+1 ❤️ через ${getEnergyTimer()}`;
@@ -896,9 +863,9 @@ function updateEnergyUI() {
 }
 
 
-// =====================================
-// MAIN UI
-// =====================================
+/* =========================
+   MAIN UI
+========================= */
 
 function updateMainUI() {
 
@@ -910,10 +877,8 @@ function updateMainUI() {
         return;
     }
 
-
     const data =
         getPlayerData();
-
 
     document
         .querySelectorAll(
@@ -925,7 +890,6 @@ function updateMainUI() {
                 data.coins;
         });
 
-
     document
         .querySelectorAll(
             "[data-level]"
@@ -935,7 +899,6 @@ function updateMainUI() {
             element.textContent =
                 data.level;
         });
-
 
     document
         .querySelectorAll(
@@ -947,14 +910,13 @@ function updateMainUI() {
                 data.totalStars;
         });
 
-
     updateEnergyUI();
 }
 
 
-// =====================================
-// ENERGY REGEN DISPLAY
-// =====================================
+/* =========================
+   ENERGY TIMER REFRESH
+========================= */
 
 setInterval(() => {
 
