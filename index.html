@@ -319,7 +319,9 @@ button{
   transition:transform .15s ease,opacity .15s ease;
 }
 
-.compact-level-node:active{transform:scale(.94);}
+.compact-level-node:active{
+  transform:scale(.94);
+}
 
 .compact-level-number{
   font-size:28px;
@@ -673,7 +675,7 @@ button{
 
 
 /* =========================
-   FISH LEVEL — UNDERWATER
+   FISH LEVEL
 ========================= */
 
 .fish-area{
@@ -776,11 +778,16 @@ button{
     transform:translateY(0) translateX(0) scale(.7);
     opacity:0;
   }
-  15%{opacity:.8;}
+
+  15%{
+    opacity:.8;
+  }
+
   55%{
     transform:translateY(-90px) translateX(7px) scale(1);
     opacity:.65;
   }
+
   100%{
     transform:translateY(-190px) translateX(-5px) scale(1.15);
     opacity:0;
@@ -914,7 +921,7 @@ button{
   position:absolute;
   left:55px;
   top:61px;
-  z-index:7;
+  z-index:8;
   width:70px;
   height:46px;
   display:flex;
@@ -967,7 +974,9 @@ button{
 }
 
 
-/* WOOD PLANKS */
+/* =========================
+   WOOD
+========================= */
 
 .fish-bar{
   position:absolute;
@@ -1025,6 +1034,9 @@ button{
     );
   box-shadow:0 0 0 1px rgba(0,0,0,.4);
 }
+
+
+/* OUTER FRAME */
 
 .fish-bar-top{
   width:220px;
@@ -1086,6 +1098,57 @@ button{
   top:3px;
 }
 
+
+/* =========================
+   EXTRA CAGE BARS
+========================= */
+
+.fish-cage-v{
+  width:15px;
+  height:112px;
+  top:18px;
+  z-index:9;
+}
+
+.fish-cage-v1{
+  left:67px;
+}
+
+.fish-cage-v2{
+  left:117px;
+}
+
+.fish-cage-v3{
+  right:67px;
+}
+
+.fish-cage-v::after{
+  left:2px;
+  top:7px;
+}
+
+
+/*
+  Центральная горизонтальная
+  перекладина.
+*/
+
+.fish-cage-h{
+  width:216px;
+  height:15px;
+  left:17px;
+  top:56px;
+  z-index:10;
+}
+
+.fish-cage-h::after{
+  right:8px;
+  top:2px;
+}
+
+
+/* INTERACTION */
+
 .fish-bar:active{
   filter:brightness(1.16);
 }
@@ -1095,11 +1158,25 @@ button{
 }
 
 @keyframes wrongBarShake{
-  0%{transform:translateX(0);}
-  25%{transform:translateX(-7px) rotate(-2deg);}
-  50%{transform:translateX(7px) rotate(2deg);}
-  75%{transform:translateX(-4px);}
-  100%{transform:translateX(0);}
+  0%{
+    transform:translateX(0);
+  }
+
+  25%{
+    transform:translateX(-7px) rotate(-2deg);
+  }
+
+  50%{
+    transform:translateX(7px) rotate(2deg);
+  }
+
+  75%{
+    transform:translateX(-4px);
+  }
+
+  100%{
+    transform:translateX(0);
+  }
 }
 
 .fish-bar.fish-exit-open{
@@ -1123,7 +1200,9 @@ button{
   z-index:10000;
 }
 
-.overlay.show{display:flex;}
+.overlay.show{
+  display:flex;
+}
 
 .win{
   width:100%;
@@ -1181,8 +1260,13 @@ button{
   padding:25px 20px;
 }
 
-.energy-box{text-align:center;}
-.energy-big{font-size:54px;}
+.energy-box{
+  text-align:center;
+}
+
+.energy-big{
+  font-size:54px;
+}
 
 .energy-description{
   color:#929bab;
@@ -1212,7 +1296,9 @@ button{
   font-weight:800;
 }
 
-.shop-option.primary{background:#6c5ce7;}
+.shop-option.primary{
+  background:#6c5ce7;
+}
 
 .close-shop{
   width:100%;
@@ -1259,7 +1345,10 @@ button{
 
 
 @media(max-width:380px){
-  .fish-area{height:255px;}
+
+  .fish-area{
+    height:255px;
+  }
 
   .fish-trap{
     transform:translateX(-50%) scale(.92);
@@ -1279,21 +1368,32 @@ button{
 <div class="app" id="homeScreen">
 
   <div class="top">
-    <div class="logo">🧠 ONE MOVE</div>
+
+    <div class="logo">
+      🧠 ONE MOVE
+    </div>
 
     <div class="balance">
       🪙 <span data-coins>300</span>
     </div>
+
   </div>
 
 
   <div class="hero">
-    <div class="brain">🧠</div>
-    <h1>Only One Move</h1>
+
+    <div class="brain">
+      🧠
+    </div>
+
+    <h1>
+      Only One Move
+    </h1>
 
     <div class="tagline">
       Решение есть всегда. Ход только один.
     </div>
+
   </div>
 
 
@@ -1303,6 +1403,7 @@ button{
       class="progress-top"
       onclick="openLevelMap(1)"
     >
+
       <span>
         ЭТАП 1 · Уровень
         <b id="homeLevel">1</b>/5
@@ -1312,14 +1413,17 @@ button{
       <span>
         ⭐ <b data-stars>0</b>
       </span>
+
     </div>
 
 
     <div class="progress-bar">
+
       <div
         class="progress-fill"
-        id="progressFill">
-      </div>
+        id="progressFill"
+      ></div>
+
     </div>
 
 
@@ -1339,11 +1443,14 @@ button{
         class="stat energy-stat"
         onclick="openEnergyShop()"
       >
+
         <div class="stat-value">
           ❤️ <span data-energy>5/5</span>
         </div>
 
-        <div class="stat-label">Энергия</div>
+        <div class="stat-label">
+          Энергия
+        </div>
 
         <div
           class="energy-timer"
@@ -1351,24 +1458,33 @@ button{
         >
           Полная энергия
         </div>
+
       </div>
 
 
       <div class="stat">
+
         <div class="stat-value">
           🪙 <span data-coins>300</span>
         </div>
 
-        <div class="stat-label">Монеты</div>
+        <div class="stat-label">
+          Монеты
+        </div>
+
       </div>
 
 
       <div class="stat">
+
         <div class="stat-value">
           🔥 <span id="streakValue">1</span>
         </div>
 
-        <div class="stat-label">Серия дней</div>
+        <div class="stat-label">
+          Серия дней
+        </div>
+
       </div>
 
     </div>
@@ -1386,17 +1502,33 @@ button{
 
   <div class="menu">
 
-    <button class="menu-btn" onclick="openRules()">
+    <button
+      class="menu-btn"
+      onclick="openRules()"
+    >
+
       <div class="menu-left">
-        <div class="menu-icon">📖</div>
+
+        <div class="menu-icon">
+          📖
+        </div>
 
         <div>
-          <div class="menu-title">Правила</div>
-          <div class="menu-sub">⭐, ❤️, время и этапы</div>
+
+          <div class="menu-title">
+            Правила
+          </div>
+
+          <div class="menu-sub">
+            ⭐, ❤️, время и этапы
+          </div>
+
         </div>
+
       </div>
 
       <div>›</div>
+
     </button>
 
 
@@ -1404,16 +1536,29 @@ button{
       class="menu-btn"
       onclick="comingSoon('Ежедневная загадка')"
     >
+
       <div class="menu-left">
-        <div class="menu-icon">🧩</div>
+
+        <div class="menu-icon">
+          🧩
+        </div>
 
         <div>
-          <div class="menu-title">Ежедневная загадка</div>
-          <div class="menu-sub">Новая задача каждый день</div>
+
+          <div class="menu-title">
+            Ежедневная загадка
+          </div>
+
+          <div class="menu-sub">
+            Новая задача каждый день
+          </div>
+
         </div>
+
       </div>
 
       <div>›</div>
+
     </button>
 
 
@@ -1421,16 +1566,29 @@ button{
       class="menu-btn"
       onclick="comingSoon('60 секунд')"
     >
+
       <div class="menu-left">
-        <div class="menu-icon">⏱</div>
+
+        <div class="menu-icon">
+          ⏱
+        </div>
 
         <div>
-          <div class="menu-title">60 секунд</div>
-          <div class="menu-sub">Реши как можно больше</div>
+
+          <div class="menu-title">
+            60 секунд
+          </div>
+
+          <div class="menu-sub">
+            Реши как можно больше
+          </div>
+
         </div>
+
       </div>
 
       <div>🔒</div>
+
     </button>
 
 
@@ -1438,16 +1596,29 @@ button{
       class="menu-btn"
       onclick="comingSoon('Рейтинг')"
     >
+
       <div class="menu-left">
-        <div class="menu-icon">🏆</div>
+
+        <div class="menu-icon">
+          🏆
+        </div>
 
         <div>
-          <div class="menu-title">Рейтинг</div>
-          <div class="menu-sub">Соревнуйся с другими</div>
+
+          <div class="menu-title">
+            Рейтинг
+          </div>
+
+          <div class="menu-sub">
+            Соревнуйся с другими
+          </div>
+
         </div>
+
       </div>
 
       <div>›</div>
+
     </button>
 
 
@@ -1455,16 +1626,29 @@ button{
       class="menu-btn"
       onclick="dailyReward()"
     >
+
       <div class="menu-left">
-        <div class="menu-icon">🎁</div>
+
+        <div class="menu-icon">
+          🎁
+        </div>
 
         <div>
-          <div class="menu-title">Награда дня</div>
-          <div class="menu-sub">Забери ежедневный бонус</div>
+
+          <div class="menu-title">
+            Награда дня
+          </div>
+
+          <div class="menu-sub">
+            Забери ежедневный бонус
+          </div>
+
         </div>
+
       </div>
 
       <div>›</div>
+
     </button>
 
   </div>
@@ -1476,22 +1660,34 @@ button{
      LEVEL MAP
 ===================== -->
 
-<div class="app hidden" id="levelMapScreen">
+<div
+  class="app hidden"
+  id="levelMapScreen"
+>
 
   <div class="map-header">
 
-    <button class="back" onclick="closeLevelMap()">
+    <button
+      class="back"
+      onclick="closeLevelMap()"
+    >
       ‹
     </button>
 
 
     <div class="map-header-center">
 
-      <div class="map-title" id="mapTitle">
+      <div
+        class="map-title"
+        id="mapTitle"
+      >
         ЭТАП 1
       </div>
 
-      <div class="map-stars" id="mapStars">
+      <div
+        class="map-stars"
+        id="mapStars"
+      >
         ⭐ 0 / 15
       </div>
 
@@ -1503,16 +1699,23 @@ button{
   </div>
 
 
-  <div class="map-status" id="mapStatus">
+  <div
+    class="map-status"
+    id="mapStatus"
+  >
     🧠 Первый проход
 
     <span>
       Пройди все 5 уровней — после этого откроются повторы
     </span>
+
   </div>
 
 
-  <div class="level-path" id="levelPath"></div>
+  <div
+    class="level-path"
+    id="levelPath"
+  ></div>
 
 </div>
 
@@ -1521,11 +1724,17 @@ button{
      GAME
 ===================== -->
 
-<div class="app hidden" id="gameScreen">
+<div
+  class="app hidden"
+  id="gameScreen"
+>
 
   <div class="game-header">
 
-    <button class="back" onclick="goHome()">
+    <button
+      class="back"
+      onclick="goHome()"
+    >
       ‹
     </button>
 
@@ -1542,17 +1751,26 @@ button{
   </div>
 
 
-  <div class="level" id="gameLevelLabel">
+  <div
+    class="level"
+    id="gameLevelLabel"
+  >
     ЭТАП 1 · УРОВЕНЬ 1
   </div>
 
 
-  <h1 class="game-title" id="gameTitle">
+  <h1
+    class="game-title"
+    id="gameTitle"
+  >
     Передвинь одну спичку
   </h1>
 
 
-  <div class="subtitle" id="gameSubtitle">
+  <div
+    class="subtitle"
+    id="gameSubtitle"
+  >
     Сделай равенство правильным.<br>
     Можно передвинуть только одну спичку.
   </div>
@@ -1560,12 +1778,19 @@ button{
 
   <div class="level-status">
 
-    <div class="level-stars" id="levelStars">
+    <div
+      class="level-stars"
+      id="levelStars"
+    >
       ⭐⭐⭐
     </div>
 
     <div class="timer">
-      <span id="levelTimer">🧠 20 сек.</span>
+
+      <span id="levelTimer">
+        🧠 20 сек.
+      </span>
+
     </div>
 
   </div>
@@ -1585,55 +1810,152 @@ button{
     ></div>
 
 
-    <!-- LEVEL 1 -->
+    <!-- =====================
+         LEVEL 1
+    ====================== -->
 
     <div
       id="matchstickPuzzle"
       class="puzzle-container"
     >
 
-      <div class="equation" id="matchEquation">
+      <div
+        class="equation"
+        id="matchEquation"
+      >
 
-        <div class="digit" data-symbol="6">
-          <span class="match h a" data-segment="A"></span>
-          <span class="match v f" data-segment="F"></span>
-          <span class="match h g" data-segment="G"></span>
-          <span class="match v e" data-segment="E"></span>
-          <span class="match v c" data-segment="C"></span>
-          <span class="match h d" data-segment="D"></span>
+        <div
+          class="digit"
+          data-symbol="6"
+        >
+
+          <span
+            class="match h a"
+            data-segment="A"
+          ></span>
+
+          <span
+            class="match v f"
+            data-segment="F"
+          ></span>
+
+          <span
+            class="match h g"
+            data-segment="G"
+          ></span>
+
+          <span
+            class="match v e"
+            data-segment="E"
+          ></span>
+
+          <span
+            class="match v c"
+            data-segment="C"
+          ></span>
+
+          <span
+            class="match h d"
+            data-segment="D"
+          ></span>
 
           <span
             class="match-slot v-slot b"
             data-empty-segment="B"
           ></span>
+
         </div>
 
 
-        <div class="operator" data-symbol="+">
-          <span class="match match-h" data-segment="H"></span>
-          <span class="match match-v" data-segment="V"></span>
+        <div
+          class="operator"
+          data-symbol="+"
+        >
+
+          <span
+            class="match match-h"
+            data-segment="H"
+          ></span>
+
+          <span
+            class="match match-v"
+            data-segment="V"
+          ></span>
+
         </div>
 
 
-        <div class="digit" data-symbol="4">
-          <span class="match v f" data-segment="F"></span>
-          <span class="match h g" data-segment="G"></span>
-          <span class="match v b" data-segment="B"></span>
-          <span class="match v c" data-segment="C"></span>
+        <div
+          class="digit"
+          data-symbol="4"
+        >
+
+          <span
+            class="match v f"
+            data-segment="F"
+          ></span>
+
+          <span
+            class="match h g"
+            data-segment="G"
+          ></span>
+
+          <span
+            class="match v b"
+            data-segment="B"
+          ></span>
+
+          <span
+            class="match v c"
+            data-segment="C"
+          ></span>
+
         </div>
 
 
-        <div class="equals-symbol" data-symbol="=">
-          <span class="match eq-top" data-segment="TOP"></span>
-          <span class="match eq-bottom" data-segment="BOTTOM"></span>
+        <div
+          class="equals-symbol"
+          data-symbol="="
+        >
+
+          <span
+            class="match eq-top"
+            data-segment="TOP"
+          ></span>
+
+          <span
+            class="match eq-bottom"
+            data-segment="BOTTOM"
+          ></span>
+
         </div>
 
 
-        <div class="digit" data-symbol="4">
-          <span class="match v f" data-segment="F"></span>
-          <span class="match h g" data-segment="G"></span>
-          <span class="match v b" data-segment="B"></span>
-          <span class="match v c" data-segment="C"></span>
+        <div
+          class="digit"
+          data-symbol="4"
+        >
+
+          <span
+            class="match v f"
+            data-segment="F"
+          ></span>
+
+          <span
+            class="match h g"
+            data-segment="G"
+          ></span>
+
+          <span
+            class="match v b"
+            data-segment="B"
+          ></span>
+
+          <span
+            class="match v c"
+            data-segment="C"
+          ></span>
+
         </div>
 
       </div>
@@ -1641,7 +1963,9 @@ button{
     </div>
 
 
-    <!-- LEVEL 2 -->
+    <!-- =====================
+         LEVEL 2
+    ====================== -->
 
     <div
       id="fishPuzzle"
@@ -1678,12 +2002,12 @@ button{
         <div class="fish-exit"></div>
 
 
-        <!-- TRAP -->
+        <!-- CAGE -->
 
         <div class="fish-trap">
 
 
-          <!-- SWIMMING FISH -->
+          <!-- FISH -->
 
           <div
             class="fish"
@@ -1693,7 +2017,7 @@ button{
           </div>
 
 
-          <!-- WOODEN BARS -->
+          <!-- OUTER TOP -->
 
           <button
             class="fish-bar fish-bar-top"
@@ -1703,6 +2027,8 @@ button{
           ></button>
 
 
+          <!-- OUTER LEFT -->
+
           <button
             class="fish-bar fish-bar-left"
             data-bar="2"
@@ -1710,6 +2036,8 @@ button{
             aria-label="Левая планка"
           ></button>
 
+
+          <!-- OUTER RIGHT -->
 
           <button
             class="fish-bar fish-bar-right"
@@ -1719,6 +2047,8 @@ button{
           ></button>
 
 
+          <!-- BOTTOM LEFT -->
+
           <button
             class="fish-bar fish-bar-bottom-left"
             data-bar="5"
@@ -1727,11 +2057,53 @@ button{
           ></button>
 
 
+          <!-- BOTTOM RIGHT — CORRECT -->
+
           <button
             class="fish-bar fish-bar-bottom-right"
             data-bar="4"
             onclick="moveFishBar(4)"
             aria-label="Нижняя правая планка"
+          ></button>
+
+
+          <!-- EXTRA BAR 6 -->
+
+          <button
+            class="fish-bar fish-cage-v fish-cage-v1"
+            data-bar="6"
+            onclick="moveFishBar(6)"
+            aria-label="Решётка 6"
+          ></button>
+
+
+          <!-- EXTRA BAR 7 -->
+
+          <button
+            class="fish-bar fish-cage-v fish-cage-v2"
+            data-bar="7"
+            onclick="moveFishBar(7)"
+            aria-label="Решётка 7"
+          ></button>
+
+
+          <!-- EXTRA BAR 8 -->
+
+          <button
+            class="fish-bar fish-cage-v fish-cage-v3"
+            data-bar="8"
+            onclick="moveFishBar(8)"
+            aria-label="Решётка 8"
+          ></button>
+
+
+          <!-- EXTRA BAR 9 -->
+
+          <button
+            class="fish-bar fish-cage-h"
+            data-bar="9"
+            onclick="moveFishBar(9)"
+            aria-label="Решётка 9"
           ></button>
 
         </div>
@@ -1741,7 +2113,10 @@ button{
     </div>
 
 
-    <div class="moves" id="movesText">
+    <div
+      class="moves"
+      id="movesText"
+    >
       ⚡ Один ход
     </div>
 
@@ -1780,19 +2155,29 @@ button{
      COMPLETE
 ===================== -->
 
-<div class="overlay" id="levelCompleteModal">
+<div
+  class="overlay"
+  id="levelCompleteModal"
+>
 
   <div class="win">
 
-    <div class="check">✓</div>
+    <div class="check">
+      ✓
+    </div>
 
-    <h2>Уровень пройден!</h2>
+    <h2>
+      Уровень пройден!
+    </h2>
 
     <div id="completeTime">
       Время: 0 сек.
     </div>
 
-    <div class="stars" id="completeStars">
+    <div
+      class="stars"
+      id="completeStars"
+    >
       ⭐⭐⭐
     </div>
 
@@ -1816,13 +2201,20 @@ button{
      ENERGY
 ===================== -->
 
-<div class="overlay" id="energyModal">
+<div
+  class="overlay"
+  id="energyModal"
+>
 
   <div class="energy-box">
 
-    <div class="energy-big">❤️</div>
+    <div class="energy-big">
+      ❤️
+    </div>
 
-    <h2>Энергия</h2>
+    <h2>
+      Энергия
+    </h2>
 
     <div class="energy-description">
       Сердце снимается только после
@@ -1885,15 +2277,23 @@ button{
      RULES
 ===================== -->
 
-<div class="overlay" id="rulesModal">
+<div
+  class="overlay"
+  id="rulesModal"
+>
 
   <div class="rules-box">
 
-    <h2>📖 Правила</h2>
+    <h2>
+      📖 Правила
+    </h2>
 
 
     <div class="rule">
-      <div class="rule-title">⭐ Звёзды</div>
+
+      <div class="rule-title">
+        ⭐ Звёзды
+      </div>
 
       <div class="rule-text">
         Каждая попытка начинается с ⭐⭐⭐.
@@ -1901,11 +2301,15 @@ button{
         Сколько звёзд осталось при решении —
         столько получает игрок.
       </div>
+
     </div>
 
 
     <div class="rule">
-      <div class="rule-title">⏱ Время</div>
+
+      <div class="rule-title">
+        ⏱ Время
+      </div>
 
       <div class="rule-text">
         Первые 20 секунд — время на размышление.
@@ -1914,22 +2318,30 @@ button{
         на 50-й — ещё ⭐.
         Ошибки и штрафы времени складываются.
       </div>
+
     </div>
 
 
     <div class="rule">
-      <div class="rule-title">❤️ Энергия</div>
+
+      <div class="rule-title">
+        ❤️ Энергия
+      </div>
 
       <div class="rule-text">
         Ошибка не снимает сердце сразу.
         Когда закончились все ⭐,
         попытка проиграна и снимается 1 ❤️.
       </div>
+
     </div>
 
 
     <div class="rule">
-      <div class="rule-title">🏆 Этапы</div>
+
+      <div class="rule-title">
+        🏆 Этапы
+      </div>
 
       <div class="rule-text">
         В одном этапе 5 уровней.
@@ -1940,11 +2352,15 @@ button{
         После завершения этапа можно улучшать
         результаты и добирать звёзды.
       </div>
+
     </div>
 
 
     <div class="rule">
-      <div class="rule-title">🧠 Один ход</div>
+
+      <div class="rule-title">
+        🧠 Один ход
+      </div>
 
       <div class="rule-text">
         У каждой головоломки есть решение
@@ -1952,6 +2368,7 @@ button{
         элементы — очевидный вариант не всегда
         правильный.
       </div>
+
     </div>
 
 
@@ -1976,10 +2393,10 @@ button{
 <script src="js/game.js?v=6"></script>
 <script src="js/matchsticks.js?v=6"></script>
 
-<!-- НОВАЯ РЫБКА -->
-<script src="js/objects.js?v=4"></script>
+<!-- FISH V5 -->
+<script src="js/objects.js?v=5"></script>
 
-<!-- КАРТА -->
+<!-- LEVEL MAP -->
 <script src="js/levelmap.js?v=3"></script>
 
 <script src="levels/easy.js?v=6"></script>
@@ -2271,9 +2688,11 @@ function loadLevel(levelNumber){
       ".puzzle-container"
     )
     .forEach(puzzle => {
+
       puzzle.classList.add(
         "hidden"
       );
+
     });
 
 
@@ -2415,17 +2834,17 @@ function setupLevelTwo(){
       "tutorialBox"
     )
     .innerHTML =
-      "🐠 Рыбка заперта в деревянной ловушке.<br>Выбери одну планку и открой ей выход.";
+      "🐠 Рыбка заперта в деревянной клетке.<br>Выбери одну решётку и открой ей выход.";
 
   document
     .getElementById(
       "gameInstruction"
     )
     .textContent =
-      "Правильная планка заранее не подсвечивается.";
+      "Можно выбрать любую планку. Правильная заранее не подсвечивается.";
 
   movesText.textContent =
-    "⚡ Один ход";
+    "⚡ Передвинь одну планку";
 
   if(
     typeof resetFishPuzzle ===
@@ -2471,9 +2890,11 @@ function goHome(){
     );
 
   if(complete){
+
     complete.classList.remove(
       "show"
     );
+
   }
 
   const lose =
@@ -2482,9 +2903,11 @@ function goHome(){
     );
 
   if(lose){
+
     lose.classList.remove(
       "show"
     );
+
   }
 
   updateMainUI();
@@ -2505,8 +2928,10 @@ function bindMatchsticks(){
       "#matchEquation .match"
     )
     .forEach(match => {
+
       match.onpointerdown =
         startMatchDrag;
+
     });
 }
 
@@ -2557,17 +2982,21 @@ function startMatchDrag(event){
     rect.width >
     rect.height
   ){
+
     dragCopy.style.width =
       rect.width + "px";
 
     dragCopy.style.height =
       "7px";
+
   }else{
+
     dragCopy.style.width =
       "7px";
 
     dragCopy.style.height =
       rect.height + "px";
+
   }
 
   document.body.appendChild(
@@ -2670,9 +3099,13 @@ function endMatchDrag(event){
       typeof wrongMatchstickMove ===
       "function"
     ){
+
       wrongMatchstickMove();
+
     }else{
+
       registerWrongMove();
+
     }
   }
 
@@ -2741,12 +3174,15 @@ function findDropSlot(
         distance <= MAGNET_RADIUS &&
         distance < bestDistance
       ){
+
         bestDistance =
           distance;
 
         bestSlot =
           slot;
+
       }
+
     });
 
   return bestSlot;
@@ -2819,7 +3255,9 @@ function processMatchMove(
         !levelSolved &&
         !levelFailed
       ){
+
         solveLevel(30);
+
       }
 
     },200);
@@ -2833,9 +3271,13 @@ function processMatchMove(
     typeof wrongMatchstickMove ===
     "function"
   ){
+
     wrongMatchstickMove();
+
   }else{
+
     registerWrongMove();
+
   }
 }
 
@@ -2863,6 +3305,7 @@ function resetMatchstickVisual(){
       match.classList.remove(
         "match-selected"
       );
+
     });
 
   document
@@ -2876,6 +3319,7 @@ function resetMatchstickVisual(){
 
       slot.style.background =
         "transparent";
+
     });
 
   bindMatchsticks();
@@ -2904,11 +3348,14 @@ function resetPuzzleVisual(){
       typeof resetFishPuzzle ===
       "function"
     ){
+
       resetFishPuzzle();
+
     }
 
     movesText.textContent =
-      "⚡ Один ход";
+      "⚡ Передвинь одну планку";
+
   }
 }
 
@@ -2920,15 +3367,19 @@ function resetPuzzleVisual(){
 function restoreDraggedMatch(){
 
   if(draggingMatch){
+
     draggingMatch.style.opacity =
       "1";
+
   }
 
   if(
     typeof clearMatchstickSelection ===
     "function"
   ){
+
     clearMatchstickSelection();
+
   }
 
   draggingMatch = null;
@@ -2940,8 +3391,11 @@ function restoreDraggedMatch(){
 function removeDragCopy(){
 
   if(dragCopy){
+
     dragCopy.remove();
+
     dragCopy = null;
+
   }
 
   draggingMatch = null;
@@ -2958,8 +3412,10 @@ function cancelCurrentDrag(){
   );
 
   if(draggingMatch){
+
     draggingMatch.style.opacity =
       "1";
+
   }
 
   removeDragCopy();
@@ -3006,7 +3462,8 @@ function showHint(){
   if(displayedLevel === 2){
 
     gameMessage.textContent =
-      "💡 Не обязательно разбирать всю ловушку. Рыбке нужен только один свободный выход.";
+      "💡 Не обязательно разбирать всю клетку. Рыбке нужен только один свободный выход.";
+
   }
 }
 
@@ -3042,9 +3499,11 @@ function finishLevel(){
     );
 
   if(modal){
+
     modal.classList.remove(
       "show"
     );
+
   }
 
 
@@ -3085,7 +3544,9 @@ function finishLevel(){
     typeof renderLevelMap ===
     "function"
   ){
+
     renderLevelMap(1);
+
   }
 }
 
