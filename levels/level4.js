@@ -434,20 +434,171 @@ window.ONE_MOVE_LEVELS[4] = {
     // =====================================
 
     chooseSwitch(button, number) {
-
-        if (
-            this.locked ||
-            this.solved ||
-            levelSolved ||
-            levelFailed
-        ) {
-            return;
-        }
-
+        if (this.locked || this.solved || levelSolved || levelFailed) return;
 
         this.locked = true;
         this.selectedSwitch = number;
 
+        const puzzle = document.getElementById("railwayPuzzle");
+        if (!puzzle) return;
 
-        const puzzle =
-            document.getElementBy
+        puzzle.classList.add("railway-running");
+        button.classList.add("switch-selected", "switch-changed");
+
+        puzzle.querySelectorAll(".rail-switch").forEach(item => {
+            item.disabled = true;
+        });
+
+        if (typeof movesText !== "undefined" && movesText) {
+            movesText.textContent = "🚂 Поезда в пути…";
+        }
+
+        const timer = setTimeout(() => {
+            if (number === this.correctSwitch) {
+                button.classList.add("switch-correct");
+                this.runCorrectRoute();
+            } else {
+                button.classList.add("switch-wrong");
+                this.runWrongRoute(number);
+            }
+        }, 300);
+
+        this.timers.push(timer);
+    },
+
+    runCorrectRoute() {
+        const routeA = [
+            [5,86],[72,86],[112,113],[151,140],[177,164],
+            [211,195],[247,231],[277,267],[286,309],[286,356]
+        ];
+        const routeB = [
+            [345,86],[280,86],[245,86],[222,111],[198,137],[177,164],
+            [147,195],[111,231],[76,266],[51,309],[51,356]
+        ];
+
+        // Both trains start together, but B is slightly slower so they do not
+        // occupy the central junction at the same instant.
+        this.animateTrain("trainA", routeA, 3900, () => this.trainArrived("A"));
+        this.animateTrain("trainB", routeB, 4400, () => this.trainArrived("B"));
+    },
+
+    runWrongRoute(number) {
+        let routeA;
+        let routeB;
+
+        if ([1,4,7,10,14].includes(number)) {
+            routeA = [[5,86],[72,86],[112,113],[151,140],[177,164]];
+            routeB = [[345,86],[280,86],[245,86],[222,111],[198,137],[177,164]];
+        } else if ([2,5,8,12,15].includes(number)) {
+            routeA = [[5,86],[72,86],[112,113],[134,160],[134,238]];
+            routeB = [[345,86],[280,86],[245,86],[222,111],[247,157],[280,218]];
+        } else {
+            routeA = [[5,86],[72,86],[112,113],[151,140],[177,164],[147,195],[111,231]];
+            routeB = [[345,86],[280,86],[245,86],[222,111],[198,137],[177,164],[211,195],[247,231]];
+        }
+
+        let finished = 0;
+        const done = () => {
+            finished += 1;
+            if (finished === 2) this.wrongMove();
+        };
+
+        this.animateTrain("trainA", routeA, 2500, done);
+        this.animateTrain("trainB", routeB, 2500, done);
+    },
+
+    animateTrain(id, points, duration, onDone) {
+        const start = performance.now();
+
+        const frame = now => {
+            const t = Math.min(1, (now - start) / duration);
+            const scaled = t * (points.length - 1);
+            const index = Math.min(points.length - 2, Math.floor(scaled));
+            const local = Math.min(1, scaled - index);
+            const a = points[index];
+            const b = points[index + 1];
+
+            const x = a[0] + (b[0] - a[0]) * local;
+            const y = a[1] + (b[1] - a[1]) * local;
+            const angle = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
+
+            this.setTrainPosition(id, x, y, angle);
+
+            if (t < 1 && this.locked) {
+                this.animationFrames.push(requestAnimationFrame(frame));
+            } else if (t >= 1 && typeof onDone === "function") {
+                onDone();
+            }
+        };
+
+        this.animationFrames.push(requestAnimationFrame(frame));
+    },
+
+    setTrainPosition(id, x, y, angle) {
+        const train = document.getElementById(id);
+        const board = document.querySelector("#railwayPuzzle .railway-board");
+        if (!train || !board) return;
+
+        const sx = board.clientWidth / 350;
+        const sy = board.clientHeight / 405;
+
+        train.style.left = (x * sx - train.offsetWidth / 2) + "px";
+        train.style.top = (y * sy - train.offsetHeight / 2) + "px";
+        train.style.transform = `rotate(${angle}deg)`;
+    },
+
+    trainArrived() {
+        this.arrived = (this.arrived || 0) + 1;
+        if (this.arrived < 2) return;
+
+        this.solved = true;
+        this.locked = false;
+
+        const puzzle = document.getElementById("railwayPuzzle");
+        if (puzzle) puzzle.classList.add("railway-solved");
+
+        if (typeof movesText !== "undefined" && movesText) {
+            movesText.textContent = "✓ Оба поезда прибыли";
+        }
+
+        const timer = setTimeout(() => {
+            if (!levelSolved && !levelFailed) solveLevel(40);
+        }, 650);
+        this.timers.push(timer);
+    },
+
+    wrongMove() {
+        const puzzle = document.getElementById("railwayPuzzle");
+        if (puzzle) puzzle.classList.add("railway-wrong");
+
+        if (typeof movesText !== "undefined" && movesText) {
+            movesText.textContent = "✕ Неверная стрелка";
+        }
+
+        if (!levelSolved && !levelFailed) registerWrongMove();
+
+        const timer = setTimeout(() => {
+            if (!levelSolved && !levelFailed) this.reset();
+        }, 850);
+        this.timers.push(timer);
+    },
+
+    reset() {
+        this.clearAnimations();
+        this.arrived = 0;
+        this.start();
+    },
+
+    stop() {
+        this.clearAnimations();
+        this.locked = true;
+    },
+
+    clearAnimations() {
+        this.timers.forEach(timer => clearTimeout(timer));
+        this.timers = [];
+
+        this.animationFrames.forEach(frame => cancelAnimationFrame(frame));
+        this.animationFrames = [];
+    }
+};
