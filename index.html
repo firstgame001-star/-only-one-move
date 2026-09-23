@@ -2109,15 +2109,19 @@ function findDropSlot(
   dragged
 ){
 
+  const draggedRect =
+    dragged.getBoundingClientRect();
+
   const horizontal =
-    dragged.getBoundingClientRect()
-      .width >
-    dragged.getBoundingClientRect()
-      .height;
+    draggedRect.width >
+    draggedRect.height;
 
 
   let bestSlot = null;
   let bestDistance = Infinity;
+
+  // Радиус магнитного захвата
+  const MAGNET_RADIUS = 85;
 
 
   document
@@ -2126,13 +2130,16 @@ function findDropSlot(
     )
     .forEach(slot => {
 
-
       const slotHorizontal =
         slot.classList.contains(
           "h-slot"
         );
 
 
+      // Вертикальная спичка →
+      // вертикальное место.
+      // Горизонтальная →
+      // горизонтальное.
       if(
         horizontal !==
         slotHorizontal
@@ -2161,8 +2168,11 @@ function findDropSlot(
         );
 
 
+      // Магнит:
+      // выбираем ближайшую
+      // подходящую позицию
       if(
-        distance < 35 &&
+        distance <= MAGNET_RADIUS &&
         distance < bestDistance
       ){
 
@@ -2177,6 +2187,8 @@ function findDropSlot(
 
 
   return bestSlot;
+
+}
 
 }
 
