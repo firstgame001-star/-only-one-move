@@ -1,12 +1,7 @@
 /* =====================================
    ONLY ONE MOVE
    LEVEL 3 — LASER LABYRINTH
-   16 MIRRORS + FALSE ROUTES
-===================================== */
-
-
-/* =====================================
-   PUZZLE
+   16 VISIBLE MIRRORS
 ===================================== */
 
 #laserPuzzle{
@@ -15,12 +10,9 @@
 
 #laserPuzzle .laser-board{
     position:relative;
-
-    width:min(100%, 350px);
+    width:min(100%,350px);
     height:430px;
-
     margin:8px auto 0;
-
     overflow:hidden;
 
     border:1px solid rgba(116,145,190,.25);
@@ -51,8 +43,8 @@
 .laser-grid{
     position:absolute;
     inset:0;
-
     opacity:.20;
+    pointer-events:none;
 
     background-image:
         linear-gradient(
@@ -65,23 +57,13 @@
             transparent 1px
         );
 
-    background-size:
-        35px 35px;
-
-    pointer-events:none;
+    background-size:35px 35px;
 }
-
-
-/* =====================================
-   BACKGROUND GLOW
-===================================== */
 
 .laser-board::before{
     content:"";
-
     position:absolute;
     inset:0;
-
     pointer-events:none;
 
     background:
@@ -99,12 +81,11 @@
 
 
 /* =====================================
-   SOURCE
+   LASER SOURCE
 ===================================== */
 
 .laser-source{
     position:absolute;
-
     left:-5px;
     top:47px;
 
@@ -134,9 +115,7 @@
 .laser-source-core{
     width:12px;
     height:12px;
-
     border-radius:50%;
-
     background:#ff4141;
 
     box-shadow:
@@ -149,7 +128,6 @@
 }
 
 @keyframes laserSourcePulse{
-
     0%,
     100%{
         transform:scale(.9);
@@ -183,7 +161,6 @@
     justify-content:center;
 
     border-radius:50%;
-
     background:#101722;
 
     box-shadow:
@@ -193,9 +170,7 @@
 
 .laser-target-ring{
     position:absolute;
-
     border-radius:50%;
-
     border:2px solid #596579;
 }
 
@@ -214,7 +189,6 @@
     height:11px;
 
     border-radius:50%;
-
     background:#6b7484;
 
     transition:
@@ -225,12 +199,11 @@
 
 
 /* =====================================
-   METAL BLOCKS
+   BLOCKS
 ===================================== */
 
 .laser-block{
     position:absolute;
-
     z-index:4;
 
     border:1px solid #354052;
@@ -249,51 +222,71 @@
 }
 
 .block-1{
-    left:142px;
-    top:20px;
-
-    width:54px;
-    height:22px;
+    left:143px;
+    top:64px;
+    width:43px;
+    height:43px;
 }
 
 .block-2{
-    right:18px;
-    top:112px;
-
-    width:55px;
-    height:21px;
+    right:21px;
+    top:88px;
+    width:43px;
+    height:43px;
 }
 
 .block-3{
-    left:17px;
-    top:196px;
-
-    width:54px;
-    height:22px;
+    left:40px;
+    top:192px;
+    width:43px;
+    height:43px;
 }
 
 .block-4{
-    left:139px;
-    top:249px;
-
-    width:50px;
-    height:22px;
+    left:147px;
+    top:244px;
+    width:43px;
+    height:43px;
 }
 
 .block-5{
-    right:16px;
-    top:299px;
-
-    width:53px;
-    height:22px;
+    right:74px;
+    top:276px;
+    width:43px;
+    height:43px;
 }
 
 .block-6{
-    left:24px;
-    bottom:35px;
+    left:176px;
+    bottom:28px;
+    width:43px;
+    height:43px;
+}
 
-    width:58px;
-    height:22px;
+
+/* X inside blocks */
+
+.laser-block::before,
+.laser-block::after{
+    content:"";
+    position:absolute;
+
+    left:7px;
+    top:20px;
+
+    width:29px;
+    height:3px;
+
+    border-radius:3px;
+    background:#080c12;
+}
+
+.laser-block::before{
+    transform:rotate(45deg);
+}
+
+.laser-block::after{
+    transform:rotate(-45deg);
 }
 
 
@@ -304,13 +297,12 @@
 .laser-mirror{
     position:absolute;
 
-    width:38px;
-    height:38px;
+    width:34px;
+    height:34px;
 
     z-index:20;
 
     padding:0;
-
     border:0;
     outline:0;
 
@@ -340,11 +332,11 @@
 
     position:absolute;
 
-    left:5px;
-    top:5px;
+    left:4px;
+    top:4px;
 
-    width:28px;
-    height:28px;
+    width:26px;
+    height:26px;
 
     border:1px solid rgba(151,171,199,.25);
     border-radius:50%;
@@ -353,10 +345,10 @@
 .mirror-glass{
     position:absolute;
 
-    left:5px;
-    top:16px;
+    left:4px;
+    top:14px;
 
-    width:28px;
+    width:26px;
     height:6px;
 
     border-radius:5px;
@@ -386,112 +378,150 @@
 
 
 /* =====================================
-   MIRROR POSITIONS
+   ALL 16 MIRRORS
+
+   Каждый находится в отдельной позиции.
 ===================================== */
 
-/* верхняя зона */
+
+/* 1 — верх слева */
 
 .mirror-1{
-    left:64px;
-    top:42px;
-}
-
-.mirror-2{
-    left:220px;
+    left:84px;
     top:34px;
 }
 
-.mirror-3{
-    right:20px;
-    top:62px;
+
+/* 2 — верх центр */
+
+.mirror-2{
+    left:201px;
+    top:28px;
 }
 
 
-/* зона 2 */
+/* 3 — верх справа */
+
+.mirror-3{
+    right:18px;
+    top:34px;
+}
+
+
+/* 4 — слева под источником */
 
 .mirror-4{
-    left:112px;
-    top:100px;
+    left:35px;
+    top:119px;
 }
+
+
+/* 5 — первый маршрут */
 
 .mirror-5{
-    left:193px;
-    top:106px;
+    left:94px;
+    top:102px;
 }
+
+
+/* 6 — центр сверху */
 
 .mirror-6{
-    right:37px;
-    top:147px;
+    left:190px;
+    top:116px;
 }
 
 
-/* зона 3 */
+/* 7 — справа сверху */
 
 .mirror-7{
-    left:38px;
-    top:145px;
+    right:28px;
+    top:143px;
 }
+
+
+/* 8 — слева центр */
 
 .mirror-8{
-    left:109px;
-    top:177px;
+    left:91px;
+    top:180px;
 }
+
+
+/* 9 — центр */
 
 .mirror-9{
-    left:190px;
-    top:177px;
+    left:194px;
+    top:180px;
 }
+
+
+/* 10 — справа центр */
 
 .mirror-10{
-    right:23px;
-    top:213px;
+    right:27px;
+    top:216px;
 }
 
 
-/* зона 4 */
+/* 11 — нижняя левая зона */
 
 .mirror-11{
-    left:42px;
-    top:238px;
+    left:45px;
+    top:258px;
 }
 
+
+/* 12 — нижний центр слева */
+
 .mirror-12{
-    left:104px;
-    top:282px;
+    left:105px;
+    top:305px;
 }
+
+
+/* =====================================
+   FOUR EXTRA MIRRORS
+===================================== */
 
 
 /*
-   ПРАВИЛЬНОЕ ЗЕРКАЛО
-   Внешне ничем не отличается.
+   13 — правильное зеркало.
+   Никакого визуального выделения.
 */
 
 .mirror-13{
-    left:201px;
+    left:202px;
     top:274px;
 }
 
 
-/* нижняя зона */
+/* 14 — дополнительное справа */
 
 .mirror-14{
     right:23px;
-    top:339px;
+    top:316px;
 }
+
+
+/* 15 — дополнительное снизу слева */
 
 .mirror-15{
-    left:86px;
-    top:352px;
+    left:59px;
+    top:365px;
 }
 
+
+/* 16 — дополнительное снизу по центру */
+
 .mirror-16{
-    left:165px;
+    left:151px;
     top:374px;
 }
 
 
 /* =====================================
-   LASER BEAMS
+   BEAMS
 ===================================== */
 
 .laser-beam,
@@ -520,60 +550,49 @@
 
 
 /* =====================================
-   INITIAL ROUTE
+   STARTING ROUTE
 ===================================== */
-
-/*
-   Луч входит слева и создаёт
-   впечатление маршрута через поле.
-*/
 
 .beam-1{
     left:22px;
     top:63px;
-
-    width:59px;
+    width:79px;
 }
-
 
 .beam-2{
-    left:81px;
+    left:100px;
     top:63px;
 
-    width:73px;
+    width:56px;
 
     transform:rotate(90deg);
 }
-
 
 .beam-3{
-    left:81px;
-    top:135px;
+    left:100px;
+    top:118px;
 
-    width:124px;
+    width:107px;
 }
 
-
 .beam-4{
-    left:203px;
-    top:135px;
+    left:205px;
+    top:118px;
 
-    width:157px;
+    width:172px;
 
     transform:rotate(90deg);
 }
 
-
 .beam-5{
-    left:203px;
-    top:290px;
-
-    width:19px;
+    left:205px;
+    top:288px;
+    width:18px;
 }
 
 
 /* =====================================
-   FINAL CORRECT ROUTE
+   CORRECT FINAL ROUTE
 ===================================== */
 
 .final-beam{
@@ -583,45 +602,36 @@
         opacity .18s ease;
 }
 
-
-/*
-   После поворота №13
-   луч продолжает путь.
-*/
-
 .final-beam-1{
     left:219px;
     top:290px;
 
-    width:74px;
+    width:73px;
 }
 
-
 .final-beam-2{
-    left:291px;
+    left:290px;
     top:290px;
 
-    width:67px;
+    width:65px;
 
     transform:rotate(90deg);
 }
 
-
 .final-beam-3{
-    left:291px;
-    top:355px;
+    left:290px;
+    top:353px;
 
     width:34px;
 
     transform:rotate(135deg);
 }
 
-
 .final-beam-4{
-    left:267px;
-    top:379px;
+    left:266px;
+    top:377px;
 
-    width:51px;
+    width:31px;
 
     transform:rotate(90deg);
 }
@@ -654,84 +664,78 @@
 }
 
 
-/* =====================================
-   FALSE ROUTE A
-===================================== */
+/* FALSE A */
 
 .false-a-1{
-    left:80px;
+    left:100px;
     top:63px;
 
-    width:100px;
+    width:94px;
 
     transform:rotate(45deg);
 }
 
 .false-a-2{
-    left:150px;
-    top:133px;
+    left:166px;
+    top:129px;
 
-    width:88px;
+    width:75px;
 
     transform:rotate(-45deg);
 }
 
 
-/* =====================================
-   FALSE ROUTE B
-===================================== */
+/* FALSE B */
 
 .false-b-1{
-    left:203px;
-    top:135px;
+    left:205px;
+    top:118px;
 
-    width:89px;
+    width:87px;
 }
 
 .false-b-2{
     left:291px;
-    top:135px;
+    top:118px;
 
-    width:84px;
+    width:85px;
 
     transform:rotate(90deg);
 }
 
 .false-b-3{
     left:291px;
-    top:218px;
+    top:201px;
 
-    width:67px;
+    width:62px;
 
     transform:rotate(145deg);
 }
 
 
-/* =====================================
-   FALSE ROUTE C
-===================================== */
+/* FALSE C */
 
 .false-c-1{
-    left:203px;
-    top:289px;
+    left:205px;
+    top:288px;
 
-    width:94px;
+    width:92px;
 
     transform:rotate(145deg);
 }
 
 .false-c-2{
-    left:127px;
-    top:343px;
+    left:130px;
+    top:341px;
 
-    width:86px;
+    width:70px;
 
     transform:rotate(90deg);
 }
 
 
 /* =====================================
-   SHOW FALSE ROUTES
+   FALSE ROUTE VISIBILITY
 ===================================== */
 
 .show-false-a .false-route-a{
@@ -748,7 +752,7 @@
 
 
 /* =====================================
-   MIRROR TURN
+   MIRROR INTERACTION
 ===================================== */
 
 .mirror-turning{
@@ -758,11 +762,6 @@
         0 0 0 2px #66758c,
         0 0 18px rgba(157,205,235,.40);
 }
-
-
-/* =====================================
-   WRONG MIRROR
-===================================== */
 
 .mirror-wrong{
     animation:
@@ -794,7 +793,7 @@
 
 
 /* =====================================
-   WRONG BOARD FLASH
+   WRONG
 ===================================== */
 
 .laser-wrong .laser-board{
@@ -820,7 +819,7 @@
 
 
 /* =====================================
-   CORRECT MIRROR
+   CORRECT
 ===================================== */
 
 .mirror-correct{
@@ -873,21 +872,18 @@
 
 
 /* =====================================
-   LASER ANIMATION
+   LASER FLOW
 ===================================== */
 
 .laser-beam,
 .false-beam{
-    background-size:
-        200% 100%;
-
     animation:
         laserFlow .7s linear infinite;
 }
 
 @keyframes laserFlow{
 
-    from{
+    0%{
         filter:brightness(.9);
     }
 
@@ -895,14 +891,14 @@
         filter:brightness(1.55);
     }
 
-    to{
+    100%{
         filter:brightness(.9);
     }
 }
 
 
 /* =====================================
-   DISABLED MIRRORS
+   DISABLED
 ===================================== */
 
 .laser-mirror:disabled{
@@ -911,63 +907,39 @@
 
 
 /* =====================================
-   SMALL PHONES
+   MOBILE
 ===================================== */
 
 @media(max-width:380px){
 
     #laserPuzzle .laser-board{
-        width:320px;
-        max-width:100%;
-        height:410px;
-    }
-
-    .laser-mirror{
-        width:35px;
-        height:35px;
-    }
-
-    .laser-mirror::before{
-        width:25px;
-        height:25px;
-
-        left:5px;
-        top:5px;
-    }
-
-    .mirror-glass{
-        width:25px;
-        height:5px;
-
-        left:5px;
-        top:15px;
+        width:100%;
+        height:430px;
     }
 
 }
 
 
 /* =====================================
-   VERY SMALL PHONES
+   VERY SMALL MOBILE
 ===================================== */
 
 @media(max-width:340px){
 
-    #laserPuzzle .laser-board{
-        transform-origin:top center;
-    }
-
     .laser-mirror{
-        width:33px;
-        height:33px;
+        width:32px;
+        height:32px;
     }
 
     .laser-mirror::before{
-        width:23px;
-        height:23px;
+        width:24px;
+        height:24px;
     }
 
     .mirror-glass{
-        width:23px;
+        width:24px;
+        left:4px;
+        top:13px;
     }
 
 }
