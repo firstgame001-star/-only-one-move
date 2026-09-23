@@ -10,7 +10,7 @@
 
 <title>Only One Move</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=4">
 
 <style>
 *{
@@ -739,64 +739,47 @@ button{
       <div>›</div>
     </button>
 
-    <button
-      class="menu-btn"
-      onclick="comingSoon('Ежедневная загадка')">
-
+    <button class="menu-btn" onclick="comingSoon('Ежедневная загадка')">
       <div class="menu-left">
         <div class="menu-icon">🧩</div>
-
         <div>
           <div class="menu-title">Ежедневная загадка</div>
           <div class="menu-sub">Новая задача каждый день</div>
         </div>
       </div>
-
       <div>›</div>
     </button>
 
-    <button
-      class="menu-btn"
-      onclick="comingSoon('60 секунд')">
-
+    <button class="menu-btn" onclick="comingSoon('60 секунд')">
       <div class="menu-left">
         <div class="menu-icon">⏱</div>
-
         <div>
           <div class="menu-title">60 секунд</div>
           <div class="menu-sub">Реши как можно больше</div>
         </div>
       </div>
-
       <div>🔒</div>
     </button>
 
-    <button
-      class="menu-btn"
-      onclick="comingSoon('Рейтинг')">
-
+    <button class="menu-btn" onclick="comingSoon('Рейтинг')">
       <div class="menu-left">
         <div class="menu-icon">🏆</div>
-
         <div>
           <div class="menu-title">Рейтинг</div>
           <div class="menu-sub">Соревнуйся с другими</div>
         </div>
       </div>
-
       <div>›</div>
     </button>
 
     <button class="menu-btn" onclick="dailyReward()">
       <div class="menu-left">
         <div class="menu-icon">🎁</div>
-
         <div>
           <div class="menu-title">Награда дня</div>
           <div class="menu-sub">Забери ежедневный бонус</div>
         </div>
       </div>
-
       <div>›</div>
     </button>
 
@@ -810,9 +793,7 @@ button{
 
   <div class="game-header">
 
-    <button class="back" onclick="goHome()">
-      ‹
-    </button>
+    <button class="back" onclick="goHome()">‹</button>
 
     <div class="balance energy-click" onclick="openEnergyShop()">
       ❤️ <span data-energy>5/5</span>
@@ -842,9 +823,7 @@ button{
     </div>
 
     <div class="timer">
-      <span id="levelTimer">
-        🧠 20 сек.
-      </span>
+      <span id="levelTimer">🧠 20 сек.</span>
     </div>
 
   </div>
@@ -864,9 +843,7 @@ button{
     <div class="equation" id="matchEquation">
 
       <!-- 6 -->
-
       <div class="digit" data-symbol="6">
-
         <span class="match h a" data-segment="A"></span>
         <span class="match v f" data-segment="F"></span>
         <span class="match h g" data-segment="G"></span>
@@ -878,61 +855,34 @@ button{
           class="match-slot v-slot b"
           data-empty-segment="B">
         </span>
-
       </div>
 
       <!-- + -->
-
       <div class="operator" data-symbol="+">
-
-        <span
-          class="match match-h"
-          data-segment="H">
-        </span>
-
-        <span
-          class="match match-v"
-          data-segment="V">
-        </span>
-
+        <span class="match match-h" data-segment="H"></span>
+        <span class="match match-v" data-segment="V"></span>
       </div>
 
       <!-- 4 -->
-
       <div class="digit" data-symbol="4">
-
         <span class="match v f" data-segment="F"></span>
         <span class="match h g" data-segment="G"></span>
         <span class="match v b" data-segment="B"></span>
         <span class="match v c" data-segment="C"></span>
-
       </div>
 
       <!-- = -->
-
       <div class="equals-symbol" data-symbol="=">
-
-        <span
-          class="match eq-top"
-          data-segment="TOP">
-        </span>
-
-        <span
-          class="match eq-bottom"
-          data-segment="BOTTOM">
-        </span>
-
+        <span class="match eq-top" data-segment="TOP"></span>
+        <span class="match eq-bottom" data-segment="BOTTOM"></span>
       </div>
 
       <!-- 4 -->
-
       <div class="digit" data-symbol="4">
-
         <span class="match v f" data-segment="F"></span>
         <span class="match h g" data-segment="G"></span>
         <span class="match v b" data-segment="B"></span>
         <span class="match v c" data-segment="C"></span>
-
       </div>
 
     </div>
@@ -962,7 +912,6 @@ button{
 <!-- LEVEL COMPLETE -->
 
 <div class="overlay" id="levelCompleteModal">
-
   <div class="win">
 
     <div class="check">✓</div>
@@ -986,7 +935,6 @@ button{
     </button>
 
   </div>
-
 </div>
 
 <!-- ENERGY -->
@@ -1013,33 +961,23 @@ button{
       Полная энергия
     </div>
 
-    <button
-      class="shop-option"
-      onclick="buyEnergy(1,100)">
+    <button class="shop-option" onclick="buyEnergy(1,100)">
       ❤️ +1 — 100 🪙
     </button>
 
-    <button
-      class="shop-option"
-      onclick="buyEnergy(3,250)">
+    <button class="shop-option" onclick="buyEnergy(3,250)">
       ❤️❤️❤️ +3 — 250 🪙
     </button>
 
-    <button
-      class="shop-option primary"
-      onclick="buyFullEnergy()">
+    <button class="shop-option primary" onclick="buyFullEnergy()">
       ❤️ Восстановить всё — 350 🪙
     </button>
 
-    <button
-      class="shop-option"
-      onclick="comingSoon('Реклама за сердце')">
+    <button class="shop-option" onclick="comingSoon('Реклама за сердце')">
       📺 Посмотреть рекламу — +1 ❤️
     </button>
 
-    <button
-      class="close-shop"
-      onclick="closeEnergyShop()">
+    <button class="close-shop" onclick="closeEnergyShop()">
       Закрыть
     </button>
 
@@ -1057,7 +995,6 @@ button{
 
     <div class="rule">
       <div class="rule-title">⭐ Звёзды</div>
-
       <div class="rule-text">
         Каждая попытка начинается с ⭐⭐⭐.
         Неправильный ход сжигает одну ⭐.
@@ -1068,20 +1005,18 @@ button{
 
     <div class="rule">
       <div class="rule-title">⏱ Время</div>
-
       <div class="rule-text">
         Первые 20 секунд даются на размышление.
-        Затем время начинает сжигать звёзды.
         На 30-й секунде сгорает ⭐,
-        на 40-й — ещё ⭐.
-        На 50-й секунде сгорает последняя ⭐
-        и попытка автоматически проиграна.
+        на 40-й — ещё ⭐,
+        на 50-й — ещё ⭐.
+        Штрафы за время складываются
+        с неправильными ходами.
       </div>
     </div>
 
     <div class="rule">
       <div class="rule-title">❤️ Энергия</div>
-
       <div class="rule-text">
         Обычная ошибка сама по себе
         не снимает сердце.
@@ -1093,7 +1028,6 @@ button{
 
     <div class="rule">
       <div class="rule-title">🏆 Этапы</div>
-
       <div class="rule-text">
         В одном этапе 5 уровней.
         Максимум — 15 ⭐.
@@ -1107,7 +1041,6 @@ button{
 
     <div class="rule">
       <div class="rule-title">🔥 Спички</div>
-
       <div class="rule-text">
         В заданиях со спичками можно выбрать
         любую доступную спичку.
@@ -1125,13 +1058,13 @@ button{
 
 </div>
 
-<!-- CORE FILES -->
+<!-- CORE FILES — v=4 заставляет Telegram взять свежие файлы -->
 
-<script src="js/storage.js"></script>
-<script src="js/energy.js"></script>
-<script src="js/game.js"></script>
-<script src="js/matchsticks.js"></script>
-<script src="levels/easy.js"></script>
+<script src="js/storage.js?v=4"></script>
+<script src="js/energy.js?v=4"></script>
+<script src="js/game.js?v=4"></script>
+<script src="js/matchsticks.js?v=4"></script>
+<script src="levels/easy.js?v=4"></script>
 
 <script>
 
@@ -1186,43 +1119,26 @@ function initializeApp(){
 
 function migrateOldSave(){
 
-  if(
-    localStorage.getItem("oldSaveMigrated")
-  ){
+  if(localStorage.getItem("oldSaveMigrated")){
     return;
   }
 
-  const data =
-    getPlayerData();
+  const data = getPlayerData();
 
-  const oldCoins =
-    localStorage.getItem("coins");
-
-  const oldLevel =
-    localStorage.getItem("level");
-
-  const oldStreak =
-    localStorage.getItem("streak");
+  const oldCoins = localStorage.getItem("coins");
+  const oldLevel = localStorage.getItem("level");
+  const oldStreak = localStorage.getItem("streak");
 
   if(oldCoins !== null){
-    data.coins =
-      Number(oldCoins) || 0;
+    data.coins = Number(oldCoins) || 0;
   }
 
   if(oldLevel !== null){
-    data.level =
-      Math.max(
-        1,
-        Number(oldLevel) || 1
-      );
+    data.level = Math.max(1, Number(oldLevel) || 1);
   }
 
   if(oldStreak !== null){
-    data.streak =
-      Math.max(
-        1,
-        Number(oldStreak) || 1
-      );
+    data.streak = Math.max(1, Number(oldStreak) || 1);
   }
 
   savePlayerData(data);
@@ -1238,15 +1154,11 @@ function migrateOldSave(){
 
 function updateProgress(){
 
-  const data =
-    getPlayerData();
+  const data = getPlayerData();
 
   const level =
     Math.min(
-      Math.max(
-        data.level,
-        1
-      ),
+      Math.max(data.level,1),
       5
     );
 
@@ -1257,8 +1169,7 @@ function updateProgress(){
 
   if(fill){
     fill.style.width =
-      ((level - 1) / 5 * 100) +
-      "%";
+      ((level - 1) / 5 * 100) + "%";
   }
 }
 
@@ -1276,13 +1187,9 @@ function updateChapterUI(){
     return;
   }
 
-  if(
-    typeof getChapterProgress !==
-    "function"
-  ){
+  if(typeof getChapterProgress !== "function"){
     element.textContent =
       "⭐ 0 / 15 до Этапа 2";
-
     return;
   }
 
@@ -1313,22 +1220,14 @@ function openGame(){
     return;
   }
 
-  homeScreen.classList.add(
-    "hidden"
-  );
-
-  gameScreen.classList.remove(
-    "hidden"
-  );
+  homeScreen.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
 
   resetPuzzleVisual();
 
   startLevel(1);
 
-  if(
-    typeof startMatchstickPuzzle ===
-    "function"
-  ){
+  if(typeof startMatchstickPuzzle === "function"){
     startMatchstickPuzzle();
   }
 }
@@ -1340,31 +1239,18 @@ function goHome(){
 
   cancelCurrentDrag();
 
-  gameScreen.classList.add(
-    "hidden"
-  );
-
-  homeScreen.classList.remove(
-    "hidden"
-  );
+  gameScreen.classList.add("hidden");
+  homeScreen.classList.remove("hidden");
 
   document
-    .getElementById(
-      "levelCompleteModal"
-    )
-    .classList.remove(
-      "show"
-    );
+    .getElementById("levelCompleteModal")
+    .classList.remove("show");
 
   const loseModal =
-    document.getElementById(
-      "loseModal"
-    );
+    document.getElementById("loseModal");
 
   if(loseModal){
-    loseModal.classList.remove(
-      "show"
-    );
+    loseModal.classList.remove("show");
   }
 
   updateMainUI();
@@ -1378,9 +1264,7 @@ function goHome(){
 function bindMatchsticks(){
 
   document
-    .querySelectorAll(
-      "#matchEquation .match"
-    )
+    .querySelectorAll("#matchEquation .match")
     .forEach(match => {
 
       match.onpointerdown =
@@ -1393,10 +1277,7 @@ bindMatchsticks();
 
 function startMatchDrag(event){
 
-  if(
-    levelSolved ||
-    levelFailed
-  ){
+  if(levelSolved || levelFailed){
     return;
   }
 
@@ -1405,37 +1286,24 @@ function startMatchDrag(event){
   const match =
     event.currentTarget;
 
-  if(
-    typeof selectMatchstick ===
-    "function"
-  ){
+  if(typeof selectMatchstick === "function"){
     selectMatchstick(match);
   }
 
-  draggingMatch =
-    match;
-
-  sourceParent =
-    match.parentElement;
-
-  sourceSegment =
-    match.dataset.segment;
+  draggingMatch = match;
+  sourceParent = match.parentElement;
+  sourceSegment = match.dataset.segment;
 
   const rect =
     match.getBoundingClientRect();
 
   dragCopy =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   dragCopy.className =
     "drag-copy";
 
-  if(
-    rect.width >
-    rect.height
-  ){
+  if(rect.width > rect.height){
 
     dragCopy.style.width =
       rect.width + "px";
@@ -1456,8 +1324,7 @@ function startMatchDrag(event){
     dragCopy
   );
 
-  match.style.opacity =
-    ".18";
+  match.style.opacity = ".18";
 
   moveDragCopy(
     event.clientX,
@@ -1467,17 +1334,13 @@ function startMatchDrag(event){
   document.addEventListener(
     "pointermove",
     moveMatchDrag,
-    {
-      passive:false
-    }
+    {passive:false}
   );
 
   document.addEventListener(
     "pointerup",
     endMatchDrag,
-    {
-      once:true
-    }
+    {once:true}
   );
 }
 
@@ -1507,12 +1370,10 @@ function moveDragCopy(x,y){
     dragCopy.getBoundingClientRect();
 
   dragCopy.style.left =
-    (x - rect.width / 2) +
-    "px";
+    (x - rect.width / 2) + "px";
 
   dragCopy.style.top =
-    (y - rect.height / 2) +
-    "px";
+    (y - rect.height / 2) + "px";
 }
 
 
@@ -1550,10 +1411,7 @@ function endMatchDrag(event){
 
     restoreDraggedMatch();
 
-    if(
-      typeof wrongMatchstickMove ===
-      "function"
-    ){
+    if(typeof wrongMatchstickMove === "function"){
       wrongMatchstickMove();
     }else{
       registerWrongMove();
@@ -1566,11 +1424,7 @@ function endMatchDrag(event){
 
 /* FIND INVISIBLE SLOT */
 
-function findDropSlot(
-  x,
-  y,
-  dragged
-){
+function findDropSlot(x,y,dragged){
 
   const draggedRect =
     dragged.getBoundingClientRect();
@@ -1585,9 +1439,7 @@ function findDropSlot(
   const MAGNET_RADIUS = 85;
 
   document
-    .querySelectorAll(
-      "#matchEquation .match-slot"
-    )
+    .querySelectorAll("#matchEquation .match-slot")
     .forEach(slot => {
 
       const slotHorizontal =
@@ -1595,10 +1447,7 @@ function findDropSlot(
           "h-slot"
         );
 
-      if(
-        horizontal !==
-        slotHorizontal
-      ){
+      if(horizontal !== slotHorizontal){
         return;
       }
 
@@ -1606,12 +1455,10 @@ function findDropSlot(
         slot.getBoundingClientRect();
 
       const centerX =
-        rect.left +
-        rect.width / 2;
+        rect.left + rect.width / 2;
 
       const centerY =
-        rect.top +
-        rect.height / 2;
+        rect.top + rect.height / 2;
 
       const distance =
         Math.hypot(
@@ -1623,11 +1470,8 @@ function findDropSlot(
         distance <= MAGNET_RADIUS &&
         distance < bestDistance
       ){
-        bestDistance =
-          distance;
-
-        bestSlot =
-          slot;
+        bestDistance = distance;
+        bestSlot = slot;
       }
 
     });
@@ -1638,15 +1482,11 @@ function findDropSlot(
 
 /* PROCESS MOVE */
 
-function processMatchMove(
-  dragged,
-  target
-){
+function processMatchMove(dragged,target){
 
   const fromPlus =
     sourceParent &&
-    sourceParent.dataset.symbol ===
-    "+";
+    sourceParent.dataset.symbol === "+";
 
   const verticalFromPlus =
     fromPlus &&
@@ -1657,12 +1497,10 @@ function processMatchMove(
 
   const targetIsSix =
     targetDigit &&
-    targetDigit.dataset.symbol ===
-    "6";
+    targetDigit.dataset.symbol === "6";
 
   const targetIsB =
-    target.dataset.emptySegment ===
-    "B";
+    target.dataset.emptySegment === "B";
 
   const correct =
     verticalFromPlus &&
@@ -1671,17 +1509,11 @@ function processMatchMove(
 
   if(correct){
 
-    dragged.style.display =
-      "none";
+    dragged.style.display = "none";
 
-    target.style.opacity =
-      "1";
-
-    target.style.background =
-      "#f4d58d";
-
-    target.style.borderRadius =
-      "10px";
+    target.style.opacity = "1";
+    target.style.background = "#f4d58d";
+    target.style.borderRadius = "10px";
 
     movesText.textContent =
       "✓ Ход выполнен";
@@ -1696,10 +1528,7 @@ function processMatchMove(
 
     setTimeout(() => {
 
-      if(
-        !levelSolved &&
-        !levelFailed
-      ){
+      if(!levelSolved && !levelFailed){
         solveLevel(30);
       }
 
@@ -1710,10 +1539,7 @@ function processMatchMove(
 
   restoreDraggedMatch();
 
-  if(
-    typeof wrongMatchstickMove ===
-    "function"
-  ){
+  if(typeof wrongMatchstickMove === "function"){
     wrongMatchstickMove();
   }else{
     registerWrongMove();
@@ -1726,14 +1552,10 @@ function processMatchMove(
 function restoreDraggedMatch(){
 
   if(draggingMatch){
-    draggingMatch.style.opacity =
-      "1";
+    draggingMatch.style.opacity = "1";
   }
 
-  if(
-    typeof clearMatchstickSelection ===
-    "function"
-  ){
+  if(typeof clearMatchstickSelection === "function"){
     clearMatchstickSelection();
   }
 
@@ -1746,9 +1568,7 @@ function restoreDraggedMatch(){
 function removeDragCopy(){
 
   if(dragCopy){
-
     dragCopy.remove();
-
     dragCopy = null;
   }
 
@@ -1766,8 +1586,7 @@ function cancelCurrentDrag(){
   );
 
   if(draggingMatch){
-    draggingMatch.style.opacity =
-      "1";
+    draggingMatch.style.opacity = "1";
   }
 
   removeDragCopy();
@@ -1778,10 +1597,7 @@ function cancelCurrentDrag(){
 
 function showHint(){
 
-  if(
-    levelSolved ||
-    levelFailed
-  ){
+  if(levelSolved || levelFailed){
     return;
   }
 
@@ -1819,11 +1635,8 @@ function resetPuzzleVisual(){
 
   matches.forEach(match => {
 
-    match.style.display =
-      "block";
-
-    match.style.opacity =
-      "1";
+    match.style.display = "block";
+    match.style.opacity = "1";
 
     match.classList.remove(
       "match-selected"
@@ -1831,16 +1644,11 @@ function resetPuzzleVisual(){
   });
 
   document
-    .querySelectorAll(
-      "#matchEquation .match-slot"
-    )
+    .querySelectorAll("#matchEquation .match-slot")
     .forEach(slot => {
 
-      slot.style.opacity =
-        "0";
-
-      slot.style.background =
-        "transparent";
+      slot.style.opacity = "0";
+      slot.style.background = "transparent";
     });
 
   movesText.textContent =
@@ -1849,8 +1657,7 @@ function resetPuzzleVisual(){
   gameMessage.className =
     "message";
 
-  gameMessage.textContent =
-    "";
+  gameMessage.textContent = "";
 
   const completeModal =
     document.getElementById(
@@ -1871,10 +1678,7 @@ function resetPuzzleVisual(){
 
 function resetLevel(){
 
-  if(
-    levelSolved ||
-    levelFailed
-  ){
+  if(levelSolved || levelFailed){
     return;
   }
 
@@ -1882,10 +1686,7 @@ function resetLevel(){
 
   startLevel(1);
 
-  if(
-    typeof startMatchstickPuzzle ===
-    "function"
-  ){
+  if(typeof startMatchstickPuzzle === "function"){
     startMatchstickPuzzle();
   }
 }
@@ -1896,12 +1697,8 @@ function resetLevel(){
 function finishLevel(){
 
   document
-    .getElementById(
-      "levelCompleteModal"
-    )
-    .classList.remove(
-      "show"
-    );
+    .getElementById("levelCompleteModal")
+    .classList.remove("show");
 
   goHome();
 }
@@ -1912,24 +1709,16 @@ function finishLevel(){
 function openRules(){
 
   document
-    .getElementById(
-      "rulesModal"
-    )
-    .classList.add(
-      "show"
-    );
+    .getElementById("rulesModal")
+    .classList.add("show");
 }
 
 
 function closeRules(){
 
   document
-    .getElementById(
-      "rulesModal"
-    )
-    .classList.remove(
-      "show"
-    );
+    .getElementById("rulesModal")
+    .classList.remove("show");
 }
 
 
@@ -1941,7 +1730,7 @@ initializeApp();
 
 <!-- APP -->
 
-<script src="js/app.js"></script>
+<script src="js/app.js?v=4"></script>
 
 </body>
 </html>
