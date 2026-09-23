@@ -1,6 +1,7 @@
 // =====================================
 // ONLY ONE MOVE
 // LEVEL 3 — LASER LABYRINTH
+// 16 MIRRORS + FALSE ROUTES
 // =====================================
 
 window.ONE_MOVE_LEVELS =
@@ -15,71 +16,84 @@ window.ONE_MOVE_LEVELS[3] = {
     solved: false,
     selectedMirror: null,
 
+    // Единственное правильное зеркало
+    correctMirror: 13,
+
 
     // =====================================
-    // LEVEL HTML
+    // RENDER
     // =====================================
 
     render() {
 
         return `
-        <div id="laserPuzzle" class="puzzle-container">
+        <div
+            id="laserPuzzle"
+            class="puzzle-container"
+        >
 
             <div class="laser-board">
 
-                <!-- decorative grid -->
                 <div class="laser-grid"></div>
 
 
-                <!-- =========================
+                <!-- =====================
                      LASER SOURCE
-                ========================== -->
+                ====================== -->
 
                 <div class="laser-source">
                     <div class="laser-source-core"></div>
                 </div>
 
 
-                <!-- =========================
+                <!-- =====================
                      TARGET
-                ========================== -->
+                ====================== -->
 
                 <div class="laser-target">
-                    <div class="laser-target-ring ring-1"></div>
-                    <div class="laser-target-ring ring-2"></div>
-                    <div class="laser-target-core"></div>
+
+                    <div
+                        class="laser-target-ring ring-1"
+                    ></div>
+
+                    <div
+                        class="laser-target-ring ring-2"
+                    ></div>
+
+                    <div
+                        class="laser-target-core"
+                    ></div>
+
                 </div>
 
 
-                <!-- =========================
-                     OBSTACLES
-                ========================== -->
+                <!-- =====================
+                     METAL OBSTACLES
+                ====================== -->
 
                 <div class="laser-block block-1"></div>
                 <div class="laser-block block-2"></div>
                 <div class="laser-block block-3"></div>
                 <div class="laser-block block-4"></div>
                 <div class="laser-block block-5"></div>
+                <div class="laser-block block-6"></div>
 
 
-                <!-- =========================
-                     LASER BEAM
-                     Initial visible path
-                ========================== -->
+                <!-- =====================
+                     STARTING LASER PATH
+                ====================== -->
 
                 <div class="laser-beam beam-1"></div>
                 <div class="laser-beam beam-2"></div>
                 <div class="laser-beam beam-3"></div>
                 <div class="laser-beam beam-4"></div>
+                <div class="laser-beam beam-5"></div>
 
 
-                <!-- =========================
-                     MIRRORS
-                     12 mirrors total
-                ========================== -->
+                <!-- =====================
+                     MIRRORS 1–16
+                ====================== -->
 
-
-                <!-- mirror 1 -->
                 <button
                     class="laser-mirror mirror-1 angle-back"
                     data-mirror="1"
@@ -89,7 +103,6 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 2 -->
                 <button
                     class="laser-mirror mirror-2 angle-forward"
                     data-mirror="2"
@@ -99,7 +112,6 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 3 -->
                 <button
                     class="laser-mirror mirror-3 angle-back"
                     data-mirror="3"
@@ -109,7 +121,6 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 4 -->
                 <button
                     class="laser-mirror mirror-4 angle-forward"
                     data-mirror="4"
@@ -119,7 +130,6 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 5 -->
                 <button
                     class="laser-mirror mirror-5 angle-back"
                     data-mirror="5"
@@ -129,7 +139,6 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 6 -->
                 <button
                     class="laser-mirror mirror-6 angle-forward"
                     data-mirror="6"
@@ -139,7 +148,6 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 7 -->
                 <button
                     class="laser-mirror mirror-7 angle-forward"
                     data-mirror="7"
@@ -149,7 +157,6 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 8 -->
                 <button
                     class="laser-mirror mirror-8 angle-back"
                     data-mirror="8"
@@ -159,7 +166,6 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 9 -->
                 <button
                     class="laser-mirror mirror-9 angle-forward"
                     data-mirror="9"
@@ -168,12 +174,6 @@ window.ONE_MOVE_LEVELS[3] = {
                     <span class="mirror-glass"></span>
                 </button>
 
-
-                <!--
-                    MIRROR 10
-                    This is the correct mirror.
-                    It starts in the wrong direction.
-                -->
 
                 <button
                     class="laser-mirror mirror-10 angle-back"
@@ -184,9 +184,8 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 11 -->
                 <button
-                    class="laser-mirror mirror-11 angle-back"
+                    class="laser-mirror mirror-11 angle-forward"
                     data-mirror="11"
                     aria-label="Зеркало 11"
                 >
@@ -194,9 +193,8 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- mirror 12 -->
                 <button
-                    class="laser-mirror mirror-12 angle-forward"
+                    class="laser-mirror mirror-12 angle-back"
                     data-mirror="12"
                     aria-label="Зеркало 12"
                 >
@@ -204,18 +202,120 @@ window.ONE_MOVE_LEVELS[3] = {
                 </button>
 
 
-                <!-- =========================
-                     FINAL BEAMS
-                     Hidden until solved
-                ========================== -->
+                <!--
+                    ПРАВИЛЬНОЕ ЗЕРКАЛО
+                -->
 
-                <div class="laser-beam final-beam final-beam-1"></div>
-                <div class="laser-beam final-beam final-beam-2"></div>
-                <div class="laser-beam final-beam final-beam-3"></div>
+                <button
+                    class="laser-mirror mirror-13 angle-back"
+                    data-mirror="13"
+                    aria-label="Зеркало 13"
+                >
+                    <span class="mirror-glass"></span>
+                </button>
 
 
-                <!-- wrong laser flash -->
-                <div class="wrong-laser-path"></div>
+                <button
+                    class="laser-mirror mirror-14 angle-forward"
+                    data-mirror="14"
+                    aria-label="Зеркало 14"
+                >
+                    <span class="mirror-glass"></span>
+                </button>
+
+
+                <button
+                    class="laser-mirror mirror-15 angle-back"
+                    data-mirror="15"
+                    aria-label="Зеркало 15"
+                >
+                    <span class="mirror-glass"></span>
+                </button>
+
+
+                <button
+                    class="laser-mirror mirror-16 angle-forward"
+                    data-mirror="16"
+                    aria-label="Зеркало 16"
+                >
+                    <span class="mirror-glass"></span>
+                </button>
+
+
+                <!-- =====================
+                     CORRECT FINAL ROUTE
+                ====================== -->
+
+                <div
+                    class="laser-beam final-beam final-beam-1"
+                ></div>
+
+                <div
+                    class="laser-beam final-beam final-beam-2"
+                ></div>
+
+                <div
+                    class="laser-beam final-beam final-beam-3"
+                ></div>
+
+                <div
+                    class="laser-beam final-beam final-beam-4"
+                ></div>
+
+
+                <!-- =====================
+                     FALSE ROUTE A
+                ====================== -->
+
+                <div class="false-route false-route-a">
+
+                    <div
+                        class="false-beam false-a-1"
+                    ></div>
+
+                    <div
+                        class="false-beam false-a-2"
+                    ></div>
+
+                </div>
+
+
+                <!-- =====================
+                     FALSE ROUTE B
+                ====================== -->
+
+                <div class="false-route false-route-b">
+
+                    <div
+                        class="false-beam false-b-1"
+                    ></div>
+
+                    <div
+                        class="false-beam false-b-2"
+                    ></div>
+
+                    <div
+                        class="false-beam false-b-3"
+                    ></div>
+
+                </div>
+
+
+                <!-- =====================
+                     FALSE ROUTE C
+                ====================== -->
+
+                <div class="false-route false-route-c">
+
+                    <div
+                        class="false-beam false-c-1"
+                    ></div>
+
+                    <div
+                        class="false-beam false-c-2"
+                    ></div>
+
+                </div>
 
             </div>
 
@@ -225,7 +325,7 @@ window.ONE_MOVE_LEVELS[3] = {
 
 
     // =====================================
-    // START LEVEL
+    // START
     // =====================================
 
     start() {
@@ -235,14 +335,21 @@ window.ONE_MOVE_LEVELS[3] = {
         this.selectedMirror = null;
 
         const puzzle =
-            document.getElementById("laserPuzzle");
+            document.getElementById(
+                "laserPuzzle"
+            );
 
-        if (!puzzle) return;
+        if (!puzzle) {
+            return;
+        }
 
 
         puzzle.classList.remove(
             "laser-solved",
-            "laser-wrong"
+            "laser-wrong",
+            "show-false-a",
+            "show-false-b",
+            "show-false-c"
         );
 
 
@@ -276,10 +383,13 @@ window.ONE_MOVE_LEVELS[3] = {
 
 
     // =====================================
-    // MIRROR CLICK
+    // ROTATE MIRROR
     // =====================================
 
-    rotateMirror(mirror, mirrorNumber) {
+    rotateMirror(
+        mirror,
+        mirrorNumber
+    ) {
 
         if (
             this.locked ||
@@ -292,14 +402,20 @@ window.ONE_MOVE_LEVELS[3] = {
 
 
         this.locked = true;
-        this.selectedMirror = mirrorNumber;
+
+        this.selectedMirror =
+            mirrorNumber;
 
 
-        // rotate mirror visually
         mirror.classList.add(
             "mirror-turning"
         );
 
+
+        /*
+            Поворачиваем зеркало
+            ровно на 90 градусов.
+        */
 
         if (
             mirror.classList.contains(
@@ -328,11 +444,15 @@ window.ONE_MOVE_LEVELS[3] = {
         }
 
 
-        // =================================
-        // CORRECT MIRROR
-        // =================================
+        /*
+            Единственный
+            правильный ход.
+        */
 
-        if (mirrorNumber === 10) {
+        if (
+            mirrorNumber ===
+            this.correctMirror
+        ) {
 
             setTimeout(() => {
 
@@ -346,14 +466,59 @@ window.ONE_MOVE_LEVELS[3] = {
         }
 
 
-        // =================================
-        // WRONG MIRROR
-        // =================================
+        /*
+            Для неправильных зеркал
+            выбираем один из трёх
+            ложных маршрутов.
+
+            Маршрут определяется
+            номером зеркала, поэтому
+            результат не случайный.
+        */
+
+        let falseRoute = "a";
+
+
+        if (
+            [
+                1,
+                4,
+                7,
+                10,
+                14
+            ].includes(
+                mirrorNumber
+            )
+        ) {
+
+            falseRoute = "a";
+
+        } else if (
+            [
+                2,
+                5,
+                8,
+                11,
+                15
+            ].includes(
+                mirrorNumber
+            )
+        ) {
+
+            falseRoute = "b";
+
+        } else {
+
+            falseRoute = "c";
+
+        }
+
 
         setTimeout(() => {
 
             this.wrongMove(
-                mirror
+                mirror,
+                falseRoute
             );
 
         }, 350);
@@ -365,18 +530,28 @@ window.ONE_MOVE_LEVELS[3] = {
     // WRONG MOVE
     // =====================================
 
-    wrongMove(mirror) {
+    wrongMove(
+        mirror,
+        falseRoute
+    ) {
 
         const puzzle =
             document.getElementById(
                 "laserPuzzle"
             );
 
-        if (!puzzle) return;
+        if (!puzzle) {
+            return;
+        }
 
 
         puzzle.classList.add(
             "laser-wrong"
+        );
+
+
+        puzzle.classList.add(
+            `show-false-${falseRoute}`
         );
 
 
@@ -390,12 +565,16 @@ window.ONE_MOVE_LEVELS[3] = {
 
 
         gameMessage.textContent =
-            "Луч ушёл не туда. −⭐";
+            "Луч ушёл по ложному маршруту. −⭐";
 
+
+        /*
+            Показываем ошибочный луч,
+            затем возвращаем зеркало
+            в исходное положение.
+        */
 
         setTimeout(() => {
-
-            // return mirror to original angle
 
             if (
                 mirror.classList.contains(
@@ -431,9 +610,17 @@ window.ONE_MOVE_LEVELS[3] = {
 
 
             puzzle.classList.remove(
-                "laser-wrong"
+                "laser-wrong",
+                "show-false-a",
+                "show-false-b",
+                "show-false-c"
             );
 
+
+            /*
+                Общая механика игры:
+                снимает одну ⭐.
+            */
 
             registerWrongMove();
 
@@ -444,11 +631,13 @@ window.ONE_MOVE_LEVELS[3] = {
             ) {
 
                 this.locked = false;
-                this.selectedMirror = null;
+
+                this.selectedMirror =
+                    null;
 
             }
 
-        }, 700);
+        }, 850);
 
     },
 
@@ -457,14 +646,18 @@ window.ONE_MOVE_LEVELS[3] = {
     // CORRECT MOVE
     // =====================================
 
-    correctMove(mirror) {
+    correctMove(
+        mirror
+    ) {
 
         const puzzle =
             document.getElementById(
                 "laserPuzzle"
             );
 
-        if (!puzzle) return;
+        if (!puzzle) {
+            return;
+        }
 
 
         this.solved = true;
@@ -485,7 +678,10 @@ window.ONE_MOVE_LEVELS[3] = {
         );
 
 
-        // disable all mirrors
+        /*
+            После правильного хода
+            больше ничего нажать нельзя.
+        */
 
         puzzle
             .querySelectorAll(
@@ -507,10 +703,13 @@ window.ONE_MOVE_LEVELS[3] = {
 
 
         gameMessage.textContent =
-            "Есть! Луч попал в цель 🔴";
+            "Есть! Луч прошёл лабиринт и попал в цель 🔴";
 
 
-        // allow beam animation to finish
+        /*
+            Даём игроку увидеть
+            финальную анимацию.
+        */
 
         setTimeout(() => {
 
@@ -523,13 +722,13 @@ window.ONE_MOVE_LEVELS[3] = {
 
             }
 
-        }, 1500);
+        }, 1600);
 
     },
 
 
     // =====================================
-    // RESET LEVEL
+    // RESET
     // =====================================
 
     reset() {
@@ -544,13 +743,17 @@ window.ONE_MOVE_LEVELS[3] = {
                 "laserPuzzle"
             );
 
-
-        if (!puzzle) return;
+        if (!puzzle) {
+            return;
+        }
 
 
         puzzle.classList.remove(
             "laser-solved",
-            "laser-wrong"
+            "laser-wrong",
+            "show-false-a",
+            "show-false-b",
+            "show-false-c"
         );
 
 
@@ -571,22 +774,25 @@ window.ONE_MOVE_LEVELS[3] = {
             });
 
 
-        // restore correct initial position
-        // mirror 10 must begin as angle-back
+        /*
+            Возвращаем правильное
+            зеркало №13
+            в стартовое положение.
+        */
 
-        const mirror10 =
+        const correctMirror =
             puzzle.querySelector(
-                '[data-mirror="10"]'
+                '[data-mirror="13"]'
             );
 
 
-        if (mirror10) {
+        if (correctMirror) {
 
-            mirror10.classList.remove(
+            correctMirror.classList.remove(
                 "angle-forward"
             );
 
-            mirror10.classList.add(
+            correctMirror.classList.add(
                 "angle-back"
             );
 
@@ -596,7 +802,7 @@ window.ONE_MOVE_LEVELS[3] = {
 
 
     // =====================================
-    // STOP LEVEL
+    // STOP
     // =====================================
 
     stop() {
@@ -609,8 +815,9 @@ window.ONE_MOVE_LEVELS[3] = {
                 "laserPuzzle"
             );
 
-
-        if (!puzzle) return;
+        if (!puzzle) {
+            return;
+        }
 
 
         puzzle
