@@ -1,6 +1,7 @@
 /* =========================================
-   ONLY ONE MOVE — COMPACT LEVEL MAP
+   ONLY ONE MOVE — LEVEL MAP
    20 этапов × 5 уровней
+   SVG SCENERY VERSION
 ========================================= */
 
 let openedChapter = 1;
@@ -63,254 +64,643 @@ function closeLevelMap() {
 
 
 /* =========================================
-   DECORATIONS
+   SVG MAP
 ========================================= */
 
-function createGrass() {
+function createMapSVG() {
 
-    const grass = document.createElement("div");
+    return `
+        <svg
+            class="level-road"
+            viewBox="0 0 340 510"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            style="
+                position:absolute;
+                inset:0;
+                width:100%;
+                height:100%;
+                z-index:1;
+                pointer-events:none;
+            "
+        >
 
-    grass.className = "map-decor map-grass";
+            <defs>
 
-    grass.innerHTML = `
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+                <!-- ROAD -->
+
+                <linearGradient
+                    id="roadGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+                    <stop
+                        offset="0%"
+                        stop-color="#8b6cff"
+                    />
+
+                    <stop
+                        offset="50%"
+                        stop-color="#7057e8"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#39425a"
+                    />
+                </linearGradient>
+
+
+                <filter
+                    id="roadGlow"
+                    x="-40%"
+                    y="-40%"
+                    width="180%"
+                    height="180%"
+                >
+
+                    <feGaussianBlur
+                        stdDeviation="5"
+                        result="blur"
+                    />
+
+                    <feMerge>
+
+                        <feMergeNode in="blur"/>
+
+                        <feMergeNode in="SourceGraphic"/>
+
+                    </feMerge>
+
+                </filter>
+
+
+                <!-- CRYSTAL -->
+
+                <linearGradient
+                    id="crystalGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="#9df5ff"
+                    />
+
+                    <stop
+                        offset="45%"
+                        stop-color="#6e9cff"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#7b5cff"
+                    />
+
+                </linearGradient>
+
+
+                <filter
+                    id="crystalGlow"
+                    x="-100%"
+                    y="-100%"
+                    width="300%"
+                    height="300%"
+                >
+
+                    <feGaussianBlur
+                        stdDeviation="4"
+                        result="glow"
+                    />
+
+                    <feMerge>
+
+                        <feMergeNode in="glow"/>
+
+                        <feMergeNode in="SourceGraphic"/>
+
+                    </feMerge>
+
+                </filter>
+
+
+                <!-- ROCK -->
+
+                <linearGradient
+                    id="rockGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="#536077"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#252e3e"
+                    />
+
+                </linearGradient>
+
+
+                <!-- SIGN -->
+
+                <linearGradient
+                    id="woodGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="#9b7049"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#59402d"
+                    />
+
+                </linearGradient>
+
+            </defs>
+
+
+            <!-- =================================
+                 BACKGROUND PARTICLES
+            ================================== -->
+
+            <g opacity=".8">
+
+                <circle
+                    cx="30"
+                    cy="42"
+                    r="2.3"
+                    fill="#9c8cff"
+                />
+
+                <circle
+                    cx="304"
+                    cy="62"
+                    r="2"
+                    fill="#8edcff"
+                />
+
+                <circle
+                    cx="318"
+                    cy="176"
+                    r="1.8"
+                    fill="#9c8cff"
+                />
+
+                <circle
+                    cx="26"
+                    cy="212"
+                    r="2"
+                    fill="#8edcff"
+                />
+
+                <circle
+                    cx="310"
+                    cy="290"
+                    r="2.4"
+                    fill="#9c8cff"
+                />
+
+                <circle
+                    cx="24"
+                    cy="363"
+                    r="1.8"
+                    fill="#9c8cff"
+                />
+
+                <circle
+                    cx="295"
+                    cy="453"
+                    r="2.2"
+                    fill="#8edcff"
+                />
+
+            </g>
+
+
+            <!-- =================================
+                 ROCKS — LEFT TOP
+            ================================== -->
+
+            <g transform="translate(10 93)">
+
+                <ellipse
+                    cx="18"
+                    cy="18"
+                    rx="19"
+                    ry="13"
+                    fill="url(#rockGradient)"
+                />
+
+                <ellipse
+                    cx="7"
+                    cy="23"
+                    rx="10"
+                    ry="7"
+                    fill="#303a4c"
+                />
+
+                <path
+                    d="M6 13 Q18 5 30 13"
+                    fill="none"
+                    stroke="#69768b"
+                    stroke-width="2"
+                    opacity=".55"
+                />
+
+            </g>
+
+
+            <!-- GRASS LEFT -->
+
+            <g
+                transform="translate(24 118)"
+                stroke-linecap="round"
+            >
+
+                <path
+                    d="M0 19 Q-3 5 -8 0"
+                    fill="none"
+                    stroke="#3d9d74"
+                    stroke-width="5"
+                />
+
+                <path
+                    d="M2 19 Q4 2 3 -5"
+                    fill="none"
+                    stroke="#53b887"
+                    stroke-width="5"
+                />
+
+                <path
+                    d="M4 19 Q11 6 14 1"
+                    fill="none"
+                    stroke="#337d61"
+                    stroke-width="5"
+                />
+
+            </g>
+
+
+            <!-- =================================
+                 CRYSTAL — RIGHT TOP
+            ================================== -->
+
+            <g
+                transform="translate(304 78)"
+                filter="url(#crystalGlow)"
+            >
+
+                <polygon
+                    points="
+                        0,-18
+                        10,-5
+                        6,17
+                        -6,17
+                        -10,-5
+                    "
+                    fill="url(#crystalGradient)"
+                />
+
+                <polyline
+                    points="
+                        0,-18
+                        0,17
+                        10,-5
+                    "
+                    fill="none"
+                    stroke="rgba(255,255,255,.45)"
+                    stroke-width="1"
+                />
+
+            </g>
+
+
+            <!-- SMALL CRYSTAL RIGHT -->
+
+            <g
+                transform="translate(318 111)"
+                opacity=".75"
+            >
+
+                <polygon
+                    points="
+                        0,-10
+                        6,-2
+                        3,10
+                        -3,10
+                        -6,-2
+                    "
+                    fill="#755cff"
+                />
+
+            </g>
+
+
+            <!-- =================================
+                 ROCK RIGHT MIDDLE
+            ================================== -->
+
+            <g transform="translate(298 224)">
+
+                <ellipse
+                    cx="15"
+                    cy="14"
+                    rx="18"
+                    ry="12"
+                    fill="url(#rockGradient)"
+                />
+
+                <ellipse
+                    cx="28"
+                    cy="19"
+                    rx="10"
+                    ry="7"
+                    fill="#303a4c"
+                />
+
+                <path
+                    d="M3 10 Q16 3 27 10"
+                    fill="none"
+                    stroke="#657187"
+                    stroke-width="2"
+                    opacity=".45"
+                />
+
+            </g>
+
+
+            <!-- GRASS RIGHT -->
+
+            <g
+                transform="translate(315 250)"
+                stroke-linecap="round"
+            >
+
+                <path
+                    d="M0 20 Q-5 6 -9 1"
+                    fill="none"
+                    stroke="#3b926e"
+                    stroke-width="5"
+                />
+
+                <path
+                    d="M2 20 Q3 4 4 -5"
+                    fill="none"
+                    stroke="#55bd8b"
+                    stroke-width="5"
+                />
+
+                <path
+                    d="M4 20 Q12 8 15 3"
+                    fill="none"
+                    stroke="#34795e"
+                    stroke-width="5"
+                />
+
+            </g>
+
+
+            <!-- =================================
+                 CRYSTALS LEFT MIDDLE
+            ================================== -->
+
+            <g
+                transform="translate(25 287)"
+                filter="url(#crystalGlow)"
+            >
+
+                <polygon
+                    points="
+                        0,-17
+                        9,-4
+                        5,16
+                        -5,16
+                        -9,-4
+                    "
+                    fill="url(#crystalGradient)"
+                />
+
+                <polygon
+                    points="
+                        15,-8
+                        21,0
+                        18,13
+                        12,13
+                        9,0
+                    "
+                    fill="#6754d8"
+                    opacity=".85"
+                />
+
+            </g>
+
+
+            <!-- =================================
+                 SIGN RIGHT
+            ================================== -->
+
+            <g
+                transform="translate(278 340) rotate(-7)"
+            >
+
+                <rect
+                    x="22"
+                    y="22"
+                    width="7"
+                    height="42"
+                    rx="3"
+                    fill="#513927"
+                />
+
+                <path
+                    d="
+                        M0 0
+                        H39
+                        L52 14
+                        L39 28
+                        H0
+                        Z
+                    "
+                    fill="url(#woodGradient)"
+                />
+
+                <path
+                    d="
+                        M13 14
+                        H36
+                        M30 8
+                        L37 14
+                        L30 20
+                    "
+                    fill="none"
+                    stroke="#f2dfbd"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+            </g>
+
+
+            <!-- =================================
+                 BOTTOM LEFT ROCKS
+            ================================== -->
+
+            <g transform="translate(15 427)">
+
+                <ellipse
+                    cx="16"
+                    cy="17"
+                    rx="17"
+                    ry="11"
+                    fill="url(#rockGradient)"
+                />
+
+                <ellipse
+                    cx="31"
+                    cy="20"
+                    rx="11"
+                    ry="7"
+                    fill="#2c3545"
+                />
+
+            </g>
+
+
+            <!-- BOTTOM LEFT GRASS -->
+
+            <g
+                transform="translate(43 435)"
+                stroke-linecap="round"
+            >
+
+                <path
+                    d="M0 22 Q-4 6 -10 0"
+                    fill="none"
+                    stroke="#388767"
+                    stroke-width="5"
+                />
+
+                <path
+                    d="M3 22 Q4 5 4 -6"
+                    fill="none"
+                    stroke="#53b887"
+                    stroke-width="5"
+                />
+
+                <path
+                    d="M6 22 Q13 9 17 3"
+                    fill="none"
+                    stroke="#347a5e"
+                    stroke-width="5"
+                />
+
+            </g>
+
+
+            <!-- =================================
+                 BOTTOM RIGHT CRYSTAL
+            ================================== -->
+
+            <g
+                transform="translate(307 455)"
+                filter="url(#crystalGlow)"
+            >
+
+                <polygon
+                    points="
+                        0,-19
+                        10,-5
+                        6,18
+                        -6,18
+                        -10,-5
+                    "
+                    fill="url(#crystalGradient)"
+                />
+
+            </g>
+
+
+            <!-- =================================
+                 ROAD SHADOW
+            ================================== -->
+
+            <path
+                d="
+                    M 65 55
+                    C 190 40, 285 75, 260 145
+                    C 235 205, 90 190, 95 260
+                    C 100 330, 275 300, 250 380
+                    C 230 435, 155 420, 165 455
+                "
+                fill="none"
+                stroke="#263146"
+                stroke-width="11"
+                stroke-linecap="round"
+                opacity=".9"
+            />
+
+
+            <!-- =================================
+                 ROAD GLOW
+            ================================== -->
+
+            <path
+                d="
+                    M 65 55
+                    C 190 40, 285 75, 260 145
+                    C 235 205, 90 190, 95 260
+                    C 100 330, 275 300, 250 380
+                    C 230 435, 155 420, 165 455
+                "
+                fill="none"
+                stroke="#765cff"
+                stroke-width="13"
+                stroke-linecap="round"
+                opacity=".13"
+                filter="url(#roadGlow)"
+            />
+
+
+            <!-- =================================
+                 MAIN ROAD
+            ================================== -->
+
+            <path
+                d="
+                    M 65 55
+                    C 190 40, 285 75, 260 145
+                    C 235 205, 90 190, 95 260
+                    C 100 330, 275 300, 250 380
+                    C 230 435, 155 420, 165 455
+                "
+                fill="none"
+                stroke="url(#roadGradient)"
+                stroke-width="5"
+                stroke-linecap="round"
+                filter="url(#roadGlow)"
+            />
+
+        </svg>
     `;
-
-    return grass;
-}
-
-
-function createRock(small = false) {
-
-    const rock = document.createElement("div");
-
-    rock.className =
-        "map-decor map-rock" +
-        (small ? " small" : "");
-
-    return rock;
-}
-
-
-function createCrystal(small = false) {
-
-    const crystal = document.createElement("div");
-
-    crystal.className =
-        "map-decor map-crystal" +
-        (small ? " small" : "");
-
-    return crystal;
-}
-
-
-function createSign() {
-
-    const sign = document.createElement("div");
-
-    sign.className = "map-decor map-sign";
-
-    sign.textContent = "➜";
-
-    return sign;
-}
-
-
-function createSpark() {
-
-    const spark = document.createElement("div");
-
-    spark.className = "map-decor map-spark";
-
-    return spark;
-}
-
-
-function placeDecoration(
-    map,
-    element,
-    left,
-    top,
-    rotate = 0
-) {
-
-    element.style.left = left;
-    element.style.top = top;
-
-    if (rotate !== 0) {
-        element.style.transform =
-            `rotate(${rotate}deg)`;
-    }
-
-    map.appendChild(element);
-}
-
-
-/* =========================================
-   ADD MAP SCENERY
-========================================= */
-
-function addMapScenery(map) {
-
-    /* LEFT TOP */
-
-    placeDecoration(
-        map,
-        createRock(),
-        "1%",
-        "13%",
-        -8
-    );
-
-    placeDecoration(
-        map,
-        createGrass(),
-        "8%",
-        "19%",
-        -5
-    );
-
-    placeDecoration(
-        map,
-        createCrystal(true),
-        "3%",
-        "31%",
-        -10
-    );
-
-
-    /* RIGHT TOP */
-
-    placeDecoration(
-        map,
-        createCrystal(),
-        "89%",
-        "7%",
-        10
-    );
-
-    placeDecoration(
-        map,
-        createGrass(),
-        "88%",
-        "31%",
-        7
-    );
-
-
-    /* LEFT MIDDLE */
-
-    placeDecoration(
-        map,
-        createRock(true),
-        "2%",
-        "48%",
-        8
-    );
-
-    placeDecoration(
-        map,
-        createCrystal(),
-        "5%",
-        "60%",
-        -8
-    );
-
-
-    /* RIGHT MIDDLE */
-
-    placeDecoration(
-        map,
-        createRock(),
-        "87%",
-        "48%",
-        7
-    );
-
-    placeDecoration(
-        map,
-        createGrass(),
-        "91%",
-        "61%",
-        -6
-    );
-
-
-    /* SIGN */
-
-    placeDecoration(
-        map,
-        createSign(),
-        "77%",
-        "72%",
-        -6
-    );
-
-
-    /* BOTTOM LEFT */
-
-    placeDecoration(
-        map,
-        createGrass(),
-        "5%",
-        "82%",
-        4
-    );
-
-    placeDecoration(
-        map,
-        createRock(true),
-        "16%",
-        "89%",
-        -5
-    );
-
-
-    /* BOTTOM RIGHT */
-
-    placeDecoration(
-        map,
-        createCrystal(),
-        "88%",
-        "87%",
-        9
-    );
-
-
-    /* GLOWING PARTICLES */
-
-    const sparks = [
-
-        ["17%", "8%"],
-        ["76%", "14%"],
-        ["93%", "22%"],
-        ["7%", "38%"],
-        ["82%", "43%"],
-        ["18%", "67%"],
-        ["91%", "76%"],
-        ["29%", "91%"],
-        ["72%", "94%"]
-
-    ];
-
-
-    sparks.forEach(
-        ([left, top], index) => {
-
-            const spark = createSpark();
-
-            spark.style.left = left;
-            spark.style.top = top;
-
-            spark.style.animationDelay =
-                `${index * 0.18}s`;
-
-            map.appendChild(spark);
-        }
-    );
 }
 
 
@@ -341,7 +731,8 @@ function renderLevelMap(chapterId) {
     /* HEADER */
 
     if (title) {
-        title.textContent = `ЭТАП ${chapterId}`;
+        title.textContent =
+            `ЭТАП ${chapterId}`;
     }
 
 
@@ -404,125 +795,32 @@ function renderLevelMap(chapterId) {
 
 
     /* =====================================
-       MAP
+       COMPACT MAP
     ===================================== */
 
     const compactMap =
         document.createElement("div");
 
+
     compactMap.className =
         "compact-level-map";
 
 
-    /* =====================================
-       BACKGROUND ROAD
-    ===================================== */
-
-    compactMap.innerHTML = `
-
-        <svg
-            class="level-road"
-            viewBox="0 0 340 480"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-        >
-
-            <defs>
-
-                <linearGradient
-                    id="roadGradient"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-
-                    <stop
-                        offset="0%"
-                        stop-color="#ffd166"
-                    />
-
-                    <stop
-                        offset="32%"
-                        stop-color="#765cff"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#354056"
-                    />
-
-                </linearGradient>
+    compactMap.style.position =
+        "relative";
 
 
-                <filter id="roadGlow">
-
-                    <feGaussianBlur
-                        stdDeviation="3"
-                        result="blur"
-                    />
-
-                    <feMerge>
-
-                        <feMergeNode in="blur" />
-
-                        <feMergeNode
-                            in="SourceGraphic"
-                        />
-
-                    </feMerge>
-
-                </filter>
-
-            </defs>
-
-
-            <!-- SHADOW ROAD -->
-
-            <path
-                d="
-                    M 65 55
-                    C 190 40, 285 75, 260 145
-                    C 235 205, 90 190, 95 260
-                    C 100 330, 275 300, 250 380
-                    C 230 435, 155 420, 165 455
-                "
-                fill="none"
-                stroke="#263146"
-                stroke-width="10"
-                stroke-linecap="round"
-            />
-
-
-            <!-- GLOW ROAD -->
-
-            <path
-                d="
-                    M 65 55
-                    C 190 40, 285 75, 260 145
-                    C 235 205, 90 190, 95 260
-                    C 100 330, 275 300, 250 380
-                    C 230 435, 155 420, 165 455
-                "
-                fill="none"
-                stroke="url(#roadGradient)"
-                stroke-width="5"
-                stroke-linecap="round"
-                filter="url(#roadGlow)"
-                opacity=".75"
-            />
-
-        </svg>
-    `;
+    compactMap.style.overflow =
+        "hidden";
 
 
     /*
-       ВАЖНО:
-       Декорации теперь реально
-       добавляются в DOM.
+       Дорога + декорации теперь
+       находятся В ОДНОМ SVG.
     */
 
-    addMapScenery(compactMap);
+    compactMap.innerHTML =
+        createMapSVG();
 
 
     /* =====================================
@@ -597,6 +895,13 @@ function renderLevelMap(chapterId) {
             "compact-node-wrap";
 
 
+        /*
+           Ставим уровни ВЫШЕ SVG.
+        */
+
+        wrapper.style.zIndex = "10";
+
+
         const position =
             positions[index];
 
@@ -619,7 +924,9 @@ function renderLevelMap(chapterId) {
             position.top;
 
 
-        /* LOCK */
+        /* =================================
+           LOCK
+        ================================= */
 
         if (
             !completed &&
@@ -642,7 +949,9 @@ function renderLevelMap(chapterId) {
         }
 
 
-        /* BUTTON */
+        /* =================================
+           BUTTON
+        ================================= */
 
         const button =
             document.createElement("button");
@@ -669,9 +978,8 @@ function renderLevelMap(chapterId) {
 
 
         /*
-           ИСПРАВЛЕНО:
-           завершённый уровень не затемняем,
-           даже если повтор пока закрыт.
+           Пройденный уровень
+           не затемняем.
         */
 
         if (
@@ -702,7 +1010,9 @@ function renderLevelMap(chapterId) {
         button.appendChild(number);
 
 
-        /* STARS */
+        /* =================================
+           STARS
+        ================================= */
 
         const starRow =
             document.createElement("div");
@@ -730,7 +1040,8 @@ function renderLevelMap(chapterId) {
             }
 
 
-            starRow.textContent = text;
+            starRow.textContent =
+                text;
 
         } else {
 
@@ -753,7 +1064,9 @@ function renderLevelMap(chapterId) {
         wrapper.appendChild(button);
 
 
-        /* CHECK */
+        /* =================================
+           COMPLETED CHECK
+        ================================= */
 
         if (completed) {
 
@@ -773,7 +1086,9 @@ function renderLevelMap(chapterId) {
         }
 
 
-        /* CURRENT */
+        /* =================================
+           CURRENT
+        ================================= */
 
         if (current) {
 
@@ -902,8 +1217,7 @@ function handleMapLevelClick(level) {
 
 
     /*
-       Пока реально готовы
-       только уровни 1 и 2.
+       Сейчас готовы уровни 1 и 2.
     */
 
     if (level > 2) {
