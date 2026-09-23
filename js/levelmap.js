@@ -1,5 +1,6 @@
 /* =========================================
-   ONLY ONE MOVE — LEVEL MAP
+   ONLY ONE MOVE — COMPACT LEVEL MAP
+   20 этапов × 5 уровней
 ========================================= */
 
 let openedChapter = 1;
@@ -104,25 +105,29 @@ function renderLevelMap(chapterId) {
     const path =
         document.getElementById("levelPath");
 
+
+    /* =====================================
+       HEADER
+    ===================================== */
+
     if (title) {
         title.textContent =
             `ЭТАП ${chapterId}`;
     }
 
 
-    /* STARS */
-
     const progress =
         getChapterProgress(chapterId);
 
     if (stars && progress) {
-
         stars.textContent =
             `⭐ ${progress.earned} / 15`;
     }
 
 
-    /* STATUS */
+    /* =====================================
+       STATUS
+    ===================================== */
 
     if (status) {
 
@@ -132,19 +137,35 @@ function renderLevelMap(chapterId) {
             )
         ) {
 
-            status.innerHTML =
-                `🔁 Этап пройден<br>
-                 <span>
-                 Теперь можно улучшать результаты
-                 </span>`;
+            status.innerHTML = `
+                <div style="
+                    font-size:16px;
+                    font-weight:900;
+                ">
+                    🔁 Можно улучшать результаты
+                </div>
+
+                <span>
+                    Нажми на уровень,
+                    где не хватает звёзд
+                </span>
+            `;
 
         } else {
 
-            status.innerHTML =
-                `🧠 Первый проход<br>
-                 <span>
-                 Иди вперёд — повторы откроются после уровня ${chapter.lastLevel}
-                 </span>`;
+            status.innerHTML = `
+                <div style="
+                    font-size:16px;
+                    font-weight:900;
+                ">
+                    🧠 Первый проход
+                </div>
+
+                <span>
+                    Пройди все 5 уровней —
+                    после этого откроются повторы
+                </span>
+            `;
         }
     }
 
@@ -157,7 +178,145 @@ function renderLevelMap(chapterId) {
 
 
     /* =====================================
-       LEVELS
+       COMPACT MAP
+    ===================================== */
+
+    const compactMap =
+        document.createElement("div");
+
+    compactMap.className =
+        "compact-level-map";
+
+
+    /*
+       SVG-дорожка.
+
+       Она декоративная.
+       Кнопки уровней располагаются
+       поверх неё.
+    */
+
+    compactMap.innerHTML = `
+        <svg
+            class="level-road"
+            viewBox="0 0 340 480"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+        >
+            <defs>
+
+                <linearGradient
+                    id="roadGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+                    <stop
+                        offset="0%"
+                        stop-color="#ffd166"
+                    />
+
+                    <stop
+                        offset="30%"
+                        stop-color="#765cff"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#354056"
+                    />
+                </linearGradient>
+
+                <filter id="roadGlow">
+
+                    <feGaussianBlur
+                        stdDeviation="3"
+                        result="blur"
+                    />
+
+                    <feMerge>
+
+                        <feMergeNode
+                            in="blur"
+                        />
+
+                        <feMergeNode
+                            in="SourceGraphic"
+                        />
+
+                    </feMerge>
+
+                </filter>
+
+            </defs>
+
+            <path
+                d="
+                    M 82 58
+                    C 200 55, 275 75, 255 145
+                    C 235 205, 110 180, 95 255
+                    C 80 320, 265 300, 250 375
+                    C 240 425, 160 430, 170 455
+                "
+                fill="none"
+                stroke="#263146"
+                stroke-width="8"
+                stroke-linecap="round"
+            />
+
+            <path
+                d="
+                    M 82 58
+                    C 200 55, 275 75, 255 145
+                "
+                fill="none"
+                stroke="url(#roadGradient)"
+                stroke-width="7"
+                stroke-linecap="round"
+                filter="url(#roadGlow)"
+            />
+
+        </svg>
+    `;
+
+
+    /* =====================================
+       POSITIONS
+    ===================================== */
+
+    const positions = [
+
+        {
+            left: "7%",
+            top: "3%"
+        },
+
+        {
+            right: "7%",
+            top: "20%"
+        },
+
+        {
+            left: "15%",
+            top: "40%"
+        },
+
+        {
+            right: "13%",
+            top: "60%"
+        },
+
+        {
+            left: "34%",
+            top: "79%"
+        }
+
+    ];
+
+
+    /* =====================================
+       CREATE LEVELS
     ===================================== */
 
     for (
@@ -165,6 +324,9 @@ function renderLevelMap(chapterId) {
         level <= chapter.lastLevel;
         level++
     ) {
+
+        const index =
+            level - chapter.firstLevel;
 
         const completed =
             isLevelCompleted(level);
@@ -175,157 +337,157 @@ function renderLevelMap(chapterId) {
         const playable =
             canPlayLevel(level);
 
-        const isCurrent =
+        const current =
             !completed && playable;
 
 
-        /* ROW */
-
-        const row =
+        const wrapper =
             document.createElement("div");
 
-        row.className =
-            "map-level-row";
+        wrapper.className =
+            "compact-node-wrap";
 
 
         /*
-            Делаем дорожку змейкой.
+            Position
         */
 
         const position =
-            (level - chapter.firstLevel) % 3;
+            positions[index];
 
-        if (position === 0) {
-            row.classList.add("map-left");
+        if (position.left) {
+            wrapper.style.left =
+                position.left;
         }
 
-        if (position === 1) {
-            row.classList.add("map-center");
+        if (position.right) {
+            wrapper.style.right =
+                position.right;
         }
 
-        if (position === 2) {
-            row.classList.add("map-right");
-        }
+        wrapper.style.top =
+            position.top;
 
 
-        /* CONNECTOR */
-
-        if (level !== chapter.firstLevel) {
-
-            const connector =
-                document.createElement("div");
-
-            connector.className =
-                "map-connector";
-
-            row.appendChild(connector);
-        }
-
-
-        /* BUTTON */
-
-        const button =
-            document.createElement("button");
-
-        button.className =
-            "level-node";
-
-
-        if (completed) {
-            button.classList.add(
-                "level-completed"
-            );
-        }
-
-
-        if (isCurrent) {
-            button.classList.add(
-                "level-current"
-            );
-        }
-
-
-        if (!playable) {
-            button.classList.add(
-                "level-locked"
-            );
-        }
-
-
-        /*
-            NUMBER / LOCK
-        */
-
-        const number =
-            document.createElement("div");
-
-        number.className =
-            "level-number";
-
+        /* =================================
+           LOCK ICON
+        ================================= */
 
         if (
             !completed &&
             !playable
         ) {
 
-            number.textContent = "🔒";
+            const lock =
+                document.createElement("div");
 
-        } else {
+            lock.className =
+                "compact-lock";
 
-            number.textContent =
-                level;
+            lock.textContent =
+                "🔒";
+
+            wrapper.appendChild(lock);
         }
 
 
-        button.appendChild(number);
+        /* =================================
+           BUTTON
+        ================================= */
 
+        const button =
+            document.createElement("button");
 
-        /* STARS */
-
-        const starsRow =
-            document.createElement("div");
-
-        starsRow.className =
-            "node-stars";
+        button.className =
+            "compact-level-node";
 
 
         if (completed) {
 
-            let starText = "";
+            button.classList.add(
+                "compact-completed"
+            );
+        }
+
+
+        if (current) {
+
+            button.classList.add(
+                "compact-current"
+            );
+        }
+
+
+        if (!playable) {
+
+            button.classList.add(
+                "compact-locked"
+            );
+        }
+
+
+        /*
+            Number always stays visible.
+            We don't replace it with 🔒.
+        */
+
+        const number =
+            document.createElement("div");
+
+        number.className =
+            "compact-level-number";
+
+        number.textContent =
+            level;
+
+        button.appendChild(number);
+
+
+        /* =================================
+           STARS
+        ================================= */
+
+        const starRow =
+            document.createElement("div");
+
+        starRow.className =
+            "compact-stars";
+
+
+        if (completed) {
+
+            let text = "";
 
             for (
-                let i = 1;
-                i <= 3;
-                i++
+                let star = 1;
+                star <= 3;
+                star++
             ) {
 
-                starText +=
-                    i <= bestStars
+                text +=
+                    star <= bestStars
                         ? "⭐"
                         : "☆";
             }
 
-            starsRow.textContent =
-                starText;
-
-        } else if (isCurrent) {
-
-            starsRow.textContent =
-                "☆☆☆";
+            starRow.textContent =
+                text;
 
         } else {
 
-            starsRow.textContent =
-                " ";
+            starRow.textContent =
+                "☆☆☆";
         }
 
 
         button.appendChild(
-            starsRow
+            starRow
         );
 
 
-        /* CLICK */
+        /* =================================
+           CLICK
+        ================================= */
 
         button.onclick = () => {
 
@@ -335,10 +497,62 @@ function renderLevelMap(chapterId) {
         };
 
 
-        row.appendChild(button);
+        wrapper.appendChild(
+            button
+        );
 
-        path.appendChild(row);
+
+        /* =================================
+           COMPLETED CHECK
+        ================================= */
+
+        if (completed) {
+
+            const check =
+                document.createElement("div");
+
+            check.className =
+                "compact-check";
+
+            check.textContent =
+                "✓";
+
+            wrapper.appendChild(
+                check
+            );
+        }
+
+
+        /* =================================
+           CURRENT LABEL
+        ================================= */
+
+        if (current) {
+
+            const label =
+                document.createElement("div");
+
+            label.className =
+                "compact-play-label";
+
+            label.textContent =
+                "ИГРАТЬ";
+
+            wrapper.appendChild(
+                label
+            );
+        }
+
+
+        compactMap.appendChild(
+            wrapper
+        );
     }
+
+
+    path.appendChild(
+        compactMap
+    );
 
 
     /* =====================================
@@ -349,7 +563,7 @@ function renderLevelMap(chapterId) {
         document.createElement("div");
 
     footer.className =
-        "map-footer";
+        "compact-map-footer";
 
 
     if (
@@ -363,46 +577,48 @@ function renderLevelMap(chapterId) {
                 chapterId
             );
 
+
         if (
             improvement.length === 0
         ) {
 
-            footer.innerHTML =
-                `
-                <div class="map-perfect">
-                    🏆 ИДЕАЛЬНО!
+            footer.innerHTML = `
+                <div class="compact-perfect">
+                    🏆 ИДЕАЛЬНО
                 </div>
 
-                <div class="map-perfect-sub">
-                    Все уровни пройдены на ⭐⭐⭐
+                <div class="compact-footer-sub">
+                    Все уровни пройдены
+                    на ⭐⭐⭐
                 </div>
-                `;
+            `;
 
         } else {
 
-            footer.innerHTML =
-                `
-                <div class="map-replay">
-                    🔁 Можно улучшить:
-                    ${improvement
-                        .map(item =>
-                            `Ур. ${item.level}`
-                        )
-                        .join(", ")}
+            footer.innerHTML = `
+                <div class="compact-footer-title">
+                    🔁 Улучшить результат
                 </div>
-                `;
+
+                <div class="compact-footer-sub">
+                    Нажми на уровень,
+                    где не хватает ⭐
+                </div>
+            `;
         }
 
     } else {
 
-        footer.innerHTML =
-            `
-            <div class="map-first-run">
+        footer.innerHTML = `
+            <div class="compact-footer-title">
                 🔒 Повторное прохождение
-                откроется после завершения
+            </div>
+
+            <div class="compact-footer-sub">
+                Откроется после завершения
                 всех 5 уровней этапа
             </div>
-            `;
+        `;
     }
 
 
@@ -413,13 +629,14 @@ function renderLevelMap(chapterId) {
 
 
 /* =========================================
-   LEVEL CLICK
+   CLICK LEVEL
 ========================================= */
 
 function handleMapLevelClick(level) {
 
     const playable =
         canPlayLevel(level);
+
 
     if (!playable) {
 
@@ -443,8 +660,8 @@ function handleMapLevelClick(level) {
 
 
     /*
-        Пока реально созданы
-        только уровни 1 и 2.
+        Сейчас реально готовы
+        уровни 1 и 2.
     */
 
     if (level > 2) {
@@ -501,21 +718,20 @@ function handleMapLevelClick(level) {
 
 
     if (map) {
+
         map.classList.add(
             "hidden"
         );
     }
 
+
     if (game) {
+
         game.classList.remove(
             "hidden"
         );
     }
 
-
-    /*
-        Загружаем конкретный уровень.
-    */
 
     if (
         typeof loadLevel ===
