@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<head>\n<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">\n<meta http-equiv="Pragma" content="no-cache">\n<meta http-equiv="Expires" content="0">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 
 <meta charset="UTF-8">
 
@@ -23,6 +26,7 @@
 <link rel="stylesheet" href="css/level3.css?v=5">
 <link rel="stylesheet" href="css/level4.css?v=5">
 <link rel="stylesheet" href="css/level5.css?v=2">
+<link rel="stylesheet" href="css/stage2.css?v=1">
 
 
 <style>
@@ -455,6 +459,41 @@ button{
 }
 
 
+.chapter-nav{
+  margin:12px 6px 0;
+}
+
+.chapter-nav-button{
+  width:100%;
+  border:1px solid rgba(118,92,255,.32);
+  border-radius:20px;
+  padding:16px 18px;
+  background:linear-gradient(180deg,#1c2032,#141a27);
+  color:white;
+  text-align:center;
+  font-weight:900;
+}
+
+.chapter-nav-button span{
+  display:block;
+  font-size:14px;
+  letter-spacing:.5px;
+}
+
+.chapter-nav-button small{
+  display:block;
+  margin-top:6px;
+  color:#9ba6ba;
+  font-size:11px;
+  font-weight:700;
+}
+
+.chapter-nav-locked{
+  opacity:.72;
+  border-color:rgba(150,158,178,.18);
+}
+
+
 /* =========================
    GAME
 ========================= */
@@ -746,7 +785,23 @@ button{
 
 </style>
 
-\n<script id="level3CacheGuard">\n(function(){\n  try{\n    const key='oom-cache-v5';\n    if(localStorage.getItem(key)!=='1'){\n      localStorage.setItem(key,'1');\n      const u=new URL(location.href);\n      if(u.searchParams.get('_v')!=='5'){\n        u.searchParams.set('_v','5');\n        location.replace(u.toString());\n      }\n    }\n  }catch(e){}\n})();\n</script>\n</head>
+
+<script id="level3CacheGuard">
+(function(){
+  try{
+    const key='oom-cache-v6';
+    if(localStorage.getItem(key)!=='1'){
+      localStorage.setItem(key,'1');
+      const u=new URL(location.href);
+      if(u.searchParams.get('_v')!=='6'){
+        u.searchParams.set('_v','6');
+        location.replace(u.toString());
+      }
+    }
+  }catch(e){}
+})();
+</script>
+</head>
 
 
 <body>
@@ -794,7 +849,7 @@ button{
     >
 
       <span>
-        ЭТАП 1 · Уровень
+        ЭТАП <b id="homeChapter">1</b> · Уровень
         <b id="homeLevel">1</b>/5
         <span class="chapter-open-hint">›</span>
       </span>
@@ -1393,19 +1448,19 @@ button{
      CORE SCRIPTS
 ========================= -->
 
-<script src="js/storage.js?v=6"></script>
+<script src="js/storage.js?v=7"></script>
 <script src="js/energy.js?v=7"></script>
 <script src="js/game.js?v=7"></script>
 <script src="js/matchsticks.js?v=6"></script>
 <script src="js/objects.js?v=5"></script>
-<script src="js/levelmap.js?v=4"></script>
+<script src="js/levelmap.js?v=5"></script>
 
 
 <!-- =========================
      LEVEL DATA
 ========================= -->
 
-<script src="levels/easy.js?v=10"></script>
+<script src="levels/easy.js?v=11"></script>
 
 
 <!-- =========================
@@ -1417,6 +1472,7 @@ button{
 <script src="levels/level3.js?v=5"></script>
 <script src="levels/level4.js?v=6"></script>
 <script src="levels/level5.js?v=2"></script>
+<script src="levels/stage2.js?v=1"></script>
 
 
 <script>
@@ -1580,7 +1636,7 @@ function migrateOldSave(){
 
 /* =========================
    PLAYABLE LEVEL
-   Сейчас готовы 1–5
+   Сейчас готовы 1–10
 ========================= */
 
 function getPlayableLevel(){
@@ -1593,7 +1649,7 @@ function getPlayableLevel(){
       Number(data.level) || 1,
       1
     ),
-    5
+    10
   );
 }
 
@@ -1609,6 +1665,11 @@ function updateHomeLevel(){
       "homeLevel"
     );
 
+  const chapterElement =
+    document.getElementById(
+      "homeChapter"
+    );
+
   if(!element){
     return;
   }
@@ -1616,13 +1677,21 @@ function updateHomeLevel(){
   const data =
     getPlayerData();
 
+  const rawLevel =
+    Math.max(
+      1,
+      Number(data.level) || 1
+    );
+
+  const chapter =
+    Math.ceil(
+      rawLevel / 5
+    );
+
   const chapterLevel =
     (
       (
-        Math.max(
-          1,
-          Number(data.level) || 1
-        ) - 1
+        rawLevel - 1
       ) % 5
     ) + 1;
 
@@ -1631,6 +1700,26 @@ function updateHomeLevel(){
       chapterLevel,
       5
     );
+
+  if(chapterElement){
+    chapterElement.textContent =
+      Math.min(
+        chapter,
+        20
+      );
+  }
+
+  const top =
+    document.querySelector(
+      ".progress-top"
+    );
+
+  if(top){
+    top.onclick = () =>
+      openLevelMap(
+        Math.min(chapter,20)
+      );
+  }
 }
 
 
@@ -1696,15 +1785,38 @@ function updateChapterUI(){
     return;
   }
 
+  const data =
+    getPlayerData();
+
+  const currentChapter =
+    Math.min(
+      20,
+      Math.max(
+        1,
+        Math.ceil(
+          (
+            Number(data.level) || 1
+          ) / 5
+        )
+      )
+    );
+
   const progress =
-    getChapterProgress(1);
+    getChapterProgress(
+      currentChapter
+    );
 
   if(!progress){
     return;
   }
 
   element.textContent =
-    `⭐ ${progress.earned} / 15 · Открыть Этап 1 ›`;
+    `⭐ ${progress.earned} / 15 · Открыть Этап ${currentChapter} ›`;
+
+  element.onclick = () =>
+    openLevelMap(
+      currentChapter
+    );
 }
 
 
@@ -1890,6 +2002,46 @@ function loadLevel(levelNumber){
 
     movesText.textContent =
       "⚡ Поверни одну трубу";
+
+  }else if(displayedLevel === 6){
+
+    tutorialBox.innerHTML =
+      "⚡ Схема стала плотнее.<br>Поверни один контакт и замкни цепь.";
+
+    movesText.textContent =
+      "⚡ Поверни один контакт";
+
+  }else if(displayedLevel === 7){
+
+    tutorialBox.innerHTML =
+      "⚙️ Одна шестерня нарушает передачу.<br>Исправить можно только одну.";
+
+    movesText.textContent =
+      "⚙️ Поверни одну шестерню";
+
+  }else if(displayedLevel === 8){
+
+    tutorialBox.innerHTML =
+      "🔴 Зеркал больше, маршрут длиннее.<br>Поверни только одно зеркало.";
+
+    movesText.textContent =
+      "🔴 Поверни одно зеркало";
+
+  }else if(displayedLevel === 9){
+
+    tutorialBox.innerHTML =
+      "🚦 Три маршрута пересекаются.<br>Переключи одну стрелку без конфликта.";
+
+    movesText.textContent =
+      "🚦 Переключи одну стрелку";
+
+  }else if(displayedLevel === 10){
+
+    tutorialBox.innerHTML =
+      "💧 Два потока зависят от одного общего узла.<br>Поверни один клапан.";
+
+    movesText.textContent =
+      "💧 Поверни один клапан";
 
   }else{
 
@@ -2451,6 +2603,31 @@ function resetPuzzleVisual(){
     movesText.textContent =
       "⚡ Поверни одну трубу";
 
+  }else if(displayedLevel === 6){
+
+    movesText.textContent =
+      "⚡ Поверни один контакт";
+
+  }else if(displayedLevel === 7){
+
+    movesText.textContent =
+      "⚙️ Поверни одну шестерню";
+
+  }else if(displayedLevel === 8){
+
+    movesText.textContent =
+      "🔴 Поверни одно зеркало";
+
+  }else if(displayedLevel === 9){
+
+    movesText.textContent =
+      "🚦 Переключи одну стрелку";
+
+  }else if(displayedLevel === 10){
+
+    movesText.textContent =
+      "💧 Поверни один клапан";
+
   }else{
 
     movesText.textContent =
@@ -2678,9 +2855,41 @@ function finishLevel(){
   }
 
 
+  /* LEVEL 5 → LEVEL 6, только когда Этап 2 открыт */
+
+  if(
+    activeLevel === 5 &&
+    isChapterUnlocked(2) &&
+    !isLevelCompleted(6)
+  ){
+
+    loadLevel(6);
+
+    return;
+  }
+
+
+  /* LEVELS 6 → 10 */
+
+  if(
+    activeLevel >= 6 &&
+    activeLevel < 10 &&
+    !isLevelCompleted(
+      activeLevel + 1
+    )
+  ){
+
+    loadLevel(
+      activeLevel + 1
+    );
+
+    return;
+  }
+
+
   /*
-    После уровня 5
-    возвращаемся к карте.
+    После 5-го или 10-го уровня
+    возвращаемся на карту нужного этапа.
   */
 
   gameScreen.classList.add(
@@ -2701,7 +2910,9 @@ function finishLevel(){
     "function"
   ){
 
-    renderLevelMap(1);
+    renderLevelMap(
+      activeLevel >= 6 ? 2 : 1
+    );
 
   }
 }
