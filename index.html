@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="css/level2.css?v=1">
 <link rel="stylesheet" href="css/level3.css?v=5">
 <link rel="stylesheet" href="css/level4.css?v=5">
+<link rel="stylesheet" href="css/level5.css?v=1">
 
 
 <style>
@@ -745,7 +746,7 @@ button{
 
 </style>
 
-\n<script id="level3CacheGuard">\n(function(){\n  try{\n    const key='oom-cache-v3';\n    if(localStorage.getItem(key)!=='1'){\n      localStorage.setItem(key,'1');\n      const u=new URL(location.href);\n      if(u.searchParams.get('_v')!=='3'){\n        u.searchParams.set('_v','3');\n        location.replace(u.toString());\n      }\n    }\n  }catch(e){}\n})();\n</script>\n</head>
+\n<script id="level3CacheGuard">\n(function(){\n  try{\n    const key='oom-cache-v4';\n    if(localStorage.getItem(key)!=='1'){\n      localStorage.setItem(key,'1');\n      const u=new URL(location.href);\n      if(u.searchParams.get('_v')!=='4'){\n        u.searchParams.set('_v','4');\n        location.replace(u.toString());\n      }\n    }\n  }catch(e){}\n})();\n</script>\n</head>
 
 
 <body>
@@ -1397,14 +1398,14 @@ button{
 <script src="js/game.js?v=7"></script>
 <script src="js/matchsticks.js?v=6"></script>
 <script src="js/objects.js?v=5"></script>
-<script src="js/levelmap.js?v=3"></script>
+<script src="js/levelmap.js?v=4"></script>
 
 
 <!-- =========================
      LEVEL DATA
 ========================= -->
 
-<script src="levels/easy.js?v=8"></script>
+<script src="levels/easy.js?v=9"></script>
 
 
 <!-- =========================
@@ -1415,6 +1416,7 @@ button{
 <script src="levels/level2.js?v=1"></script>
 <script src="levels/level3.js?v=5"></script>
 <script src="levels/level4.js?v=6"></script>
+<script src="levels/level5.js?v=1"></script>
 
 
 <script>
@@ -1578,7 +1580,7 @@ function migrateOldSave(){
 
 /* =========================
    PLAYABLE LEVEL
-   Сейчас готовы 1–4
+   Сейчас готовы 1–5
 ========================= */
 
 function getPlayableLevel(){
@@ -1591,7 +1593,7 @@ function getPlayableLevel(){
       Number(data.level) || 1,
       1
     ),
-    4
+    5
   );
 }
 
@@ -1880,6 +1882,14 @@ function loadLevel(levelNumber){
 
     movesText.textContent =
       "🚦 Переключи одну стрелку";
+
+  }else if(displayedLevel === 5){
+
+    tutorialBox.innerHTML =
+      "💧 Вода пока не течёт.<br>Среди множества труб только один поворот откроет путь до приёмника.";
+
+    movesText.textContent =
+      "⚡ Поверни одну трубу";
 
   }else{
 
@@ -2436,6 +2446,11 @@ function resetPuzzleVisual(){
     movesText.textContent =
       "🚦 Переключи одну стрелку";
 
+  }else if(displayedLevel === 5){
+
+    movesText.textContent =
+      "⚡ Поверни одну трубу";
+
   }else{
 
     movesText.textContent =
@@ -2650,8 +2665,21 @@ function finishLevel(){
   }
 
 
+  /* LEVEL 4 → LEVEL 5 */
+
+  if(
+    activeLevel === 4 &&
+    !isLevelCompleted(5)
+  ){
+
+    loadLevel(5);
+
+    return;
+  }
+
+
   /*
-    После уровня 4
+    После уровня 5
     возвращаемся к карте.
   */
 
