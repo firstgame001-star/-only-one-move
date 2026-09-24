@@ -1040,3 +1040,67 @@
     radial-gradient(ellipse at 16% 83%,#153f29 0 6%,transparent 7%),
     radial-gradient(ellipse at 50% 92%,#174b2d 0 5%,transparent 6%);
 }
+
+
+/* ===== LEVEL 4 TRAIN HARD FIX v5 ===== */
+.train{
+  position:absolute!important;
+  width:64px!important;
+  height:24px!important;
+  margin:0!important;
+  padding:0!important;
+  transform-origin:50% 50%!important;
+  pointer-events:none!important;
+  overflow:visible!important;
+  z-index:24!important;
+}
+.train-engine,.train-car{
+  position:absolute!important;
+  margin:0!important;
+  padding:0!important;
+  float:none!important;
+}
+.train-engine{
+  left:36px!important;
+  top:1px!important;
+  width:28px!important;
+  height:22px!important;
+  border-radius:7px 10px 10px 7px!important;
+}
+.train-car{
+  top:3px!important;
+  width:19px!important;
+  height:18px!important;
+  border-radius:5px!important;
+}
+.train-car-back{left:0!important}
+.train-car-middle{left:18px!important}
+.train-window{
+  position:absolute!important;
+  right:5px!important;
+  top:5px!important;
+  width:8px!important;
+  height:7px!important;
+}
+.car-window{
+  position:absolute!important;
+  left:5px!important;
+  top:4px!important;
+  width:8px!important;
+  height:6px!important;
+}
+.train-light{
+  position:absolute!important;
+  right:-4px!important;
+  top:7px!important;
+}
+.train-smoke{
+  position:absolute!important;
+  left:30px!important;
+  top:1px!important;
+}
+.train-smoke.smoke-2{
+  left:25px!important;
+  top:0!important;
+}
+.railway-running .train{animation:none!important}
