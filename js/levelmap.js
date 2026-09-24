@@ -893,7 +893,7 @@ function renderLevelMap(chapterId) {
 
 
         const playable =
-            level <= 6 &&
+            level <= 7 &&
             canPlayLevel(level);
 
 
@@ -1309,7 +1309,7 @@ function handleMapLevelClick(level) {
        уровни 1 и 2.
     */
 
-    if (level > 6) {
+    if (level > 7) {
 
         if (
             typeof showAppNotice ===
