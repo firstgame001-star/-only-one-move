@@ -709,11 +709,49 @@ function isChapterUnlocked(
     const data =
         getPlayerData();
 
-    return (
+    if (
         data.unlockedChapters[
             String(chapterId)
         ] === true
-    );
+    ) {
+        return true;
+    }
+
+    const previousChapter =
+        getChapterData(
+            chapterId - 1
+        );
+
+    if (!previousChapter) {
+        return false;
+    }
+
+    const previousComplete =
+        isChapterFirstRunComplete(
+            chapterId - 1
+        );
+
+    const previousStars =
+        getChapterEarnedStars(
+            chapterId - 1
+        );
+
+    if (
+        previousComplete &&
+        previousStars >=
+            previousChapter.requiredStars
+    ) {
+
+        data.unlockedChapters[
+            String(chapterId)
+        ] = true;
+
+        savePlayerData(data);
+
+        return true;
+    }
+
+    return false;
 }
 
 
