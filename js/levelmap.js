@@ -1209,7 +1209,7 @@ function handleMapLevelClick(level) {
        уровни 1 и 2.
     */
 
-    if (level > 2) {
+    if (level > 5) {
 
         if (
             typeof showAppNotice ===
