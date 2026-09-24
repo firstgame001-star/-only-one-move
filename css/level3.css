@@ -1,6 +1,6 @@
 /* =========================================
    ONLY ONE MOVE — LEVEL 3
-   LASER LABYRINTH — FULL STYLES
+   RESPONSIVE LASER / EXACT HITBOXES
 ========================================= */
 
 #laserPuzzle{
@@ -11,18 +11,19 @@
 .laser-board{
   position:relative;
   width:min(100%,350px);
-  height:405px;
+  aspect-ratio:350/405;
   margin:10px auto 0;
   overflow:hidden;
-  border:1px solid rgba(94,126,164,.32);
+  border:1px solid rgba(94,126,164,.34);
   border-radius:24px;
   background:
-    radial-gradient(circle at 18% 20%,rgba(32,62,102,.35),transparent 28%),
-    radial-gradient(circle at 82% 74%,rgba(35,82,112,.25),transparent 30%),
-    linear-gradient(180deg,#101b2d 0%,#0b1422 100%);
+    radial-gradient(circle at 18% 18%,rgba(38,78,125,.38),transparent 27%),
+    radial-gradient(circle at 84% 76%,rgba(27,84,113,.28),transparent 31%),
+    linear-gradient(180deg,#101d32 0%,#091423 100%);
   box-shadow:
     inset 0 0 45px rgba(0,0,0,.48),
     0 14px 32px rgba(0,0,0,.30);
+  touch-action:manipulation;
 }
 
 .laser-grid{
@@ -30,438 +31,245 @@
   inset:0;
   z-index:1;
   pointer-events:none;
-  opacity:.18;
+  opacity:.20;
   background-image:
     linear-gradient(rgba(112,157,199,.16) 1px,transparent 1px),
     linear-gradient(90deg,rgba(112,157,199,.16) 1px,transparent 1px);
-  background-size:32px 32px;
+  background-size:9.1% 8%;
 }
 
-.laser-board::after{
-  content:"";
+.laser-svg{
   position:absolute;
   inset:0;
-  z-index:2;
+  z-index:9;
+  width:100%;
+  height:100%;
   pointer-events:none;
-  background:
-    radial-gradient(circle at 50% 50%,rgba(64,104,140,.08),transparent 45%),
-    linear-gradient(90deg,transparent,rgba(255,255,255,.025),transparent);
+  overflow:visible;
 }
 
-/* SOURCE */
+.laser-path-glow,
+.laser-path-main,
+.laser-path-final{
+  fill:none;
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.laser-path-glow{
+  stroke:rgba(255,55,82,.28);
+  stroke-width:9;
+}
+
+.laser-path-main{
+  stroke:#ff3b59;
+  stroke-width:3.2;
+  filter:drop-shadow(0 0 3px #ff4058) drop-shadow(0 0 7px rgba(255,42,67,.75));
+}
+
+.laser-path-final{
+  stroke:#ff526b;
+  stroke-width:3.6;
+  filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 9px #ff4058);
+  stroke-dasharray:180;
+  stroke-dashoffset:180;
+}
+
+.laser-solved .laser-path-final,
+.laser-wrong .laser-path-final{
+  animation:laserDraw .45s ease-out forwards;
+}
+
+@keyframes laserDraw{
+  to{stroke-dashoffset:0}
+}
+
+/* source */
 .laser-source{
   position:absolute;
-  left:15px;
-  top:178px;
+  left:8%;
+  top:52%;
   z-index:12;
-  width:34px;
-  height:34px;
+  width:10%;
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
   border-radius:50%;
-  background:radial-gradient(circle at 40% 38%,#ff7272,#b91327 58%,#570b18 100%);
-  border:2px solid #ff8585;
-  box-shadow:0 0 10px rgba(255,53,69,.75),0 0 24px rgba(255,53,69,.35);
+  background:radial-gradient(circle at 40% 38%,#fff 0 10%,#ff9ba8 16%,#fa3550 34%,#7a1020 67%,#260610 100%);
+  border:2px solid #ff8998;
+  box-shadow:0 0 10px rgba(255,64,86,.92),0 0 25px rgba(255,41,67,.52);
+  pointer-events:none;
 }
+
+.laser-source::before{
+  content:"";
+  position:absolute;
+  inset:-18%;
+  border-radius:50%;
+  border:1px solid rgba(255,80,98,.36);
+  animation:sourceRing 1.5s ease-out infinite;
+}
+
 .laser-source-core{
   position:absolute;
   left:50%;
   top:50%;
-  width:12px;
-  height:12px;
+  width:34%;
+  aspect-ratio:1;
   border-radius:50%;
   transform:translate(-50%,-50%);
-  background:#fff2f2;
-  box-shadow:0 0 8px #fff,0 0 16px #ff334d;
+  background:#fff;
+  box-shadow:0 0 7px #fff,0 0 15px #ff334d;
 }
 
-/* TARGET */
+@keyframes sourceRing{
+  from{transform:scale(.8);opacity:.75}
+  to{transform:scale(1.45);opacity:0}
+}
+
+/* target */
 .laser-target{
   position:absolute;
-  right:17px;
-  bottom:24px;
+  left:88%;
+  top:88%;
   z-index:12;
-  width:54px;
-  height:54px;
+  width:13%;
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
   border-radius:50%;
-  display:grid;
-  place-items:center;
+  pointer-events:none;
 }
+
 .laser-target-ring{
   position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
   border-radius:50%;
-  border:2px solid rgba(255,72,88,.8);
-  box-shadow:0 0 8px rgba(255,72,88,.35);
+  border:2px solid rgba(255,72,88,.9);
+  box-shadow:0 0 8px rgba(255,72,88,.45);
 }
-.ring-1{width:48px;height:48px}
-.ring-2{width:34px;height:34px}
+.ring-1{width:100%;height:100%}
+.ring-2{width:68%;height:68%}
+
 .laser-target-core{
-  width:16px;
-  height:16px;
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:30%;
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
   border-radius:50%;
   background:#ff3f54;
   box-shadow:0 0 10px #ff3f54,0 0 22px rgba(255,63,84,.7);
 }
 
-/* OBSTACLES */
+.laser-solved .laser-target{
+  animation:targetVictory .48s ease-out infinite alternate;
+}
+
+@keyframes targetVictory{
+  from{filter:brightness(1)}
+  to{filter:brightness(1.45) drop-shadow(0 0 9px rgba(255,76,96,.9))}
+}
+
+/* obstacles */
 .laser-block{
   position:absolute;
   z-index:6;
+  transform:translate(-50%,-50%) rotate(var(--block-rot,0deg));
+  transform-origin:center;
   border-radius:7px;
   background:linear-gradient(145deg,#3a4658,#1b2330);
   border:1px solid rgba(180,201,224,.20);
   box-shadow:inset 0 1px 2px rgba(255,255,255,.08),0 3px 8px rgba(0,0,0,.35);
-}
-.block-1{left:68px;top:75px;width:44px;height:18px;transform:rotate(12deg)}
-.block-2{right:54px;top:98px;width:18px;height:53px;transform:rotate(-12deg)}
-.block-3{left:145px;top:150px;width:52px;height:18px;transform:rotate(-18deg)}
-.block-4{left:62px;top:245px;width:18px;height:62px;transform:rotate(9deg)}
-.block-5{right:67px;top:245px;width:47px;height:18px;transform:rotate(16deg)}
-.block-6{left:165px;bottom:45px;width:18px;height:54px;transform:rotate(-8deg)}
-
-/* MIRRORS */
-.laser-mirror{
-  --mirror-angle:-45deg;
-  position:absolute;
-  z-index:15;
-  width:42px;
-  height:42px;
-  padding:0;
-  border:1px solid #617189;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 35% 30%,#36445b 0 24%,#1c2738 55%,#0e1520 100%);
-  box-shadow:
-    inset 0 0 0 4px #202d40,
-    0 4px 9px rgba(0,0,0,.45);
-  transform:rotate(var(--mirror-angle));
-  transition:transform .28s ease,filter .2s ease,box-shadow .2s ease;
-  -webkit-appearance:none;
-  appearance:none;
-}
-.laser-mirror.angle-forward{--mirror-angle:45deg}
-.laser-mirror.angle-back{--mirror-angle:-45deg}
-.laser-mirror:not(:disabled):active{filter:brightness(1.18)}
-.mirror-glass{
-  position:absolute;
-  left:7px;
-  top:18px;
-  width:28px;
-  height:6px;
-  border-radius:6px;
-  background:linear-gradient(180deg,#f4fbff,#a9d9f2 55%,#617d95);
-  box-shadow:0 0 7px rgba(170,225,255,.45);
-}
-.laser-mirror::before{
-  content:"";
-  position:absolute;
-  left:7px;
-  top:6px;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#ff4054;
-  box-shadow:0 0 7px rgba(255,64,84,.8);
-}
-.mirror-turning{transform:rotate(calc(var(--mirror-angle) + 90deg)) scale(1.08)}
-.mirror-wrong{box-shadow:inset 0 0 0 4px #45202a,0 0 12px rgba(255,53,72,.65)}
-.mirror-correct{box-shadow:inset 0 0 0 4px #1d513b,0 0 13px rgba(75,255,165,.8)}
-
-/* 16 mirror positions */
-.mirror-1{left:49px;top:38px}
-.mirror-2{left:122px;top:32px}
-.mirror-3{left:205px;top:39px}
-.mirror-4{right:28px;top:57px}
-.mirror-5{left:72px;top:113px}
-.mirror-6{left:143px;top:101px}
-.mirror-7{left:225px;top:116px}
-.mirror-8{right:25px;top:153px}
-.mirror-9{left:41px;top:182px}
-.mirror-10{left:119px;top:182px}
-.mirror-11{left:198px;top:185px}
-.mirror-12{right:37px;top:225px}
-#laserPuzzle .mirror-13{left:116px!important;top:286px!important;right:auto!important;bottom:auto!important}
-#laserPuzzle .mirror-14{left:auto!important;right:32px!important;top:302px!important;bottom:auto!important}
-#laserPuzzle .mirror-15{left:63px!important;right:auto!important;top:355px!important;bottom:auto!important}
-#laserPuzzle .mirror-16{left:224px!important;right:auto!important;top:348px!important;bottom:auto!important}
-
-/* LASER BEAMS */
-.laser-beam,.false-beam{
-  position:absolute;
-  z-index:9;
-  height:3px;
-  border-radius:4px;
-  transform-origin:left center;
-  background:#ff3650;
-  box-shadow:0 0 5px #ff3650,0 0 11px rgba(255,54,80,.78);
   pointer-events:none;
 }
-.beam-1{left:47px;top:194px;width:70px;transform:rotate(-8deg)}
-.beam-2{left:111px;top:184px;width:68px;transform:rotate(-38deg)}
-.beam-3{left:164px;top:144px;width:72px;transform:rotate(24deg)}
-.beam-4{left:229px;top:171px;width:61px;transform:rotate(55deg)}
-.beam-5{left:263px;top:222px;width:55px;transform:rotate(103deg)}
 
-.final-beam{
-  opacity:0;
-  background:#ff5267;
-}
-.final-beam-1{left:137px;top:307px;width:60px;transform:rotate(18deg)}
-.final-beam-2{left:191px;top:326px;width:58px;transform:rotate(-15deg)}
-.final-beam-3{left:243px;top:312px;width:62px;transform:rotate(48deg)}
-.final-beam-4{left:286px;top:357px;width:38px;transform:rotate(15deg)}
-
-.false-route{opacity:0;pointer-events:none}
-.false-a-1{left:92px;top:170px;width:70px;transform:rotate(75deg)}
-.false-a-2{left:110px;top:236px;width:55px;transform:rotate(18deg)}
-.false-b-1{left:174px;top:154px;width:72px;transform:rotate(-58deg)}
-.false-b-2{left:214px;top:94px;width:62px;transform:rotate(10deg)}
-.false-b-3{left:270px;top:106px;width:45px;transform:rotate(72deg)}
-.false-c-1{left:225px;top:198px;width:72px;transform:rotate(18deg)}
-.false-c-2{left:291px;top:219px;width:54px;transform:rotate(-52deg)}
-
-.show-false-a .false-route-a,
-.show-false-b .false-route-b,
-.show-false-c .false-route-c{opacity:1}
-
-.laser-solved .final-beam{
-  opacity:1;
-  animation:beamPulse .62s ease-in-out infinite alternate;
-}
-.laser-solved .laser-target{
-  animation:targetWin .65s ease-in-out infinite alternate;
-}
-.laser-wrong .laser-board{
-  animation:laserShake .24s linear 2;
-}
-@keyframes beamPulse{to{filter:brightness(1.55);box-shadow:0 0 8px #ff5b70,0 0 17px #ff3650}}
-@keyframes targetWin{to{filter:brightness(1.35) drop-shadow(0 0 8px rgba(255,76,96,.85))}}
-@keyframes laserShake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
-
-@media (max-width:390px){
-  .laser-board{height:405px}
-}
-
-
-/* ===== LEVEL 3 LASER / MIRROR POLISH v4 ===== */
-
-/* richer glass + metal mirrors */
+/* mirrors: the visible mirror IS the actual button/hitbox */
 .laser-mirror{
-  overflow:visible;
+  position:absolute;
+  z-index:15;
+  left:0;
+  top:0;
+  width:12%;
+  aspect-ratio:1;
+  padding:0;
+  margin:0;
+  border-radius:50%;
+  border:1px solid rgba(148,179,215,.58);
   background:
-    radial-gradient(circle at 34% 28%,rgba(104,137,178,.72) 0 11%,rgba(48,65,91,.92) 28%,#182334 62%,#0b121d 100%)!important;
-  border:1px solid rgba(148,179,215,.56)!important;
+    radial-gradient(circle at 34% 28%,rgba(104,137,178,.72) 0 11%,rgba(48,65,91,.92) 28%,#182334 62%,#0b121d 100%);
   box-shadow:
     inset 0 0 0 4px rgba(38,53,75,.95),
     inset 0 2px 5px rgba(255,255,255,.10),
-    0 5px 12px rgba(0,0,0,.50),
-    0 0 0 1px rgba(85,116,153,.10)!important;
+    0 5px 12px rgba(0,0,0,.50);
+  transform:translate(-50%,-50%) rotate(var(--mirror-rot,0deg));
+  transform-origin:50% 50%;
+  transition:transform .28s ease,filter .2s ease,box-shadow .2s ease;
+  touch-action:manipulation;
+  -webkit-appearance:none;
+  appearance:none;
+  -webkit-tap-highlight-color:transparent;
 }
-.laser-mirror::after{
-  content:"";
+
+.laser-mirror:disabled{
+  opacity:1;
+}
+
+.laser-mirror .mirror-glass{
   position:absolute;
-  inset:5px;
-  border-radius:50%;
+  left:17%;
+  top:42%;
+  width:66%;
+  height:16%;
+  border-radius:999px;
+  background:linear-gradient(180deg,#fff 0%,#d9f6ff 30%,#8ed0ee 68%,#47677f 100%);
+  box-shadow:0 0 5px rgba(204,244,255,.75),0 0 12px rgba(101,197,240,.38);
   pointer-events:none;
-  background:linear-gradient(125deg,rgba(255,255,255,.18),transparent 38%,rgba(98,154,205,.06) 62%,transparent);
-  animation:mirrorSheen 3.2s ease-in-out infinite;
 }
-@keyframes mirrorSheen{
-  0%,65%,100%{opacity:.18}
-  78%{opacity:.7}
-}
-.mirror-glass{
-  height:7px!important;
-  background:
-    linear-gradient(180deg,#ffffff 0%,#d9f6ff 30%,#8ed0ee 68%,#47677f 100%)!important;
-  box-shadow:
-    0 0 5px rgba(204,244,255,.75),
-    0 0 12px rgba(101,197,240,.38)!important;
-}
-.laser-mirror::before{
-  width:7px!important;
-  height:7px!important;
-  background:#ff3652!important;
-  box-shadow:0 0 6px #ff3652,0 0 12px rgba(255,54,82,.78)!important;
-  animation:mirrorLed 1.6s ease-in-out infinite alternate;
-}
-@keyframes mirrorLed{to{filter:brightness(1.45);transform:scale(1.12)}}
 
-/* source looks like an emitter, not a plain red circle */
-.laser-source{
-  background:
-    radial-gradient(circle at 42% 40%,#fff 0 9%,#ff9ca7 10% 18%,#fb314d 30%,#7d1021 64%,#260610 100%)!important;
-  border:2px solid #ff8998!important;
-  box-shadow:
-    0 0 10px rgba(255,64,86,.92),
-    0 0 24px rgba(255,41,67,.55),
-    0 0 42px rgba(255,41,67,.22)!important;
-  animation:laserSourceIdle 1.15s ease-in-out infinite alternate;
-}
-.laser-source::before{
-  content:"";
+.laser-mirror .mirror-led{
   position:absolute;
-  inset:-7px;
-  border:1px solid rgba(255,80,98,.35);
+  left:17%;
+  top:16%;
+  width:18%;
+  aspect-ratio:1;
   border-radius:50%;
-  animation:sourceRing 1.5s ease-out infinite;
-}
-@keyframes laserSourceIdle{
-  to{filter:brightness(1.18);transform:scale(1.035)}
-}
-@keyframes sourceRing{
-  0%{transform:scale(.72);opacity:.75}
-  100%{transform:scale(1.35);opacity:0}
+  background:#ff3652;
+  box-shadow:0 0 6px #ff3652,0 0 12px rgba(255,54,82,.78);
+  pointer-events:none;
 }
 
-/* layered beam: hot white core + red outer glow */
-.laser-beam,.false-beam{
-  height:4px!important;
-  background:
-    linear-gradient(180deg,#fff7f8 0 26%,#ff5a70 28% 70%,#c81332 72% 100%)!important;
-  box-shadow:
-    0 0 3px #fff,
-    0 0 7px #ff4058,
-    0 0 14px rgba(255,42,67,.82),
-    0 0 22px rgba(255,42,67,.34)!important;
-  overflow:visible;
-}
-.laser-beam::after,.false-beam::after{
-  content:"";
-  position:absolute;
-  left:0;
-  top:-3px;
-  width:22px;
-  height:10px;
-  border-radius:50%;
-  background:radial-gradient(ellipse,rgba(255,255,255,.92),rgba(255,70,95,.45) 42%,transparent 72%);
-  opacity:.0;
-  transform:translateX(-10px);
+.laser-mirror:not(:disabled):active{
+  filter:brightness(1.2);
 }
 
-/* moving energy pulse over the existing path */
-#laserPuzzle:not(.laser-solved):not(.laser-wrong) .beam-1::after,
-#laserPuzzle:not(.laser-solved):not(.laser-wrong) .beam-2::after,
-#laserPuzzle:not(.laser-solved):not(.laser-wrong) .beam-3::after,
-#laserPuzzle:not(.laser-solved):not(.laser-wrong) .beam-4::after,
-#laserPuzzle:not(.laser-solved):not(.laser-wrong) .beam-5::after{
-  animation:beamParticle 2.6s linear infinite;
-}
-#laserPuzzle .beam-2::after{animation-delay:.34s!important}
-#laserPuzzle .beam-3::after{animation-delay:.68s!important}
-#laserPuzzle .beam-4::after{animation-delay:1.02s!important}
-#laserPuzzle .beam-5::after{animation-delay:1.36s!important}
-@keyframes beamParticle{
-  0%,18%{left:0;opacity:0}
-  24%{opacity:1}
-  72%{opacity:1}
-  80%,100%{left:calc(100% - 10px);opacity:0}
-}
-
-/* beam itself breathes very slightly */
-#laserPuzzle:not(.laser-wrong) .beam-1,
-#laserPuzzle:not(.laser-wrong) .beam-2,
-#laserPuzzle:not(.laser-wrong) .beam-3,
-#laserPuzzle:not(.laser-wrong) .beam-4,
-#laserPuzzle:not(.laser-wrong) .beam-5{
-  animation:beamBreath 1.15s ease-in-out infinite alternate;
-}
-@keyframes beamBreath{
-  to{
-    filter:brightness(1.17);
-    box-shadow:0 0 4px #fff,0 0 9px #ff4058,0 0 18px rgba(255,42,67,.92);
-  }
-}
-
-/* correct route appears segment-by-segment instead of all at once */
-.laser-solved .final-beam{
-  opacity:0!important;
-  transform-origin:left center;
-  animation:finalBeamReveal .34s ease-out forwards,beamVictoryPulse .72s ease-in-out .38s infinite alternate!important;
-}
-.laser-solved .final-beam-1{animation-delay:.06s,.44s!important}
-.laser-solved .final-beam-2{animation-delay:.30s,.68s!important}
-.laser-solved .final-beam-3{animation-delay:.54s,.92s!important}
-.laser-solved .final-beam-4{animation-delay:.78s,1.16s!important}
-@keyframes finalBeamReveal{
-  from{opacity:0;clip-path:inset(0 100% 0 0);filter:brightness(1.7)}
-  to{opacity:1;clip-path:inset(0 0 0 0);filter:brightness(1)}
-}
-@keyframes beamVictoryPulse{
-  to{filter:brightness(1.55);box-shadow:0 0 5px #fff,0 0 12px #ff6175,0 0 24px rgba(255,55,80,.95)}
-}
-
-/* wrong ray also shoots out rather than popping in */
-.show-false-a .false-route-a .false-beam,
-.show-false-b .false-route-b .false-beam,
-.show-false-c .false-route-c .false-beam{
-  animation:falseBeamShoot .28s ease-out forwards;
-  transform-origin:left center;
-}
-.show-false-a .false-route-a .false-beam:nth-child(2),
-.show-false-b .false-route-b .false-beam:nth-child(2),
-.show-false-c .false-route-c .false-beam:nth-child(2){animation-delay:.18s}
-.show-false-b .false-route-b .false-beam:nth-child(3){animation-delay:.36s}
-@keyframes falseBeamShoot{
-  from{opacity:0;clip-path:inset(0 100% 0 0)}
-  to{opacity:1;clip-path:inset(0 0 0 0)}
-}
-
-/* target feels energized */
-.laser-target{
-  filter:drop-shadow(0 0 7px rgba(255,57,79,.30));
-}
-.laser-target-ring{
-  animation:targetIdle 1.55s ease-in-out infinite alternate;
-}
-.ring-2{animation-delay:.35s}
-@keyframes targetIdle{
-  to{transform:scale(1.08);opacity:.65}
-}
-.laser-solved .laser-target-core{
-  background:#ffffff!important;
-  box-shadow:
-    0 0 7px #fff,
-    0 0 17px #ff5268,
-    0 0 34px #ff2f50!important;
-}
-.laser-solved .laser-target-ring{
-  border-color:#ff7285!important;
-  animation:targetVictory .48s ease-out infinite alternate!important;
-}
-@keyframes targetVictory{
-  from{transform:scale(.92);opacity:.65}
-  to{transform:scale(1.15);opacity:1}
-}
-
-/* selected mirror gets a precise interaction flash */
 .mirror-turning{
-  z-index:20!important;
+  z-index:20;
   filter:brightness(1.22);
 }
-.mirror-turning::after{
-  opacity:1!important;
-  box-shadow:0 0 15px rgba(131,220,255,.65);
-}
+
 .mirror-correct{
-  border-color:#70ffb1!important;
+  border-color:#70ffb1;
   box-shadow:
     inset 0 0 0 4px #174933,
     0 0 10px #55efa0,
-    0 0 24px rgba(64,238,151,.55)!important;
-}
-.mirror-wrong{
-  border-color:#ff6377!important;
-  animation:mirrorError .18s linear 2;
-}
-@keyframes mirrorError{
-  25%{translate:-2px 0}
-  75%{translate:2px 0}
+    0 0 24px rgba(64,238,151,.55);
 }
 
-/* slightly richer board ambience */
-.laser-board{
-  background:
-    radial-gradient(circle at 17% 16%,rgba(38,78,125,.42),transparent 27%),
-    radial-gradient(circle at 84% 76%,rgba(27,84,113,.31),transparent 31%),
-    radial-gradient(circle at 52% 48%,rgba(36,63,98,.18),transparent 35%),
-    linear-gradient(180deg,#101d32 0%,#091423 100%)!important;
+.mirror-wrong{
+  border-color:#ff6377;
+  box-shadow:
+    inset 0 0 0 4px #45202a,
+    0 0 12px rgba(255,53,72,.65);
+}
+
+.laser-wrong .laser-board{
+  animation:laserShake .22s linear 2;
+}
+
+@keyframes laserShake{
+  25%{transform:translateX(-2px)}
+  75%{transform:translateX(2px)}
 }
