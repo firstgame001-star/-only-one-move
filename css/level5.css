@@ -328,3 +328,109 @@
     .source-drop{font-size:13px}
     .receiver-flag{font-size:15px}
 }
+
+
+/* ===== LEVEL 5 FOREST SCENE POLISH v2 ===== */
+.pipe-scene-item{
+    position:absolute;
+    z-index:3;
+    pointer-events:none;
+    user-select:none;
+}
+
+.pipe-tree{
+    font-size:25px;
+    opacity:.48;
+    filter:brightness(.78) saturate(.95) drop-shadow(0 4px 4px rgba(0,0,0,.38));
+}
+.tree-a{left:3%;top:20%}
+.tree-b{right:4%;top:7%}
+.tree-c{right:13%;bottom:3%}
+
+.pipe-bush{
+    font-size:21px;
+    opacity:.42;
+    filter:brightness(.78) saturate(1.05);
+}
+.bush-a{left:5%;bottom:8%}
+.bush-b{right:4%;top:49%}
+
+.pipe-rock{
+    width:30px;
+    height:18px;
+    border-radius:55% 45% 52% 40%;
+    opacity:.55;
+    background:linear-gradient(145deg,#52615e,#283633);
+    box-shadow:inset 0 2px 3px rgba(255,255,255,.08),0 4px 8px rgba(0,0,0,.22);
+}
+.rock-a{left:19%;top:53%;transform:rotate(-9deg)}
+.rock-b{right:17%;bottom:18%;transform:rotate(8deg)}
+
+.pipe-cabin{
+    right:3%;
+    top:1.5%;
+    font-size:27px;
+    opacity:.52;
+    filter:drop-shadow(0 0 8px rgba(255,180,62,.32));
+}
+
+.pipe-lamp{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    opacity:.66;
+    background:#ffd96b;
+    box-shadow:0 0 5px #ffd96b,0 0 13px rgba(255,174,55,.72);
+    animation:pipeLampPulse 1.65s ease-in-out infinite alternate;
+}
+.lamp-a{left:29%;top:8%}
+.lamp-b{right:8%;top:36%;animation-delay:.45s}
+.lamp-c{left:72%;bottom:7%;animation-delay:.8s}
+
+@keyframes pipeLampPulse{
+    to{
+        opacity:.36;
+        box-shadow:0 0 3px #ffd96b,0 0 8px rgba(255,174,55,.55);
+    }
+}
+
+.pipe-pond{
+    left:2.5%;
+    bottom:2.5%;
+    width:76px;
+    height:36px;
+    border-radius:50% 46% 53% 44%;
+    opacity:.36;
+    background:
+        radial-gradient(circle at 30% 28%,rgba(91,205,255,.34),transparent 24%),
+        linear-gradient(180deg,#237e9f,#12566f);
+    box-shadow:inset 0 0 10px rgba(0,0,0,.30),0 4px 10px rgba(0,0,0,.18);
+}
+
+.pond-lily{
+    position:absolute;
+    width:10px;
+    height:6px;
+    border-radius:50%;
+    background:#72a73f;
+}
+.lily-a{left:22px;top:14px;transform:rotate(12deg)}
+.lily-b{left:47px;top:20px;transform:rotate(-13deg)}
+
+.pipe-cell{
+    backdrop-filter:blur(.35px);
+}
+
+.pipe-running .pipe-selected .pipe-rotor{
+    filter:brightness(1.12);
+}
+
+.pipe-solved .pipe-water{
+    opacity:1;
+}
+
+.pipe-solved .pipe-board::after{
+    background:
+        radial-gradient(circle at 12% 16%,rgba(52,177,111,.18),transparent 18%),
+        radial-gradient(circle at 82% 76%,rgba(44,176,163,.15),transparent 20%);
+}
