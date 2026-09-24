@@ -182,9 +182,23 @@ window.ONE_MOVE_LEVELS[5] = {
                 <div class="pipe-board" id="pipeBoard">
                     <div class="pipe-forest-glow glow-a"></div>
                     <div class="pipe-forest-glow glow-b"></div>
-                    <div class="pipe-decor decor-a">🌲</div>
-                    <div class="pipe-decor decor-b">🌿</div>
-                    <div class="pipe-decor decor-c">🌲</div>
+
+                    <div class="pipe-scene-item pipe-tree tree-a">🌲</div>
+                    <div class="pipe-scene-item pipe-tree tree-b">🌲</div>
+                    <div class="pipe-scene-item pipe-tree tree-c">🌲</div>
+                    <div class="pipe-scene-item pipe-bush bush-a">🌿</div>
+                    <div class="pipe-scene-item pipe-bush bush-b">🌿</div>
+                    <div class="pipe-scene-item pipe-rock rock-a"></div>
+                    <div class="pipe-scene-item pipe-rock rock-b"></div>
+                    <div class="pipe-scene-item pipe-cabin">🏠</div>
+                    <div class="pipe-scene-item pipe-lamp lamp-a"></div>
+                    <div class="pipe-scene-item pipe-lamp lamp-b"></div>
+                    <div class="pipe-scene-item pipe-lamp lamp-c"></div>
+                    <div class="pipe-scene-item pipe-pond">
+                        <span class="pond-lily lily-a"></span>
+                        <span class="pond-lily lily-b"></span>
+                    </div>
+
                     <div class="pipe-grid">
                         ${cells}
                     </div>
