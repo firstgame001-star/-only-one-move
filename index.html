@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="css/level3.css?v=5">
 <link rel="stylesheet" href="css/level4.css?v=5">
 <link rel="stylesheet" href="css/level5.css?v=2">
-<link rel="stylesheet" href="css/stage2.css?v=1">
+<link rel="stylesheet" href="css/level6.css?v=1">
 
 
 <style>
@@ -789,12 +789,12 @@ button{
 <script id="level3CacheGuard">
 (function(){
   try{
-    const key='oom-cache-v6';
+    const key='oom-cache-v7';
     if(localStorage.getItem(key)!=='1'){
       localStorage.setItem(key,'1');
       const u=new URL(location.href);
-      if(u.searchParams.get('_v')!=='6'){
-        u.searchParams.set('_v','6');
+      if(u.searchParams.get('_v')!=='7'){
+        u.searchParams.set('_v','7');
         location.replace(u.toString());
       }
     }
@@ -1453,14 +1453,14 @@ button{
 <script src="js/game.js?v=7"></script>
 <script src="js/matchsticks.js?v=6"></script>
 <script src="js/objects.js?v=5"></script>
-<script src="js/levelmap.js?v=5"></script>
+<script src="js/levelmap.js?v=6"></script>
 
 
 <!-- =========================
      LEVEL DATA
 ========================= -->
 
-<script src="levels/easy.js?v=11"></script>
+<script src="levels/easy.js?v=12"></script>
 
 
 <!-- =========================
@@ -1472,7 +1472,7 @@ button{
 <script src="levels/level3.js?v=5"></script>
 <script src="levels/level4.js?v=6"></script>
 <script src="levels/level5.js?v=2"></script>
-<script src="levels/stage2.js?v=1"></script>
+<script src="levels/level6.js?v=1"></script>
 
 
 <script>
@@ -1636,7 +1636,7 @@ function migrateOldSave(){
 
 /* =========================
    PLAYABLE LEVEL
-   Сейчас готовы 1–10
+   Сейчас готовы 1–6
 ========================= */
 
 function getPlayableLevel(){
@@ -1649,7 +1649,7 @@ function getPlayableLevel(){
       Number(data.level) || 1,
       1
     ),
-    10
+    6
   );
 }
 
@@ -1836,6 +1836,22 @@ function openGame(){
     return;
   }
 
+  const data =
+    getPlayerData();
+
+  const rawLevel =
+    Math.max(
+      1,
+      Number(data.level) || 1
+    );
+
+  if(rawLevel > 6){
+
+    openLevelMap(2);
+
+    return;
+  }
+
   const level =
     getPlayableLevel();
 
@@ -2006,42 +2022,10 @@ function loadLevel(levelNumber){
   }else if(displayedLevel === 6){
 
     tutorialBox.innerHTML =
-      "⚡ Схема стала плотнее.<br>Поверни один контакт и замкни цепь.";
+      "🤖 Робот идёт по стрелкам автоматически.<br>Поверни один куб на 90°, чтобы открыть путь к выходу.";
 
     movesText.textContent =
-      "⚡ Поверни один контакт";
-
-  }else if(displayedLevel === 7){
-
-    tutorialBox.innerHTML =
-      "⚙️ Одна шестерня нарушает передачу.<br>Исправить можно только одну.";
-
-    movesText.textContent =
-      "⚙️ Поверни одну шестерню";
-
-  }else if(displayedLevel === 8){
-
-    tutorialBox.innerHTML =
-      "🔴 Зеркал больше, маршрут длиннее.<br>Поверни только одно зеркало.";
-
-    movesText.textContent =
-      "🔴 Поверни одно зеркало";
-
-  }else if(displayedLevel === 9){
-
-    tutorialBox.innerHTML =
-      "🚦 Три маршрута пересекаются.<br>Переключи одну стрелку без конфликта.";
-
-    movesText.textContent =
-      "🚦 Переключи одну стрелку";
-
-  }else if(displayedLevel === 10){
-
-    tutorialBox.innerHTML =
-      "💧 Два потока зависят от одного общего узла.<br>Поверни один клапан.";
-
-    movesText.textContent =
-      "💧 Поверни один клапан";
+      "🤖 Поверни один куб";
 
   }else{
 
@@ -2606,27 +2590,7 @@ function resetPuzzleVisual(){
   }else if(displayedLevel === 6){
 
     movesText.textContent =
-      "⚡ Поверни один контакт";
-
-  }else if(displayedLevel === 7){
-
-    movesText.textContent =
-      "⚙️ Поверни одну шестерню";
-
-  }else if(displayedLevel === 8){
-
-    movesText.textContent =
-      "🔴 Поверни одно зеркало";
-
-  }else if(displayedLevel === 9){
-
-    movesText.textContent =
-      "🚦 Переключи одну стрелку";
-
-  }else if(displayedLevel === 10){
-
-    movesText.textContent =
-      "💧 Поверни один клапан";
+      "🤖 Поверни один куб";
 
   }else{
 
@@ -2869,27 +2833,10 @@ function finishLevel(){
   }
 
 
-  /* LEVELS 6 → 10 */
-
-  if(
-    activeLevel >= 6 &&
-    activeLevel < 10 &&
-    !isLevelCompleted(
-      activeLevel + 1
-    )
-  ){
-
-    loadLevel(
-      activeLevel + 1
-    );
-
-    return;
-  }
-
-
   /*
-    После 5-го или 10-го уровня
+    После 5-го или 6-го уровня
     возвращаемся на карту нужного этапа.
+    Следующие раунды выбираем отдельно.
   */
 
   gameScreen.classList.add(
