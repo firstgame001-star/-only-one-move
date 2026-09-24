@@ -300,24 +300,15 @@ window.ONE_MOVE_LEVELS[4] = {
                      TRAIN A — RED
                 ========================== -->
 
-                <div
-                    class="train train-a"
-                    id="trainA"
-                >
-
-                    <span class="train-smoke smoke-1"></span><span class="train-smoke smoke-2"></span>
+                <div class="train train-a" id="trainA">
+                    <span class="train-smoke smoke-1"></span>
+                    <span class="train-smoke smoke-2"></span>
                     <div class="train-car train-car-back"><span class="car-window"></span></div>
-
                     <div class="train-car train-car-middle"><span class="car-window"></span></div>
-
                     <div class="train-engine">
-
                         <span class="train-window"></span>
-
                         <span class="train-light"></span>
-
                     </div>
-
                 </div>
 
 
@@ -325,23 +316,15 @@ window.ONE_MOVE_LEVELS[4] = {
                      TRAIN B — BLUE
                 ========================== -->
 
-                <div
-                    class="train train-b"
-                    id="trainB"
-                >
-
-                    <div class="train-car train-car-back"></div>
-
-                    <div class="train-car train-car-middle"></div>
-
+                <div class="train train-b" id="trainB">
+                    <span class="train-smoke smoke-1"></span>
+                    <span class="train-smoke smoke-2"></span>
+                    <div class="train-car train-car-back"><span class="car-window"></span></div>
+                    <div class="train-car train-car-middle"><span class="car-window"></span></div>
                     <div class="train-engine">
-
                         <span class="train-window"></span>
-
                         <span class="train-light"></span>
-
                     </div>
-
                 </div>
 
 
@@ -418,7 +401,7 @@ window.ONE_MOVE_LEVELS[4] = {
         // Красный поезд слева
         this.setTrainPosition(
             "trainA",
-            5,
+            28,
             86,
             0
         );
@@ -427,7 +410,7 @@ window.ONE_MOVE_LEVELS[4] = {
         // Синий поезд справа
         this.setTrainPosition(
             "trainB",
-            345,
+            322,
             86,
             180
         );
@@ -485,11 +468,11 @@ window.ONE_MOVE_LEVELS[4] = {
 
     runCorrectRoute() {
         const routeA = [
-            [5,86],[72,86],[112,113],[151,140],[177,164],
+            [28,86],[72,86],[112,113],[151,140],[177,164],
             [211,195],[247,231],[277,267],[286,309],[286,356]
         ];
         const routeB = [
-            [345,86],[280,86],[245,86],[222,111],[198,137],[177,164],
+            [322,86],[280,86],[245,86],[222,111],[198,137],[177,164],
             [147,195],[111,231],[76,266],[51,309],[51,356]
         ];
 
@@ -504,14 +487,14 @@ window.ONE_MOVE_LEVELS[4] = {
         let routeB;
 
         if ([1,4,7,10,14].includes(number)) {
-            routeA = [[5,86],[72,86],[112,113],[151,140],[177,164]];
-            routeB = [[345,86],[280,86],[245,86],[222,111],[198,137],[177,164]];
+            routeA = [[28,86],[72,86],[112,113],[151,140],[177,164]];
+            routeB = [[322,86],[280,86],[245,86],[222,111],[198,137],[177,164]];
         } else if ([2,5,8,12,15].includes(number)) {
-            routeA = [[5,86],[72,86],[112,113],[134,160],[134,238]];
-            routeB = [[345,86],[280,86],[245,86],[222,111],[247,157],[280,218]];
+            routeA = [[28,86],[72,86],[112,113],[134,160],[134,238]];
+            routeB = [[322,86],[280,86],[245,86],[222,111],[247,157],[280,218]];
         } else {
-            routeA = [[5,86],[72,86],[112,113],[151,140],[177,164],[147,195],[111,231]];
-            routeB = [[345,86],[280,86],[245,86],[222,111],[198,137],[177,164],[211,195],[247,231]];
+            routeA = [[28,86],[72,86],[112,113],[151,140],[177,164],[147,195],[111,231]];
+            routeB = [[322,86],[280,86],[245,86],[222,111],[198,137],[177,164],[211,195],[247,231]];
         }
 
         let finished = 0;
