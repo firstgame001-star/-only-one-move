@@ -1,0 +1,376 @@
+/* =========================================
+   ONLY ONE MOVE — STAGE 2 — LEVELS 6–10
+========================================= */
+
+.s2-puzzle{
+    width:100%;
+    margin-top:8px;
+}
+
+.s2-scene{
+    position:relative;
+    width:min(100%,365px);
+    margin:0 auto 10px;
+    padding:10px 48px 10px 14px;
+    min-height:54px;
+    border-radius:17px;
+    background:linear-gradient(180deg,#182132,#121a28);
+    border:1px solid rgba(128,149,184,.13);
+    overflow:hidden;
+}
+
+.s2-scene-glow{
+    position:absolute;
+    width:100px;
+    height:100px;
+    right:-35px;
+    top:-35px;
+    border-radius:50%;
+    background:rgba(108,92,231,.18);
+    filter:blur(12px);
+}
+
+.s2-scene-title{
+    position:absolute;
+    right:14px;
+    top:10px;
+    font-size:27px;
+}
+
+.s2-scene-sub{
+    position:relative;
+    z-index:2;
+    color:#cbd3e1;
+    font-size:12px;
+    line-height:1.4;
+    font-weight:700;
+}
+
+.s2-board{
+    position:relative;
+    width:min(100%,365px);
+    aspect-ratio:1 / 1;
+    margin:0 auto;
+    overflow:hidden;
+    border-radius:24px;
+    border:1px solid rgba(105,130,174,.29);
+    background:
+        radial-gradient(circle at 20% 18%,rgba(72,84,148,.15),transparent 27%),
+        radial-gradient(circle at 82% 79%,rgba(30,85,120,.14),transparent 27%),
+        linear-gradient(180deg,#101827,#09111d);
+    box-shadow:inset 0 0 42px rgba(0,0,0,.48),0 13px 28px rgba(0,0,0,.28);
+}
+
+.s2-board-grid{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(141,163,204,.18) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(141,163,204,.18) 1px,transparent 1px);
+    background-size:calc(100% / var(--s2-cols)) calc(100% / var(--s2-cols));
+}
+
+.s2-flow-layer{
+    position:absolute;
+    inset:6%;
+    z-index:2;
+    pointer-events:none;
+    opacity:.18;
+    border-radius:30%;
+    border:2px dashed rgba(107,124,174,.18);
+    transform:rotate(-12deg);
+}
+
+.s2-cells{
+    position:absolute;
+    inset:8px;
+    z-index:6;
+    display:grid;
+    grid-template-columns:repeat(var(--s2-cols),minmax(0,1fr));
+    gap:4px;
+}
+
+.s2-cell{
+    position:relative;
+    min-width:0;
+    min-height:0;
+    padding:0;
+    border:1px solid rgba(124,147,184,.12);
+    border-radius:10px;
+    background:rgba(10,18,31,.54);
+    overflow:hidden;
+    touch-action:manipulation;
+    -webkit-appearance:none;
+    appearance:none;
+    transition:transform .16s ease,box-shadow .18s ease,background .18s ease;
+}
+
+.s2-cell:not(:disabled):active{
+    transform:scale(.92);
+}
+
+.s2-cell:disabled{opacity:1}
+
+.s2-picked{
+    z-index:12;
+    box-shadow:inset 0 0 0 2px #ffd460,0 0 13px rgba(255,205,73,.54);
+    background:rgba(255,204,76,.06);
+}
+
+.s2-picked > *{
+    transform:rotate(var(--action-turn,0deg));
+}
+
+.s2-good{
+    box-shadow:inset 0 0 0 2px #55e6a5,0 0 15px rgba(85,230,165,.54);
+}
+
+.s2-bad{
+    box-shadow:inset 0 0 0 2px #ff6571,0 0 14px rgba(255,80,95,.48);
+}
+
+.s2-wrong .s2-board{
+    animation:s2Shake .24s linear 2;
+}
+
+@keyframes s2Shake{
+    25%{transform:translateX(-3px)}
+    75%{transform:translateX(3px)}
+}
+
+/* LEVEL 6 — CIRCUIT */
+.s2-circuit .s2-board{
+    background:
+        radial-gradient(circle at 18% 15%,rgba(16,158,135,.17),transparent 30%),
+        linear-gradient(180deg,#0b272a,#08191d);
+}
+
+.s2-wire-svg{
+    position:absolute;
+    inset:7%;
+    width:86%;
+    height:86%;
+    transform:rotate(var(--cell-rot));
+    transition:transform .28s ease;
+}
+
+.s2-wire-base,.s2-wire-hot{
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.s2-wire-base{stroke:#58666d;stroke-width:13}
+.s2-wire-hot{stroke:#7debd0;stroke-width:4;opacity:.16}
+
+.s2-node{
+    position:absolute;
+    width:8px;
+    height:8px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:#6b7b84;
+    box-shadow:0 0 6px rgba(100,210,190,.28);
+}
+
+.s2-circuit.s2-solved .s2-wire-hot{
+    opacity:1;
+    animation:s2Current .6s linear infinite alternate;
+}
+
+@keyframes s2Current{to{filter:drop-shadow(0 0 5px #64f4ce)}}
+
+.s2-power-source,.s2-power-target{
+    position:absolute;
+    z-index:4;
+    font-weight:900;
+    pointer-events:none;
+}
+.s2-power-source{left:2%;top:45%;font-size:22px}
+.s2-power-target{right:3%;bottom:10%;color:#65ffd0;text-shadow:0 0 9px #65ffd0}
+
+/* LEVEL 7 — GEARS */
+.s2-gears .s2-board{
+    background:
+        radial-gradient(circle at 50% 48%,rgba(160,105,46,.13),transparent 39%),
+        linear-gradient(180deg,#252019,#17140f);
+}
+
+.s2-gear{
+    position:absolute;
+    inset:15%;
+    display:block;
+    border-radius:50%;
+    border:7px dashed #89939e;
+    background:radial-gradient(circle,#1b222a 0 24%,#6d7883 26% 51%,#2e363e 54%);
+    box-shadow:inset 0 0 5px rgba(255,255,255,.12),0 3px 7px rgba(0,0,0,.35);
+    transform:rotate(var(--cell-rot));
+    transition:transform .32s ease;
+}
+
+.s2-gear-core{
+    position:absolute;
+    left:50%;top:50%;
+    width:20%;aspect-ratio:1;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:#161b20;
+    box-shadow:0 0 0 3px #a2abb4;
+}
+
+.s2-gears.s2-solved .s2-gear{
+    animation:s2GearSpin 1.4s linear infinite;
+}
+.s2-gears.s2-solved .s2-cell:nth-child(even) .s2-gear{
+    animation-direction:reverse;
+}
+@keyframes s2GearSpin{to{transform:rotate(360deg)}}
+.s2-gear-meter{position:absolute;right:4%;top:3%;z-index:4;color:#e8b456;opacity:.54;font-size:13px}
+
+/* LEVEL 8 — LASER MATRIX */
+.s2-laser2 .s2-board{
+    background:
+        radial-gradient(circle at 14% 45%,rgba(207,35,68,.15),transparent 24%),
+        linear-gradient(180deg,#101b31,#091222);
+}
+
+.s2-mirror{
+    position:absolute;
+    inset:13%;
+    display:block;
+    border-radius:50%;
+    border:1px solid #718199;
+    background:radial-gradient(circle at 32% 26%,#4f6380,#1a2637 62%,#0d1520);
+    box-shadow:inset 0 0 0 3px #223149,0 4px 7px rgba(0,0,0,.4);
+    transform:rotate(var(--cell-rot));
+    transition:transform .3s ease;
+}
+
+.s2-mirror-glass{
+    position:absolute;
+    left:16%;top:43%;
+    width:68%;height:14%;
+    border-radius:999px;
+    background:linear-gradient(180deg,#fff,#a7dbef);
+    box-shadow:0 0 7px rgba(150,225,255,.55);
+}
+
+.s2-mirror-led{
+    position:absolute;
+    left:15%;top:14%;
+    width:18%;aspect-ratio:1;
+    border-radius:50%;
+    background:#ff3e58;
+    box-shadow:0 0 7px #ff3e58;
+}
+
+.s2-laser-source{
+    position:absolute;left:1.5%;top:49%;z-index:4;width:18px;height:18px;border-radius:50%;
+    background:#fff;box-shadow:0 0 8px #ff4961,0 0 19px #ff2947;
+}
+.s2-laser-target{
+    position:absolute;right:2%;bottom:5%;z-index:4;width:28px;height:28px;border-radius:50%;
+    border:3px double #ff4b61;box-shadow:0 0 10px rgba(255,70,90,.55);
+}
+.s2-laser2.s2-solved .s2-board::after{
+    content:"";position:absolute;z-index:5;left:5%;top:50%;width:88%;height:3px;
+    background:#ff3d5b;transform:rotate(28deg);transform-origin:left center;
+    box-shadow:0 0 6px #ff3d5b,0 0 13px #ff3d5b;pointer-events:none;
+}
+
+/* LEVEL 9 — RAILWAY */
+.s2-rail2 .s2-board{
+    background:
+        radial-gradient(circle at 28% 25%,rgba(34,110,68,.17),transparent 29%),
+        linear-gradient(180deg,#0b3021,#081d16);
+}
+
+.s2-switch{
+    position:absolute;
+    inset:18%;
+    display:block;
+    border-radius:50%;
+    background:radial-gradient(circle,#2b3542,#121922 70%);
+    border:2px solid #536176;
+    box-shadow:0 3px 7px rgba(0,0,0,.4);
+}
+
+.s2-switch-bar{
+    position:absolute;
+    left:48%;top:13%;
+    width:5%;height:72%;
+    border-radius:9px;
+    background:#ccd5df;
+    transform:rotate(-38deg);
+    transform-origin:50% 80%;
+    transition:transform .26s ease;
+}
+
+.s2-picked .s2-switch-bar{transform:rotate(38deg)}
+
+.s2-switch-dot{
+    position:absolute;left:18%;top:18%;width:22%;aspect-ratio:1;border-radius:50%;
+    background:#ff4e5c;box-shadow:0 0 7px #ff4e5c;
+}
+
+.s2-train{position:absolute;z-index:4;font-size:22px;pointer-events:none;transition:transform 1.2s ease}
+.t-red{left:2%;top:4%}
+.t-blue{right:3%;top:5%}
+.t-gold{left:45%;bottom:2%}
+.s2-rail2.s2-solved .t-red{transform:translate(235px,240px)}
+.s2-rail2.s2-solved .t-blue{transform:translate(-225px,230px)}
+.s2-rail2.s2-solved .t-gold{transform:translate(18px,-230px)}
+
+/* LEVEL 10 — VALVES */
+.s2-valves .s2-board{
+    background:
+        radial-gradient(circle at 20% 10%,rgba(31,139,190,.17),transparent 30%),
+        linear-gradient(180deg,#0b2535,#081823);
+}
+
+.s2-valve{
+    position:absolute;
+    inset:16%;
+    display:block;
+    border-radius:50%;
+    background:radial-gradient(circle,#314253 0 33%,#182330 36% 60%,#0e151e 63%);
+    border:2px solid #607486;
+    box-shadow:0 3px 8px rgba(0,0,0,.38);
+    transform:rotate(var(--cell-rot));
+    transition:transform .3s ease;
+}
+
+.s2-valve-ring{
+    position:absolute;inset:18%;border-radius:50%;border:3px solid #8b9eac;
+}
+
+.s2-valve-handle{
+    position:absolute;left:14%;top:43%;width:72%;height:14%;border-radius:999px;
+    background:#c9d5dc;box-shadow:0 0 5px rgba(210,234,245,.35);
+}
+
+.s2-water-source,.s2-water-exit{
+    position:absolute;z-index:4;pointer-events:none;font-size:20px;
+}
+.s2-water-source.left{left:1%;top:20%}
+.s2-water-source.right{right:1%;top:18%}
+.s2-water-exit{right:3%;bottom:3%}
+
+.s2-valves.s2-solved .s2-cell{
+    box-shadow:inset 0 0 7px rgba(66,192,255,.18);
+}
+.s2-valves.s2-solved .s2-valve-ring{
+    border-color:#59caff;
+    box-shadow:0 0 7px rgba(73,199,255,.42);
+}
+
+@media (max-width:380px){
+    .s2-cells{inset:6px;gap:3px}
+    .s2-cell{border-radius:8px}
+    .s2-train{font-size:19px}
+}
