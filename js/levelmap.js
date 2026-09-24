@@ -746,6 +746,30 @@ function renderLevelMap(chapterId) {
     if (status) {
 
         if (
+            !isChapterUnlocked(chapterId)
+        ) {
+
+            const previous =
+                getChapterProgress(
+                    chapterId - 1
+                );
+
+            status.innerHTML = `
+                <div style="
+                    font-size:16px;
+                    font-weight:900;
+                ">
+                    🔒 Этап ${chapterId} закрыт
+                </div>
+
+                <span>
+                    Нужно ⭐ 15 / 15
+                    в предыдущем этапе
+                    ${previous ? `· сейчас ${previous.earned}/15` : ""}
+                </span>
+            `;
+
+        } else if (
             isChapterFirstRunComplete(chapterId)
         ) {
 
@@ -1168,6 +1192,81 @@ function renderLevelMap(chapterId) {
 
 
     path.appendChild(footer);
+
+
+    /* =====================================
+       STAGE NAVIGATION
+    ===================================== */
+
+    const stageNav =
+        document.createElement("div");
+
+    stageNav.className =
+        "chapter-nav";
+
+    if (chapterId === 1) {
+
+        const stage2Unlocked =
+            isChapterUnlocked(2);
+
+        stageNav.innerHTML = `
+            <button
+                class="chapter-nav-button ${stage2Unlocked ? "" : "chapter-nav-locked"}"
+                type="button"
+            >
+                <span>
+                    ↓ ЭТАП 2 · УРОВНИ 6–10
+                </span>
+                <small>
+                    ${stage2Unlocked
+                        ? "Более сложные задачи"
+                        : "Откроется при ⭐ 15 / 15"}
+                </small>
+            </button>
+        `;
+
+        const button =
+            stageNav.querySelector(
+                ".chapter-nav-button"
+            );
+
+        if (button) {
+            button.onclick = () => {
+                openedChapter = 2;
+                renderLevelMap(2);
+            };
+        }
+
+    } else if (chapterId === 2) {
+
+        stageNav.innerHTML = `
+            <button
+                class="chapter-nav-button"
+                type="button"
+            >
+                <span>
+                    ↑ ЭТАП 1 · УРОВНИ 1–5
+                </span>
+                <small>
+                    Вернуться выше
+                </small>
+            </button>
+        `;
+
+        const button =
+            stageNav.querySelector(
+                ".chapter-nav-button"
+            );
+
+        if (button) {
+            button.onclick = () => {
+                openedChapter = 1;
+                renderLevelMap(1);
+            };
+        }
+    }
+
+    path.appendChild(stageNav);
 }
 
 
@@ -1209,7 +1308,7 @@ function handleMapLevelClick(level) {
        уровни 1 и 2.
     */
 
-    if (level > 5) {
+    if (level > 10) {
 
         if (
             typeof showAppNotice ===
